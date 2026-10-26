@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package telematics.v1;
+
+option go_package = "drivetrust/proto/telematics/v1;telematicsv1";
+
+import "common/v1/types.proto";
+
+service TelematicsService {
+  rpc IngestTelemetry(TelemetryBatchRequest) returns (TelemetryBatchResponse);
+  rpc GetDriverSafetyScore(DriverSafetyScoreRequest) returns (DriverSafetyScoreResponse);
+}
+
+message SensorReading {
+  double accel_x = 1;
+  double accel_y = 2;
+  double accel_z = 3;
+  double g_force = 4;
+  bool harsh_braking = 5;
+  bool harsh_cornering = 6;
+  bool crash_candidate = 7;
+}
+
+message TelemetryEvent {
+  int64 timestamp = 1;
+  string driver_id = 2;
+  string booking_id = 3;
+  common.v1.GeoLocation location = 4;
+  SensorReading sensors = 5;
+}
+
+message TelemetryBatchRequest {
+  string driver_id = 1;
+  repeated TelemetryEvent events = 2;
+}
+
+message TelemetryBatchResponse {
+  int32 processed_count = 1;
+  bool success = 2;
+}
+
+message DriverSafetyScoreRequest {
+  string driver_id = 1;
+  int64 start_time = 2;
+  int64 end_time = 3;
+}
+
+message DriverSafetyScoreResponse {
+  string driver_id = 1;
+  int32 safety_score = 2; // 0 to 100
+  int32 harsh_braking_count = 3;
+  int32 harsh_cornering_count = 4;
+  int32 crash_flags = 5;
+  double total_km_driven = 6;
+}

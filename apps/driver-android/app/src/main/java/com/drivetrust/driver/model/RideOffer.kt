@@ -1,0 +1,32 @@
+package com.drivetrust.driver.model
+
+data class RideOffer(
+    val offerId: String = "OFFER-8491",
+    val bookingCode: String = "DT-849102",
+    val customerName: String = "Vikram Aditya",
+    val customerPhone: String = "+91 98450 12345",
+    val customerRating: String = "4.95 ★",
+    val vehicleModel: String = "Toyota Fortuner 4x4",
+    val carModel: String = "Toyota Fortuner (Automatic)",
+    val vehiclePlate: String = "KA-01-MJ-4921",
+    val transmission: String = "AUTOMATIC",
+    val serviceType: String = "Night Safe-Drop",
+    val pickupAddress: String = "Indiranagar 100ft Rd, Bangalore",
+    val destinationAddress: String = "Koramangala 5th Block, Bangalore",
+    val pickupLat: Double = 12.9716,
+    val pickupLng: Double = 77.5946,
+    val dropLat: Double = 12.9352,
+    val dropLng: Double = 77.6245,
+    val distanceKm: String = "6.4 km",
+    val estMinutes: String = "22 mins",
+    val reportingTime: String = "Immediate (~8 mins)",
+    val grossFare: Double = 540.0,
+    val fare: String = "₹540",
+    val baseFare: Double = 299.0,
+    val returnAllowance: Double = 150.0,
+    val netDriverPayout: Double = 582.0,
+    val countdownSeconds: Int = 30,
+    val startOtpRequired: Boolean = true,
+    val isHandoverAuditRequired: Boolean = true,
+    val otp: String = "8492"
+)

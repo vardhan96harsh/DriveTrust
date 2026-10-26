@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package billing.v1;
+
+option go_package = "drivetrust/proto/billing/v1;billingv1";
+
+service BillingService {
+  rpc CalculateFareEstimate(FareEstimateRequest) returns (FareEstimateResponse);
+  rpc FinalizeTripFare(FinalizeTripFareRequest) returns (FinalizeTripFareResponse);
+  rpc ProcessWalletPayout(PayoutRequest) returns (PayoutResponse);
+}
+
+message FareEstimateRequest {
+  string service_type = 1; // HOURLY, NIGHT_DROP, OUTSTATION
+  double pickup_lat = 2;
+  double pickup_lng = 3;
+  double dropoff_lat = 4;
+  double dropoff_lng = 5;
+  string transmission = 6;
+  int32 package_hours = 7;
+  string city_name = 8;
+}
+
+message FareBreakdown {
+  double base_fare = 1;
+  double extra_time_fare = 2;
+  double distance_fare = 3;
+  double night_surge_fare = 4;
+  double driver_return_allowance = 5;
+  double convenience_fee = 6;
+  double subtotal = 7;
+  double total_fare = 8;
+  double estimated_driver_earnings = 9;
+}
+
+message FareEstimateResponse {
+  double estimated_fare = 1;
+  FareBreakdown breakdown = 2;
+  double estimated_distance_km = 3;
+  int32 estimated_duration_minutes = 4;
+  string currency = 5;
+}
+
+message FinalizeTripFareRequest {
+  string booking_id = 1;
+  double actual_distance_km = 2;
+  int64 actual_duration_seconds = 3;
+  int64 completed_at = 4;
+}
+
+message FinalizeTripFareResponse {
+  string fare_id = 1;
+  double final_customer_fare = 2;
+  double driver_earnings = 3;
+  double platform_commission = 4;
+  string payment_status = 5;
+}
+
+message PayoutRequest {
+  string driver_id = 1;
+  double amount = 2;
+  string destination_upi = 3;
+}
+
+message PayoutResponse {
+  bool success = 1;
+  string transaction_ref = 2;
+  double updated_balance = 3;
+  string message = 4;
+}

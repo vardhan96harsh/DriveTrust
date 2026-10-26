@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package dispatch.v1;
+
+option go_package = "drivetrust/proto/dispatch/v1;dispatchv1";
+
+import "common/v1/types.proto";
+
+service DispatchService {
+  rpc FindAndDispatch(DispatchCandidateRequest) returns (DispatchCandidateResponse);
+  rpc AcceptRide(AcceptRideRequest) returns (AcceptRideResponse);
+  rpc DeclineRide(DeclineRideRequest) returns (DeclineRideResponse);
+  rpc StreamDriverLocation(stream DriverLocationPing) returns (DriverLocationAck);
+}
+
+message DispatchCandidateRequest {
+  string booking_id = 1;
+  string pickup_h3_index = 2;
+  double pickup_lat = 3;
+  double pickup_lng = 4;
+  string transmission_required = 5;
+  string service_type = 6;
+  double estimated_earnings = 7;
+}
+
+message DispatchCandidateResponse {
+  bool dispatch_successful = 1;
+  string assigned_driver_id = 2;
+  int32 search_ring_radius = 3;
+  string message = 4;
+}
+
+message AcceptRideRequest {
+  string booking_id = 1;
+  string driver_id = 2;
+}
+
+message AcceptRideResponse {
+  bool success = 1;
+  string start_otp = 2;
+  string customer_name = 3;
+  string pickup_address = 4;
+  string error_message = 5;
+}
+
+message DeclineRideRequest {
+  string booking_id = 1;
+  string driver_id = 2;
+  string reason = 3;
+}
+
+message DeclineRideResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message DriverLocationPing {
+  string driver_id = 1;
+  common.v1.GeoLocation location = 2;
+  int64 timestamp = 3;
+  bool is_on_trip = 4;
+}
+
+message DriverLocationAck {
+  bool acknowledged = 1;
+  int64 server_time = 2;
+}

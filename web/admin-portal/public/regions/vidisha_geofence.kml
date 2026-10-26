@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:ex="http://earth.google.com/kml/ext">
+<Document id="document">
+	<name>Vidisha Official Operational Geofence</name>
+	<Placemark id="06A5BE0F7A42A1FA3976">
+		<name>VIDISHA</name>
+		<LookAt>
+			<longitude>77.81749027618446</longitude>
+			<latitude>23.53128600897603</latitude>
+			<altitude>0.0004531684679509596</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>13646.56671653383</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						77.78823352878834,23.49965352804375,0 77.80125419295862,23.49820481554576,0 77.81590754143197,23.49745689178146,0 77.82448503970627,23.50110930016881,0 77.8418974639514,23.5137027521558,0 77.84644377889344,23.52259802023461,0 77.84000991232304,23.52718764097606,0 77.83296342239504,23.53341551570499,0 77.81478378700766,23.53383759443507,0 77.8040080297754,23.53997039246435,0 77.78929949429654,23.5383300067628,0 77.77617706065,23.52254797090081,0 77.78823352878834,23.49965352804375,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>

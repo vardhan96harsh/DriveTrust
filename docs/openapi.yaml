@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  title: DriveTrust Ultra API Gateway
+  description: High-concurrency Tier-1 mobility microservices specification for verified on-demand drivers.
+  version: 1.0.0-PROD
+servers:
+  - url: http://localhost:8080
+    description: Local API Gateway
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: System healthy
+
+  /.well-known/jwks.json:
+    get:
+      summary: RFC 7517 compliant JSON Web Key Set for RS256 validation
+      responses:
+        '200':
+          description: JWKS public keys
+
+  /api/v1/auth/send-otp:
+    post:
+      summary: Dispatch 6-digit phone OTP with 5-minute expiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone_number, role]
+              properties:
+                phone_number:
+                  type: string
+                  example: "+919876543210"
+                role:
+                  type: string
+                  enum: [CUSTOMER, DRIVER, ADMIN, DISPATCHER]
+      responses:
+        '200':
+          description: OTP dispatched
+
+  /api/v1/auth/verify-otp:
+    post:
+      summary: Verify OTP and exchange for RS256 JWT tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone_number, otp]
+              properties:
+                phone_number:
+                  type: string
+                  example: "+919876543210"
+                otp:
+                  type: string
+                  example: "729401"
+      responses:
+        '200':
+          description: Tokens returned
+
+  /api/v1/bookings/estimate:
+    post:
+      summary: Calculate multi-zone dynamic fare estimate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [service_type, pickup_lat, pickup_lng]
+              properties:
+                city_name:
+                  type: string
+                  example: "Bangalore"
+                service_type:
+                  type: string
+                  enum: [HOURLY, NIGHT_DROP, OUTSTATION]
+                pickup_lat:
+                  type: number
+                  example: 12.9716
+                pickup_lng:
+                  type: number
+                  example: 77.5946
+                dropoff_lat:
+                  type: number
+                  example: 12.9352
+                dropoff_lng:
+                  type: number
+                  example: 77.6245
+                transmission:
+                  type: string
+                  enum: [MANUAL, AUTOMATIC, LUXURY]
+                package_hours:
+                  type: integer
+                  example: 4
+      responses:
+        '200':
+          description: Fare breakdown calculated
+
+  /api/v1/bookings/dispatch:
+    post:
+      summary: Uber H3 hexagonal matching & atomic Redlock driver reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                booking_id:
+                  type: string
+                pickup_h3_index:
+                  type: string
+                transmission_required:
+                  type: string
+      responses:
+        '200':
+          description: Driver candidate locked for 30s

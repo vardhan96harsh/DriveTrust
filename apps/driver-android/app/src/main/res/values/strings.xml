@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DriveTrust Partner</string>
+    <string name="login_title">Commercial Chauffeur Terminal</string>
+    <string name="enter_mobile">Enter Registered Mobile Number</string>
+    <string name="admin_kyc_verification">Admin MoRTH KYC Verification</string>
+    <string name="online_terminal">Terminal Online</string>
+    <string name="offline_terminal">Terminal Offline</string>
+    <string name="incoming_ride">Incoming Ride Offer</string>
+    <string name="accept_ride">Accept Ride</string>
+    <string name="decline_ride">Decline</string>
+    <string name="pre_trip_inspection">Pre-Trip Vehicle Handover Inspection</string>
+    <string name="verify_otp">Verify Passenger OTP</string>
+    <string name="sos_emergency">Emergency Police Alert (112)</string>
+    <string name="chauffeur_wallet">Partner Wallet &amp; Payouts</string>
+</resources>

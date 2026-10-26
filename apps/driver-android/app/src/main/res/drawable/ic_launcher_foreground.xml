@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:translateX="18.9"
+        android:translateY="18.9">
+        <!-- Chauffeur Partner Shield -->
+        <path
+            android:fillColor="#1E293B"
+            android:strokeColor="#10B981"
+            android:strokeWidth="3.5"
+            android:pathData="M54,18 L84,30 C84,56 71.5,75 54,86 C36.5,75 24,56 24,30 L54,18 Z" />
+
+        <!-- Steering Wheel Center -->
+        <path
+            android:strokeColor="#38BDF8"
+            android:strokeWidth="3"
+            android:pathData="M54,40 A12,12 0 1,1 53.99,40 Z" />
+
+        <!-- Steering Spokes -->
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2.5"
+            android:strokeLineCap="round"
+            android:pathData="M42,52 L66,52 M54,40 L54,52 M47,61 L54,52 L61,61" />
+
+        <!-- MoRTH Verified Partner Badge -->
+        <path
+            android:fillColor="#F59E0B"
+            android:pathData="M83,27 A3.5,3.5 0 1,1 82.99,27 Z" />
+    </group>
+</vector>

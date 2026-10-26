@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "drivetrust/proto/common/v1;commonv1";
+
+enum TransmissionType {
+  TRANSMISSION_TYPE_UNSPECIFIED = 0;
+  TRANSMISSION_TYPE_MANUAL = 1;
+  TRANSMISSION_TYPE_AUTOMATIC = 2;
+  TRANSMISSION_TYPE_LUXURY = 3;
+}
+
+enum ServiceType {
+  SERVICE_TYPE_UNSPECIFIED = 0;
+  SERVICE_TYPE_HOURLY = 1;
+  SERVICE_TYPE_NIGHT_DROP = 2;
+  SERVICE_TYPE_OUTSTATION = 3;
+}
+
+enum BookingStatus {
+  BOOKING_STATUS_UNSPECIFIED = 0;
+  BOOKING_STATUS_SEARCHING = 1;
+  BOOKING_STATUS_DISPATCHED = 2;
+  BOOKING_STATUS_ACCEPTED = 3;
+  BOOKING_STATUS_DRIVER_ARRIVED = 4;
+  BOOKING_STATUS_IN_PROGRESS = 5;
+  BOOKING_STATUS_COMPLETED = 6;
+  BOOKING_STATUS_CANCELLED = 7;
+}
+
+message GeoLocation {
+  double latitude = 1;
+  double longitude = 2;
+  string h3_index = 3;
+  double speed_kmh = 4;
+  double heading = 5;
+  double accuracy_meters = 6;
+}
+
+message UserProfile {
+  string id = 1;
+  string phone_number = 2;
+  string full_name = 3;
+  string role = 4;
+  string profile_photo_url = 5;
+}
+
+message DriverScore {
+  double rating_avg = 1;
+  int32 total_trips = 2;
+  int32 safety_telematics_score = 3;
+  double acceptance_rate = 4;
+}

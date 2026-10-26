@@ -1,0 +1,70 @@
+name: Backend CI / Test Suite
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'backend/**'
+      - 'proto/**'
+      - 'deploy/**'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'backend/**'
+      - 'proto/**'
+      - 'deploy/**'
+
+jobs:
+  test-backend:
+    name: Microservices Lint & Unit Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: drivetrust_db
+          POSTGRES_USER: drivetrust_admin
+          POSTGRES_PASSWORD: SecretProdPassword123!
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7.2-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache-dependency-path: 'backend/go.work.sum'
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Schema Migrations
+        run: |
+          sudo apt-get install -y postgresql-client
+          PGPASSWORD="SecretProdPassword123!" psql -h localhost -U drivetrust_admin -d drivetrust_db -f deploy/docker/postgres/init.sql
+
+      - name: Run Unit & Race Condition Tests
+        run: |
+          cd backend
+          go test -v -race ./...

@@ -1,0 +1,13 @@
+apiVersion: v2
+name: drivetrust-ultra
+description: Production Helm Chart for DriveTrust Ultra Tier-1 Mobility Platform
+type: application
+version: 1.0.0
+appVersion: "1.0.0-PROD"
+keywords:
+  - mobility
+  - ride-hailing
+  - telematics
+  - driver-platform
+maintainers:
+  - name: DriveTrust Platform Engineering Team

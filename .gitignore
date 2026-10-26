@@ -1,0 +1,85 @@
+# ==========================================
+# DriveTrust Monorepo .gitignore
+# ==========================================
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# IDE & Editor Files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+*.patch
+
+# ==========================================
+# Node.js & Web (web/admin-portal, etc.)
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment Variables & Secrets
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+!.env.example
+!.env.production
+
+# ==========================================
+# Android & Gradle (apps/*)
+# ==========================================
+.gradle/
+**/build/
+build/
+local.properties
+**/local.properties
+.cxx/
+captures/
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# Android Studio Navigation / Cache
+.navigation/
+*.jks
+*.keystore
+
+# ==========================================
+# Go Backend (backend/*)
+# ==========================================
+/bin/
+backend/**/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+backend/**/vendor/
+
+# Redis / Database dumps
+*.rdb
+*.aof

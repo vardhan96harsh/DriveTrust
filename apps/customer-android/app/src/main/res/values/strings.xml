@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DriveTrust Passenger</string>
+    <string name="welcome_message">Welcome to DriveTrust Ultra</string>
+    <string name="login_title">Customer Sign In</string>
+    <string name="sos_title">Emergency SOS 112</string>
+    <string name="handover_title">4-Point Vehicle Handover</string>
+</resources>
