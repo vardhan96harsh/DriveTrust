@@ -39,6 +39,8 @@ export default function TripsDispatchPage() {
   const [selectedTrip, setSelectedTrip] = useState<LiveBooking | null>(null);
   const [reassignModalTrip, setReassignModalTrip] = useState<LiveBooking | null>(null);
   const [targetDriverId, setTargetDriverId] = useState("");
+  const [reassignReason, setReassignReason] = useState<string>("CUSTOMER_REQUEST");
+  const [customerNotes, setCustomerNotes] = useState<string>("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const loadData = () => {
@@ -80,9 +82,20 @@ export default function TripsDispatchPage() {
         driverPhone: targetDriver.phone,
       });
     }
-    showToast(`Chauffeur for trip ${reassignModalTrip.bookingCode} re-assigned to ${targetDriver.fullName}`);
+    const reasonLabel =
+      reassignReason === "CUSTOMER_REQUEST"
+        ? "Customer Request"
+        : reassignReason === "DRIVER_DELAYED"
+        ? "Driver Delayed"
+        : reassignReason === "DRIVER_UNREACHABLE"
+        ? "Driver Unreachable"
+        : "Operational Mismatch";
+
+    showToast(`Chauffeur for ${reassignModalTrip.bookingCode} re-assigned to ${targetDriver.fullName} [${reasonLabel}]`);
     setReassignModalTrip(null);
     setTargetDriverId("");
+    setCustomerNotes("");
+    setReassignReason("CUSTOMER_REQUEST");
   };
 
   const filteredBookings = bookings.filter((trip) => {
@@ -481,16 +494,57 @@ export default function TripsDispatchPage() {
               </button>
             </div>
 
-            <p className="text-xs text-slate-600">
-              Currently assigned: <span className="font-bold text-slate-900">{reassignModalTrip.driverName}</span>.
-              Select an approved active driver to instantly transfer duty and send SMS/push alert:
-            </p>
+            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-slate-500 font-semibold">Current Chauffeur:</span>
+                <span className="font-bold text-slate-900">{reassignModalTrip.driverName}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-500 font-semibold">Customer Car:</span>
+                <span className="font-bold text-amber-700">{reassignModalTrip.vehicleModel} ({reassignModalTrip.vehiclePlate})</span>
+              </div>
+            </div>
 
-            <div className="space-y-1.5 max-h-56 overflow-y-auto">
+            {/* Reassignment Reason */}
+            <div>
+              <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                Mandatory Reassignment Trigger:
+              </label>
+              <select
+                value={reassignReason}
+                onChange={(e) => setReassignReason(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+              >
+                <option value="CUSTOMER_REQUEST">👤 Customer Request (Client phoned to change driver)</option>
+                <option value="DRIVER_DELAYED">⏳ Driver Delayed / Idle (Stuck in traffic / not moving)</option>
+                <option value="DRIVER_UNREACHABLE">📵 Driver Unreachable (Phone busy or switched off)</option>
+                <option value="TRANSMISSION_MISMATCH">⚙️ Gearbox Mismatch (Client requires Automatic driver)</option>
+                <option value="DRIVER_EMERGENCY">🚨 Driver Emergency / Vehicle breakdown</option>
+              </select>
+            </div>
+
+            {/* Customer Call Notes */}
+            <div>
+              <label className="block text-xs font-semibold text-slate-600 mb-1">
+                Client / Dispatch Log Notes (Optional):
+              </label>
+              <input
+                type="text"
+                value={customerNotes}
+                onChange={(e) => setCustomerNotes(e.target.value)}
+                placeholder="e.g. Customer requested senior chauffeur on Vidisha-Bhopal run"
+                className="w-full px-3 py-1.5 rounded-xl text-xs border border-slate-200 bg-slate-50/50 focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+              />
+            </div>
+
+            <div className="space-y-1.5 max-h-48 overflow-y-auto">
+              <span className="text-[11px] font-bold text-slate-500 uppercase block">
+                Select Replacement Chauffeur:
+              </span>
               {drivers.map((drv) => (
                 <label
                   key={drv.id}
-                  className={`flex items-center justify-between p-3 rounded-xl border text-xs cursor-pointer transition ${
+                  className={`flex items-center justify-between p-2.5 rounded-xl border text-xs cursor-pointer transition ${
                     targetDriverId === drv.id
                       ? "border-amber-500 bg-amber-50/50 font-bold"
                       : "border-slate-200 hover:bg-slate-50"
@@ -506,7 +560,9 @@ export default function TripsDispatchPage() {
                     />
                     <div>
                       <div className="text-slate-900 font-bold">{drv.fullName}</div>
-                      <div className="text-[11px] text-slate-400 font-mono">{drv.phone} • {drv.city}</div>
+                      <div className="text-[10px] text-slate-400 font-mono">
+                        {drv.phone} • {drv.city} • {drv.transmissions.join(", ")}
+                      </div>
                     </div>
                   </div>
                   <div className="text-right">

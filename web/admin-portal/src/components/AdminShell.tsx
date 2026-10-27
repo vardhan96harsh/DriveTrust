@@ -170,12 +170,6 @@ const NAV_SECTIONS: NavSection[] = [
         icon: <Briefcase className="w-4 h-4 text-blue-600" />,
         keywords: ["hotel", "resort", "retainer", "monthly", "gstin", "b2b", "corporate"],
       },
-      {
-        href: "/shifts",
-        label: "Chauffeur Shifts & Roster",
-        icon: <CalendarCheck className="w-4 h-4 text-indigo-600" />,
-        keywords: ["shift", "roster", "attendance", "morning", "night safe", "duty", "slots"],
-      },
     ],
   },
   {
