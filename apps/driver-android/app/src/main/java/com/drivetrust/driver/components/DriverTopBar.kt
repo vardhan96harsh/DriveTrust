@@ -1,9 +1,13 @@
 package com.drivetrust.driver.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Logout
+import androidx.compose.material.icons.rounded.PowerSettingsNew
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,8 +28,9 @@ fun DriverTopBar(
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = Color.White,
-        shadowElevation = 2.dp
+        color = MidnightCard,
+        shadowElevation = 4.dp,
+        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
     ) {
         Row(
             modifier = Modifier
@@ -40,13 +45,14 @@ fun DriverTopBar(
             ) {
                 Box(
                     modifier = Modifier
-                        .size(38.dp)
-                        .background(Slate900, RoundedCornerShape(10.dp)),
+                        .size(40.dp)
+                        .background(Midnight950, RoundedCornerShape(12.dp))
+                        .border(1.dp, Gold500.copy(alpha = 0.5f), RoundedCornerShape(12.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = driver.fullName.take(2).uppercase(),
-                        color = Color.White,
+                        color = Gold500,
                         fontWeight = FontWeight.Black,
                         fontSize = 14.sp
                     )
@@ -60,49 +66,68 @@ fun DriverTopBar(
                             text = driver.fullName.split(" ")[0],
                             fontWeight = FontWeight.Black,
                             fontSize = 15.sp,
-                            color = Slate900
+                            color = Color.White
                         )
                         Box(
                             modifier = Modifier
                                 .size(8.dp)
                                 .background(
-                                    if (driver.isOnline) Emerald500 else Red600,
+                                    if (driver.isOnline) Emerald400 else Red500,
                                     CircleShape
                                 )
                         )
                     }
                     Text(
-                        text = "Wallet: ₹${driver.walletBalance.toInt()}",
+                        text = "Balance: ₹${driver.walletBalance.toInt()}",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Monospace,
-                        color = Slate700
+                        color = Gold400
                     )
                 }
             }
 
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 Button(
                     onClick = onToggleDuty,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (driver.isOnline) Emerald600 else Slate900
+                        containerColor = if (driver.isOnline) Emerald500 else Midnight950,
+                        contentColor = if (driver.isOnline) Color.White else Slate300
                     ),
-                    shape = RoundedCornerShape(8.dp),
+                    border = if (driver.isOnline) null else androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    shape = RoundedCornerShape(10.dp),
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
                 ) {
+                    Icon(
+                        imageVector = Icons.Rounded.PowerSettingsNew,
+                        contentDescription = null,
+                        modifier = Modifier.size(14.dp),
+                        tint = if (driver.isOnline) Color.White else Slate400
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = if (driver.isOnline) "ONLINE" else "OFFLINE",
                         fontSize = 11.sp,
-                        fontWeight = FontWeight.Black,
-                        color = Color.White
+                        fontWeight = FontWeight.Black
                     )
                 }
 
-                TextButton(
+                IconButton(
                     onClick = onLogoutClick,
-                    contentPadding = PaddingValues(horizontal = 6.dp)
+                    modifier = Modifier
+                        .size(36.dp)
+                        .background(Midnight950, CircleShape)
+                        .border(1.dp, MidnightBorder, CircleShape)
                 ) {
-                    Text("Exit", fontSize = 11.sp, color = Slate500, fontWeight = FontWeight.Bold)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.Logout,
+                        contentDescription = "Exit",
+                        tint = Slate400,
+                        modifier = Modifier.size(16.dp)
+                    )
                 }
             }
         }

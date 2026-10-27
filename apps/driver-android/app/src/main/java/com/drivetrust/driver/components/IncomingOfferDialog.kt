@@ -1,9 +1,15 @@
 package com.drivetrust.driver.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -38,14 +44,14 @@ fun IncomingOfferDialog(
     Dialog(onDismissRequest = onDecline) {
         Surface(
             shape = RoundedCornerShape(24.dp),
-            color = Color.White,
-            border = androidx.compose.foundation.BorderStroke(2.dp, Slate900),
+            color = MidnightCard,
+            border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.6f)),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(14.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -53,28 +59,31 @@ fun IncomingOfferDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Surface(
-                        shape = RoundedCornerShape(6.dp),
-                        color = Slate100
+                        shape = RoundedCornerShape(8.dp),
+                        color = Gold500.copy(alpha = 0.15f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.3f))
                     ) {
                         Text(
-                            text = "NEW RIDE OFFER",
+                            text = "NEW CHAUFFEUR DISPATCH",
                             fontSize = 9.sp,
                             fontWeight = FontWeight.Black,
-                            color = Slate900,
+                            color = Gold500,
+                            letterSpacing = 0.5.sp,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
 
-                    Surface(
-                        shape = RoundedCornerShape(6.dp),
-                        color = Slate100
+                    IconButton(
+                        onClick = onDecline,
+                        modifier = Modifier
+                            .size(32.dp)
+                            .background(Midnight950, CircleShape)
                     ) {
-                        Text(
-                            text = offer.transmission,
-                            fontSize = 9.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Slate700,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        Icon(
+                            Icons.Rounded.Close,
+                            contentDescription = "Decline",
+                            tint = Slate400,
+                            modifier = Modifier.size(16.dp)
                         )
                     }
                 }
@@ -82,8 +91,13 @@ fun IncomingOfferDialog(
                 // Circular Countdown Ring
                 Box(
                     modifier = Modifier
-                        .size(68.dp)
-                        .background(Slate50, CircleShape),
+                        .size(72.dp)
+                        .background(Midnight950, CircleShape)
+                        .border(
+                            2.dp,
+                            if (countdown <= 10) Red500 else Gold500,
+                            CircleShape
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -91,67 +105,126 @@ fun IncomingOfferDialog(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Black,
                         fontFamily = FontFamily.Monospace,
-                        color = if (countdown <= 10) Red600 else Slate900
+                        color = if (countdown <= 10) Red400 else Color.White
                     )
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "₹${offer.netDriverPayout.toInt()}.00",
-                        fontSize = 28.sp,
+                        fontSize = 32.sp,
                         fontWeight = FontWeight.Black,
-                        color = Slate900
+                        color = Gold500
                     )
                     Text(
-                        text = "Net Driver Payout (80% + Return Allowance)",
-                        fontSize = 10.sp,
-                        color = Slate500
+                        text = "Net Partner Payout (80% + Travel Allowance)",
+                        fontSize = 11.sp,
+                        color = Slate400
                     )
                 }
 
                 Surface(
-                    shape = RoundedCornerShape(14.dp),
-                    color = Slate50,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Slate200),
+                    shape = RoundedCornerShape(16.dp),
+                    color = Midnight950,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
-                        modifier = Modifier.padding(14.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Customer: ${offer.customerName}", fontSize = 11.sp, color = Slate500)
-                            Text(offer.customerPhone, fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = Slate500)
+                            Text("Customer: ${offer.customerName}", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                            Surface(
+                                shape = RoundedCornerShape(6.dp),
+                                color = MidnightCard,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
+                            ) {
+                                Text(
+                                    text = offer.transmission,
+                                    fontSize = 9.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Slate300,
+                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
                         }
-                        Text(
-                            text = "Vehicle: ${offer.vehicleModel} (${offer.vehiclePlate})",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Slate900
-                        )
-                        Text(
-                            text = "Pickup: ${offer.pickupAddress}",
-                            fontSize = 11.sp,
-                            color = Slate700
-                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                Icons.Rounded.DirectionsCar,
+                                contentDescription = null,
+                                tint = Gold500,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Text(
+                                text = "${offer.vehicleModel} (${offer.vehiclePlate})",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Slate200
+                            )
+                        }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                Icons.Rounded.Navigation,
+                                contentDescription = null,
+                                tint = Emerald400,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Text(
+                                text = "Pickup: ${offer.pickupAddress}",
+                                fontSize = 11.sp,
+                                color = Slate400
+                            )
+                        }
                     }
                 }
 
-                Button(
-                    onClick = onAccept,
-                    modifier = Modifier.fillMaxWidth().height(52.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Slate900),
-                    shape = RoundedCornerShape(14.dp)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    Text(
-                        text = "ACCEPT RIDE OFFER (₹${offer.netDriverPayout.toInt()}) →",
-                        fontWeight = FontWeight.Black,
-                        fontSize = 13.sp,
-                        color = Color.White
-                    )
+                    OutlinedButton(
+                        onClick = onDecline,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(50.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Slate400),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
+                    ) {
+                        Text("Decline", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    }
+
+                    Button(
+                        onClick = onAccept,
+                        modifier = Modifier
+                            .weight(1.5f)
+                            .height(50.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Gold500,
+                            contentColor = MidnightDark
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Icon(Icons.Rounded.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Accept Offer",
+                            fontWeight = FontWeight.Black,
+                            fontSize = 13.sp
+                        )
+                    }
                 }
             }
         }

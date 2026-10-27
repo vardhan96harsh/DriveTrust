@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA1000012C00000100000001 /* DriveTrustApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000012C00000100000001 /* DriveTrustApp.swift */; };
+		AA1000022C00000100000002 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000022C00000100000002 /* AppCoordinator.swift */; };
+		AA1000032C00000100000003 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000032C00000100000003 /* ThemeColors.swift */; };
+		AA1000042C00000100000004 /* UserModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000042C00000100000004 /* UserModels.swift */; };
+		AA1000052C00000100000005 /* TripModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000052C00000100000005 /* TripModels.swift */; };
+		AA1000062C00000100000006 /* CustomTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000062C00000100000006 /* CustomTopBar.swift */; };
+		AA1000072C00000100000007 /* CustomBottomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000072C00000100000007 /* CustomBottomNavBar.swift */; };
+		AA1000082C00000100000008 /* FloatingBookingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000082C00000100000008 /* FloatingBookingBar.swift */; };
+		AA1000092C00000100000009 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000092C00000100000009 /* LoginView.swift */; };
+		AA1000102C00000100000010 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000102C00000100000010 /* RegisterView.swift */; };
+		AA1000112C00000100000011 /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000112C00000100000011 /* BookingView.swift */; };
+		AA1000122C00000100000012 /* MyGarageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000122C00000100000012 /* MyGarageView.swift */; };
+		AA1000132C00000100000013 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000132C00000100000013 /* WalletView.swift */; };
+		AA1000142C00000100000014 /* RideHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000142C00000100000014 /* RideHistoryView.swift */; };
+		AA1000152C00000100000015 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000152C00000100000015 /* ProfileView.swift */; };
+		AA1000162C00000100000016 /* SafetyCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000162C00000100000016 /* SafetyCenterView.swift */; };
+		AA1000172C00000100000017 /* HandoverAuditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000172C00000100000017 /* HandoverAuditView.swift */; };
+		AA1000182C00000100000018 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000182C00000100000018 /* RatingView.swift */; };
+		AA1000192C00000100000019 /* CustomerRideTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000192C00000100000019 /* CustomerRideTrackingView.swift */; };
+		AA1000202C00000100000020 /* TripActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000202C00000100000020 /* TripActivityAttributes.swift */; };
+		AA1000212C00000100000021 /* TripActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2000212C00000100000021 /* TripActivityWidget.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA2000002C00000100000000 /* DriveTrustCustomer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriveTrustCustomer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA2000012C00000100000001 /* DriveTrustApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveTrustApp.swift; sourceTree = "<group>"; };
+		AA2000022C00000100000002 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		AA2000032C00000100000003 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
+		AA2000042C00000100000004 /* UserModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModels.swift; sourceTree = "<group>"; };
+		AA2000052C00000100000005 /* TripModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModels.swift; sourceTree = "<group>"; };
+		AA2000062C00000100000006 /* CustomTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTopBar.swift; sourceTree = "<group>"; };
+		AA2000072C00000100000007 /* CustomBottomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomNavBar.swift; sourceTree = "<group>"; };
+		AA2000082C00000100000008 /* FloatingBookingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBookingBar.swift; sourceTree = "<group>"; };
+		AA2000092C00000100000009 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		AA2000102C00000100000010 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		AA2000112C00000100000011 /* BookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingView.swift; sourceTree = "<group>"; };
+		AA2000122C00000100000012 /* MyGarageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGarageView.swift; sourceTree = "<group>"; };
+		AA2000132C00000100000013 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
+		AA2000142C00000100000014 /* RideHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideHistoryView.swift; sourceTree = "<group>"; };
+		AA2000152C00000100000015 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		AA2000162C00000100000016 /* SafetyCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyCenterView.swift; sourceTree = "<group>"; };
+		AA2000172C00000100000017 /* HandoverAuditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandoverAuditView.swift; sourceTree = "<group>"; };
+		AA2000182C00000100000018 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		AA2000192C00000100000019 /* CustomerRideTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerRideTrackingView.swift; sourceTree = "<group>"; };
+		AA2000202C00000100000020 /* TripActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripActivityAttributes.swift; sourceTree = "<group>"; };
+		AA2000212C00000100000021 /* TripActivityWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripActivityWidget.swift; sourceTree = "<group>"; };
+		AA2000222C00000100000022 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA3000012C00000100000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA4000012C00000100000001 = {
+			isa = PBXGroup;
+			children = (
+				AA4000022C00000100000002 /* DriveTrustCustomer */,
+				AA2000002C00000100000000 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA4000022C00000100000002 /* DriveTrustCustomer */ = {
+			isa = PBXGroup;
+			children = (
+				AA4000032C00000100000003 /* App */,
+				AA4000042C00000100000004 /* Theme */,
+				AA4000052C00000100000005 /* Models */,
+				AA4000062C00000100000006 /* Components */,
+				AA4000072C00000100000007 /* Views */,
+				AA4000082C00000100000008 /* LiveActivity */,
+				AA2000222C00000100000022 /* Info.plist */,
+			);
+			path = DriveTrustCustomer;
+			sourceTree = "<group>";
+		};
+		AA4000032C00000100000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AA2000012C00000100000001 /* DriveTrustApp.swift */,
+				AA2000022C00000100000002 /* AppCoordinator.swift */,
+			);
+			path = Sources/App;
+			sourceTree = "<group>";
+		};
+		AA4000042C00000100000004 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				AA2000032C00000100000003 /* ThemeColors.swift */,
+			);
+			path = Sources/Theme;
+			sourceTree = "<group>";
+		};
+		AA4000052C00000100000005 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA2000042C00000100000004 /* UserModels.swift */,
+				AA2000052C00000100000005 /* TripModels.swift */,
+			);
+			path = Sources/Models;
+			sourceTree = "<group>";
+		};
+		AA4000062C00000100000006 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AA2000062C00000100000006 /* CustomTopBar.swift */,
+				AA2000072C00000100000007 /* CustomBottomNavBar.swift */,
+				AA2000082C00000100000008 /* FloatingBookingBar.swift */,
+			);
+			path = Sources/Components;
+			sourceTree = "<group>";
+		};
+		AA4000072C00000100000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA2000092C00000100000009 /* LoginView.swift */,
+				AA2000102C00000100000010 /* RegisterView.swift */,
+				AA2000112C00000100000011 /* BookingView.swift */,
+				AA2000122C00000100000012 /* MyGarageView.swift */,
+				AA2000132C00000100000013 /* WalletView.swift */,
+				AA2000142C00000100000014 /* RideHistoryView.swift */,
+				AA2000152C00000100000015 /* ProfileView.swift */,
+				AA2000162C00000100000016 /* SafetyCenterView.swift */,
+				AA2000172C00000100000017 /* HandoverAuditView.swift */,
+				AA2000182C00000100000018 /* RatingView.swift */,
+				AA2000192C00000100000019 /* CustomerRideTrackingView.swift */,
+			);
+			path = Sources/Views;
+			sourceTree = "<group>";
+		};
+		AA4000082C00000100000008 /* LiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				AA2000202C00000100000020 /* TripActivityAttributes.swift */,
+				AA2000212C00000100000021 /* TripActivityWidget.swift */,
+			);
+			path = LiveActivityWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA5000012C00000100000001 /* DriveTrustCustomer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA6000012C00000100000001 /* Build configuration list for PBXNativeTarget "DriveTrustCustomer" */;
+			buildPhases = (
+				AA7000012C00000100000001 /* Sources */,
+				AA3000012C00000100000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DriveTrustCustomer;
+			productName = DriveTrustCustomer;
+			productReference = AA2000002C00000100000000 /* DriveTrustCustomer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA8000012C00000100000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AA5000012C00000100000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = AA6000022C00000100000002 /* Build configuration list for PBXProject "DriveTrustCustomer" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA4000012C00000100000001;
+			productRefGroup = AA2000002C00000100000000 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA5000012C00000100000001 /* DriveTrustCustomer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA7000012C00000100000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA1000012C00000100000001 /* DriveTrustApp.swift in Sources */,
+				AA1000022C00000100000002 /* AppCoordinator.swift in Sources */,
+				AA1000032C00000100000003 /* ThemeColors.swift in Sources */,
+				AA1000042C00000100000004 /* UserModels.swift in Sources */,
+				AA1000052C00000100000005 /* TripModels.swift in Sources */,
+				AA1000062C00000100000006 /* CustomTopBar.swift in Sources */,
+				AA1000072C00000100000007 /* CustomBottomNavBar.swift in Sources */,
+				AA1000082C00000100000008 /* FloatingBookingBar.swift in Sources */,
+				AA1000092C00000100000009 /* LoginView.swift in Sources */,
+				AA1000102C00000100000010 /* RegisterView.swift in Sources */,
+				AA1000112C00000100000011 /* BookingView.swift in Sources */,
+				AA1000122C00000100000012 /* MyGarageView.swift in Sources */,
+				AA1000132C00000100000013 /* WalletView.swift in Sources */,
+				AA1000142C00000100000014 /* RideHistoryView.swift in Sources */,
+				AA1000152C00000100000015 /* ProfileView.swift in Sources */,
+				AA1000162C00000100000016 /* SafetyCenterView.swift in Sources */,
+				AA1000172C00000100000017 /* HandoverAuditView.swift in Sources */,
+				AA1000182C00000100000018 /* RatingView.swift in Sources */,
+				AA1000192C00000100000019 /* CustomerRideTrackingView.swift in Sources */,
+				AA1000202C00000100000020 /* TripActivityAttributes.swift in Sources */,
+				AA1000212C00000100000021 /* TripActivityWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA9000012C00000100000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DriveTrustCustomer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.drivetrust.customer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA9000022C00000100000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DriveTrustCustomer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.drivetrust.customer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AA9000032C00000100000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA9000042C00000100000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA6000012C00000100000001 /* Build configuration list for PBXNativeTarget "DriveTrustCustomer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA9000012C00000100000001 /* Debug */,
+				AA9000022C00000100000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA6000022C00000100000002 /* Build configuration list for PBXProject "DriveTrustCustomer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA9000032C00000100000003 /* Debug */,
+				AA9000042C00000100000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = AA8000012C00000100000001 /* Project object */;
+}

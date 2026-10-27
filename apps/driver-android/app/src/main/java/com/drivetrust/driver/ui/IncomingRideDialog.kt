@@ -24,8 +24,8 @@ fun IncomingRideDialog(
     pickupAddress: String,
     estimatedEarnings: Double,
     pickupDistanceKm: Double,
-    onAccept: () => Unit,
-    onDecline: () => Unit
+    onAccept: () -> Unit,
+    onDecline: () -> Unit
 ) {
     var secondsLeft by remember { mutableIntStateOf(30) }
 

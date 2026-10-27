@@ -6,12 +6,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,7 +33,7 @@ fun CustomerCompletedRatingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate50)
+            .background(MidnightDark)
     ) {
         CustomerTopAppBar(customerName = booking.customerName, onLogoutClick = onLogoutClick)
 
@@ -46,59 +47,66 @@ fun CustomerCompletedRatingScreen(
         ) {
             Box(
                 modifier = Modifier
-                    .size(60.dp)
-                    .background(Emerald50, CircleShape),
+                    .size(68.dp)
+                    .background(Emerald400.copy(alpha = 0.15f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "✓", color = Emerald600, fontSize = 28.sp, fontWeight = FontWeight.Black)
+                Icon(
+                    Icons.Rounded.CheckCircle,
+                    contentDescription = null,
+                    tint = Emerald400,
+                    modifier = Modifier.size(40.dp)
+                )
             }
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "Trip Completed Safely",
-                    fontSize = 20.sp,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Black,
-                    color = Slate900
+                    color = Color.White
                 )
                 Text(
-                    text = "Thank you for riding with DriveTrust Ultra",
+                    text = "Thank you for riding with DriveTrust Ultra Chauffeur",
                     fontSize = 12.sp,
-                    color = Slate500
+                    color = Slate400
                 )
             }
 
             // Star Rating Card
             Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = Color.White,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Slate200),
+                shape = RoundedCornerShape(18.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(18.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
                         text = "RATE CHAUFFEUR ${booking.assignedDriverName.uppercase()}",
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Slate500
+                        color = Gold500,
+                        letterSpacing = 1.sp
                     )
 
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         (1..5).forEach { star ->
-                            TextButton(
+                            IconButton(
                                 onClick = { rating = star },
-                                contentPadding = PaddingValues(4.dp)
+                                modifier = Modifier.size(36.dp)
                             ) {
-                                Text(
-                                    text = if (star <= rating) "★" else "☆",
-                                    fontSize = 28.sp,
-                                    color = if (star <= rating) Amber600 else Slate400
+                                Icon(
+                                    imageVector = if (star <= rating) Icons.Rounded.Star else Icons.Rounded.StarBorder,
+                                    contentDescription = "$star Stars",
+                                    tint = if (star <= rating) Gold500 else Slate600,
+                                    modifier = Modifier.size(32.dp)
                                 )
                             }
                         }
@@ -106,46 +114,48 @@ fun CustomerCompletedRatingScreen(
 
                     Text(
                         text = when (rating) {
-                            5 -> "★★★★★ Exceptional Driving & Conduct"
-                            4 -> "★★★★☆ Very Good Service"
-                            3 -> "★★★☆☆ Average Trip Experience"
-                            2 -> "★★☆☆☆ Below Expectations"
-                            else -> "★☆☆☆☆ Poor Experience"
+                            5 -> "Exceptional Chauffeur Conduct & Smooth Ride"
+                            4 -> "Very Good Professional Service"
+                            3 -> "Standard Ride Experience"
+                            2 -> "Below Luxury Expectation"
+                            else -> "Unsatisfactory Experience"
                         },
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Slate700
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = if (rating >= 4) Gold500 else Slate400
                     )
                 }
             }
 
             // Gratuity Tip Card
             Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = Color.White,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Slate200),
+                shape = RoundedCornerShape(18.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    modifier = Modifier.padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = "CHAUFFEUR GRATUITY TIP",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Slate500
+                            color = Slate400,
+                            letterSpacing = 0.5.sp
                         )
                         if (tipAmount > 0) {
                             Text(
                                 text = "+₹$tipAmount credited",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Emerald600
+                                color = Emerald400
                             )
                         }
                     }
@@ -158,7 +168,11 @@ fun CustomerCompletedRatingScreen(
                             val isSelected = amt == tipAmount
                             Surface(
                                 shape = RoundedCornerShape(10.dp),
-                                color = if (isSelected) Slate900 else Slate100,
+                                color = if (isSelected) Gold500.copy(alpha = 0.15f) else Midnight950,
+                                border = androidx.compose.foundation.BorderStroke(
+                                    1.dp,
+                                    if (isSelected) Gold500 else MidnightBorder
+                                ),
                                 modifier = Modifier.weight(1f),
                                 onClick = { tipAmount = amt }
                             ) {
@@ -170,7 +184,7 @@ fun CustomerCompletedRatingScreen(
                                         text = if (amt == 0) "No Tip" else "₹$amt",
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (isSelected) Color.White else Slate700
+                                        color = if (isSelected) Gold500 else Slate400
                                     )
                                 }
                             }
@@ -182,8 +196,11 @@ fun CustomerCompletedRatingScreen(
             // Favorite Chauffeur Bookmark Button
             Surface(
                 shape = RoundedCornerShape(14.dp),
-                color = if (isFavorite) Red50 else Color.White,
-                border = androidx.compose.foundation.BorderStroke(1.dp, if (isFavorite) Red600.copy(alpha = 0.3f) else Slate200),
+                color = if (isFavorite) Red500.copy(alpha = 0.15f) else MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(
+                    1.dp,
+                    if (isFavorite) Red500.copy(alpha = 0.4f) else MidnightBorder
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { isFavorite = !isFavorite }
             ) {
@@ -192,57 +209,102 @@ fun CustomerCompletedRatingScreen(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
+                        contentDescription = null,
+                        tint = if (isFavorite) Red500 else Slate400,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = if (isFavorite) "❤️ Saved to Favorite Chauffeurs" else "🤍 Add to Favorite Chauffeurs",
+                        text = if (isFavorite) "Saved to Favorite Chauffeurs" else "Add to Favorite Chauffeurs",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
-                        color = if (isFavorite) Red600 else Slate700
+                        color = if (isFavorite) Red400 else Slate300
                     )
                 }
             }
 
             // Receipt Breakdown
             Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = Color.White,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Slate200),
+                shape = RoundedCornerShape(18.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier.padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Vehicle Driven:", fontSize = 12.sp, color = Slate500)
-                        Text("${booking.vehicleModel} (${booking.vehiclePlate})", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        Text("Vehicle Driven:", fontSize = 12.sp, color = Slate400)
+                        Text(
+                            "${booking.vehicleModel} (${booking.vehiclePlate})",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Total Billed:", fontSize = 12.sp, color = Slate500)
-                        Text("₹${(booking.estimatedFare + tipAmount).toInt()}.00", fontSize = 15.sp, fontWeight = FontWeight.Black, color = Slate900)
+                        Text("Total Billed:", fontSize = 12.sp, color = Slate400)
+                        Text(
+                            "₹${(booking.estimatedFare + tipAmount).toInt()}.00",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Black,
+                            color = Gold500
+                        )
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Payment Status:", fontSize = 12.sp, color = Slate500)
-                        Text("Auto-Debited via UPI (Instant)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Emerald600)
+                        Text("Payment Status:", fontSize = 12.sp, color = Slate400)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(
+                                Icons.Rounded.CheckCircle,
+                                contentDescription = null,
+                                tint = Emerald400,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                "Auto-Debited via UPI (Instant)",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Emerald400
+                            )
+                        }
                     }
                 }
             }
 
             Button(
                 onClick = onBookAnotherRide,
-                modifier = Modifier.fillMaxWidth().height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Slate900),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Gold500,
+                    contentColor = MidnightDark
+                ),
                 shape = RoundedCornerShape(14.dp)
             ) {
-                Text("Book Another Chauffeur Ride", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Icon(
+                    Icons.Rounded.DirectionsCar,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Book Another Chauffeur Ride", fontWeight = FontWeight.Black, fontSize = 14.sp)
             }
         }
     }

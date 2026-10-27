@@ -3,6 +3,9 @@ package com.drivetrust.driver.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.VerifiedUser
+import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,14 +24,14 @@ fun AdminVerificationBanner(
 ) {
     if (kycStatus != KycStatus.APPROVED) {
         Surface(
-            shape = RoundedCornerShape(14.dp),
-            color = Amber50,
-            border = androidx.compose.foundation.BorderStroke(1.dp, Amber600.copy(alpha = 0.3f)),
+            shape = RoundedCornerShape(16.dp),
+            color = Amber500.copy(alpha = 0.12f),
+            border = androidx.compose.foundation.BorderStroke(1.dp, Amber500.copy(alpha = 0.35f)),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(14.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -36,63 +39,83 @@ fun AdminVerificationBanner(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "⚠️", fontSize = 14.sp)
+                        Icon(
+                            Icons.Rounded.WarningAmber,
+                            contentDescription = null,
+                            tint = Amber500,
+                            modifier = Modifier.size(18.dp)
+                        )
                         Text(
                             text = "AWAITING ADMIN VERIFICATION",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Black,
-                            color = Amber600
+                            color = Amber500,
+                            letterSpacing = 0.5.sp
                         )
                     }
                     Surface(
-                        shape = RoundedCornerShape(4.dp),
-                        color = Amber600.copy(alpha = 0.15f)
+                        shape = RoundedCornerShape(6.dp),
+                        color = Amber500.copy(alpha = 0.2f)
                     ) {
                         Text(
                             text = kycStatus.name,
                             fontSize = 9.sp,
                             fontWeight = FontWeight.Black,
-                            color = Amber600,
-                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            color = Amber500,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                         )
                     }
                 }
 
                 Text(
-                    text = "Commercial Driving License ($licenseNumber) is currently UNDER REVIEW in the Admin KYC Vault. You cannot go online or receive customer rides until verified by Operations Admin.",
-                    fontSize = 11.sp,
-                    color = Slate700,
-                    lineHeight = 16.sp
+                    text = "Commercial Driving License ($licenseNumber) is currently under review in the Admin KYC Vault. Dispatch matching will unlock immediately once approved.",
+                    fontSize = 12.sp,
+                    color = Slate300,
+                    lineHeight = 18.sp
                 )
             }
         }
     } else {
         Surface(
-            shape = RoundedCornerShape(12.dp),
-            color = Emerald50,
-            border = androidx.compose.foundation.BorderStroke(1.dp, Emerald500.copy(alpha = 0.2f)),
+            shape = RoundedCornerShape(16.dp),
+            color = Emerald400.copy(alpha = 0.12f),
+            border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.3f)),
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
-                modifier = Modifier.padding(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(14.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "🛡️", fontSize = 16.sp)
+                Surface(
+                    shape = RoundedCornerShape(10.dp),
+                    color = Emerald400.copy(alpha = 0.2f),
+                    modifier = Modifier.size(38.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            Icons.Rounded.VerifiedUser,
+                            contentDescription = null,
+                            tint = Emerald400,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
                 Column {
                     Text(
                         text = "ADMIN VERIFIED & CLEARED",
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Black,
-                        color = Emerald600
+                        color = Emerald400,
+                        letterSpacing = 0.5.sp
                     )
                     Text(
-                        text = "MoRTH Sarathi Commercial Clearance active. Eligible for instant trip dispatches.",
-                        fontSize = 11.sp,
-                        color = Slate700
+                        text = "MoRTH Sarathi Commercial clearance active. Instant ride offer dispatch ready.",
+                        fontSize = 12.sp,
+                        color = Slate300
                     )
                 }
             }

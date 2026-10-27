@@ -43,10 +43,6 @@ class DriverPreferences(context: Context) {
         get() = prefs.getString(KEY_BADGE_NUMBER, "KA-COMM-88219") ?: "KA-COMM-88219"
         set(value) = prefs.edit().putString(KEY_BADGE_NUMBER, value).apply()
 
-    var authToken: String?
-        get() = prefs.getString("KEY_AUTH_TOKEN", null)
-        set(value) = prefs.edit().putString("KEY_AUTH_TOKEN", value).apply()
-
     var isAdminApproved: Boolean
         get() = prefs.getBoolean(KEY_IS_APPROVED, false)
         set(value) = prefs.edit().putBoolean(KEY_IS_APPROVED, value).apply()

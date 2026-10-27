@@ -1,9 +1,14 @@
 package com.drivetrust.customer.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.*
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,38 +22,47 @@ import com.drivetrust.customer.theme.*
 @Composable
 fun CustomerTopAppBar(
     customerName: String,
+    unreadNotificationCount: Int = 2,
+    onOpenNotifications: () -> Unit = {},
+    onOpenSupport: () -> Unit = {},
     onLogoutClick: () -> Unit = {}
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = Color.White,
-        shadowElevation = 2.dp
+        color = MidnightCard,
+        shadowElevation = 8.dp,
+        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 14.dp),
+                .statusBarsPadding()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Left: Luxury Monogram & Brand Headline
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(36.dp)
-                        .background(Slate900, RoundedCornerShape(10.dp)),
+                        .size(42.dp)
+                        .background(MidnightDark, CircleShape)
+                        .border(1.5.dp, Gold500, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "DT",
-                        color = Color.White,
+                        color = Gold500,
                         fontWeight = FontWeight.Black,
-                        fontSize = 14.sp
+                        fontSize = 16.sp,
+                        letterSpacing = 1.sp
                     )
                 }
-                Column {
+
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -56,40 +70,113 @@ fun CustomerTopAppBar(
                         Text(
                             text = "DriveTrust",
                             fontWeight = FontWeight.Black,
-                            fontSize = 16.sp,
-                            color = Slate900
+                            fontSize = 17.sp,
+                            color = Color.White,
+                            letterSpacing = (-0.3).sp
                         )
                         Surface(
                             shape = RoundedCornerShape(4.dp),
-                            color = Slate100,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Slate200)
+                            color = MidnightDark,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f))
                         ) {
-                            Text(
-                                text = "PASSENGER",
-                                fontSize = 9.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Slate700,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                            )
+                            Row(
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(3.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Shield,
+                                    contentDescription = "Verified",
+                                    tint = Gold500,
+                                    modifier = Modifier.size(9.dp)
+                                )
+                                Text(
+                                    text = "LUXURY",
+                                    fontSize = 8.sp,
+                                    fontWeight = FontWeight.Black,
+                                    color = Gold500,
+                                    letterSpacing = 0.5.sp
+                                )
+                            }
                         }
                     }
                     Text(
-                        text = "Hello, $customerName",
+                        text = "Private Chauffeur • $customerName",
                         fontSize = 11.sp,
-                        color = Slate500
+                        color = Slate400,
+                        fontWeight = FontWeight.Medium
                     )
                 }
             }
 
-            TextButton(
-                onClick = onLogoutClick,
-                colors = ButtonDefaults.textButtonColors(contentColor = Slate500)
+            // Right: Clean Luxury Action Buttons
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "Log Out",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                // Support Icon Button
+                Surface(
+                    shape = CircleShape,
+                    color = MidnightDark,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    modifier = Modifier.size(38.dp),
+                    onClick = onOpenSupport
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.HelpOutline,
+                            contentDescription = "Help & Support",
+                            tint = Slate300,
+                            modifier = Modifier.size(19.dp)
+                        )
+                    }
+                }
+
+                // Notification Bell Button with Amber/Red Live Dot
+                Box(contentAlignment = Alignment.TopEnd) {
+                    Surface(
+                        shape = CircleShape,
+                        color = MidnightDark,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                        modifier = Modifier.size(38.dp),
+                        onClick = onOpenNotifications
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(
+                                imageVector = Icons.Rounded.Notifications,
+                                contentDescription = "Notifications",
+                                tint = Slate300,
+                                modifier = Modifier.size(19.dp)
+                            )
+                        }
+                    }
+                    if (unreadNotificationCount > 0) {
+                        Box(
+                            modifier = Modifier
+                                .size(10.dp)
+                                .background(Gold500, CircleShape)
+                                .border(1.5.dp, MidnightCard, CircleShape)
+                        )
+                    }
+                }
+
+                // Logout Button
+                Surface(
+                    shape = CircleShape,
+                    color = MidnightDark,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    modifier = Modifier.size(38.dp),
+                    onClick = onLogoutClick
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.Logout,
+                            contentDescription = "Logout",
+                            tint = Slate400,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
             }
         }
     }

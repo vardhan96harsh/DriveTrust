@@ -25,3 +25,10 @@ fun DriveTrustDriverTheme(
         content = content
     )
 }
+
+@Composable
+fun DriverTheme(
+    content: @Composable () -> Unit
+) {
+    DriveTrustDriverTheme(content)
+}

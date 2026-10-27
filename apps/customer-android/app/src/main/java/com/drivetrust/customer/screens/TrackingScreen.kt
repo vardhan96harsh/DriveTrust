@@ -1,14 +1,19 @@
 package com.drivetrust.customer.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -19,7 +24,6 @@ import com.drivetrust.customer.components.QuickChatDialog
 import com.drivetrust.customer.components.SosEmergencyDialog
 import com.drivetrust.customer.components.WhatsAppShareDialog
 import com.drivetrust.customer.model.TripBooking
-import com.drivetrust.customer.model.TripStatus
 import com.drivetrust.customer.theme.*
 
 @Composable
@@ -61,7 +65,7 @@ fun CustomerTrackingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate50)
+            .background(MidnightDark)
     ) {
         CustomerTopAppBar(
             customerName = booking.customerName,
@@ -73,143 +77,233 @@ fun CustomerTrackingScreen(
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Status Header with Action Buttons
+            // Live Status Header with Executive Action Badges
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text(
-                        text = "LIVE TRIP EN ROUTE",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Emerald600
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(8.dp)
+                                .background(Emerald400, CircleShape)
+                        )
+                        Text(
+                            text = "LIVE TRIP EN ROUTE",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Emerald400,
+                            letterSpacing = 1.sp
+                        )
+                    }
                     Text(
                         text = "Chauffeur Approaching",
-                        fontSize = 18.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Black,
-                        color = Slate900
+                        color = Color.White
                     )
                 }
 
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilledTonalButton(
                         onClick = { showChatDialog = true },
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = MidnightCard,
+                            contentColor = Gold500
+                        ),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
                     ) {
-                        Text("💬 Chat", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                        Icon(Icons.Rounded.Chat, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("Chat", fontSize = 11.sp, fontWeight = FontWeight.Bold)
                     }
 
-                    Button(
+                    FilledTonalButton(
                         onClick = { showShareDialog = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = Emerald600),
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = MidnightCard,
+                            contentColor = Emerald400
+                        ),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
                     ) {
-                        Text("📲 Share", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                        Icon(Icons.Rounded.Share, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("Share", fontSize = 11.sp, fontWeight = FontWeight.Bold)
                     }
 
                     Button(
                         onClick = { showSosDialog = true },
                         colors = ButtonDefaults.buttonColors(containerColor = Red600),
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(10.dp),
                         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
                     ) {
-                        Text("SOS", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                        Icon(Icons.Rounded.Emergency, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("SOS", fontSize = 11.sp, fontWeight = FontWeight.Black)
                     }
                 }
             }
 
-            // Simulated Map Box
+            // Radar/Telemetry Map Box with Executive Obsidian Glass
             Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = Slate900,
-                modifier = Modifier.fillMaxWidth().height(160.dp)
+                shape = RoundedCornerShape(20.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(175.dp)
             ) {
                 Box(
-                    modifier = Modifier.fillMaxSize().padding(16.dp),
-                    contentAlignment = Alignment.BottomStart
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.linearGradient(
+                                colors = listOf(Color(0xFF0D1527), Color(0xFF131D38), Color(0xFF0F172A))
+                            )
+                        )
+                        .padding(18.dp)
                 ) {
-                    Column {
+                    // Subtle background grid radar ring
+                    Box(
+                        modifier = Modifier
+                            .size(140.dp)
+                            .align(Alignment.CenterEnd)
+                            .border(1.dp, Gold500.copy(alpha = 0.15f), CircleShape)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .align(Alignment.CenterEnd)
+                            .border(1.dp, Gold500.copy(alpha = 0.25f), CircleShape)
+                    )
+
+                    Column(
+                        modifier = Modifier.align(Alignment.BottomStart),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Surface(
                                 shape = RoundedCornerShape(6.dp),
-                                color = Emerald600
+                                color = Emerald400.copy(alpha = 0.2f),
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.4f))
                             ) {
-                                Text(
-                                    text = "LIVE GPS",
-                                    fontSize = 9.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White,
-                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                                )
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Icon(
+                                        Icons.Rounded.GpsFixed,
+                                        contentDescription = null,
+                                        tint = Emerald400,
+                                        modifier = Modifier.size(12.dp)
+                                    )
+                                    Text(
+                                        text = "TELEMETRY ACTIVE",
+                                        fontSize = 9.sp,
+                                        fontWeight = FontWeight.Black,
+                                        color = Emerald400,
+                                        letterSpacing = 0.5.sp
+                                    )
+                                }
                             }
                             Text(
                                 text = "ETA: ~12 Mins to Pickup",
                                 color = Color.White,
-                                fontSize = 13.sp,
+                                fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold
                             )
                         }
-                        Text(
-                            text = "Pickup: ${booking.pickupAddress}",
-                            color = Slate400,
-                            fontSize = 11.sp
-                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                Icons.Rounded.Navigation,
+                                contentDescription = null,
+                                tint = Gold500,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                text = "Pickup: ${booking.pickupAddress}",
+                                color = Slate400,
+                                fontSize = 12.sp,
+                                maxLines = 1
+                            )
+                        }
                     }
                 }
             }
 
             // 4-Point Vehicle Pre-Trip Handover Status Card
             Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = Color.White,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Slate200),
+                shape = RoundedCornerShape(18.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
-                    modifier = Modifier.padding(14.dp),
+                    modifier = Modifier.padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f)
                     ) {
-                        Text(text = "🔍", fontSize = 20.sp)
+                        Surface(
+                            shape = RoundedCornerShape(12.dp),
+                            color = Gold500.copy(alpha = 0.12f),
+                            modifier = Modifier.size(44.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    Icons.Rounded.FactCheck,
+                                    contentDescription = null,
+                                    tint = Gold500,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
                         Column {
                             Text(
-                                text = "4-Point Vehicle Handover",
+                                text = "4-Point Handover Audit",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 13.sp,
-                                color = Slate900
+                                fontSize = 14.sp,
+                                color = Color.White
                             )
                             Text(
-                                text = if (isHandoverVerified) "✓ Handover Verified (No scratches)" else "Pre-trip scratch audit pending",
+                                text = if (isHandoverVerified) "Handover verified (zero pre-existing marks)" else "Pre-trip scratch audit pending",
                                 fontSize = 11.sp,
-                                color = if (isHandoverVerified) Emerald600 else Slate500
+                                color = if (isHandoverVerified) Emerald400 else Slate400
                             )
                         }
                     }
 
                     Button(
-                        onClick = {
-                            onOpenInspection()
-                        },
+                        onClick = { onOpenInspection() },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isHandoverVerified) Emerald50 else Slate900,
-                            contentColor = if (isHandoverVerified) Emerald600 else Color.White
+                            containerColor = if (isHandoverVerified) Emerald400.copy(alpha = 0.2f) else Gold500,
+                            contentColor = if (isHandoverVerified) Emerald400 else MidnightDark
                         ),
-                        shape = RoundedCornerShape(8.dp),
-                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
+                        shape = RoundedCornerShape(10.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
                     ) {
                         Text(
                             text = if (isHandoverVerified) "View Audit" else "Audit Car",
@@ -222,14 +316,14 @@ fun CustomerTrackingScreen(
 
             // Chauffeur Identity Card
             Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = Color.White,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Slate200),
+                shape = RoundedCornerShape(18.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    modifier = Modifier.padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -237,19 +331,21 @@ fun CustomerTrackingScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Surface(
-                                shape = RoundedCornerShape(10.dp),
-                                color = Slate900,
-                                modifier = Modifier.size(40.dp)
+                                shape = CircleShape,
+                                color = Midnight950,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f)),
+                                modifier = Modifier.size(46.dp)
                             ) {
                                 Box(contentAlignment = Alignment.Center) {
                                     Text(
                                         text = booking.assignedDriverName.take(2).uppercase(),
-                                        color = Color.White,
-                                        fontWeight = FontWeight.Bold
+                                        color = Gold500,
+                                        fontWeight = FontWeight.Black,
+                                        fontSize = 16.sp
                                     )
                                 }
                             }
@@ -257,82 +353,128 @@ fun CustomerTrackingScreen(
                                 Text(
                                     text = booking.assignedDriverName,
                                     fontWeight = FontWeight.Black,
-                                    fontSize = 14.sp,
-                                    color = Slate900
+                                    fontSize = 15.sp,
+                                    color = Color.White
                                 )
                                 Text(
                                     text = "DL: ${booking.assignedDriverDL}",
-                                    fontSize = 10.sp,
+                                    fontSize = 11.sp,
                                     fontFamily = FontFamily.Monospace,
-                                    color = Slate500
+                                    color = Slate400
                                 )
                             }
                         }
 
                         Surface(
-                            shape = RoundedCornerShape(6.dp),
-                            color = Emerald50,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Emerald500.copy(alpha = 0.3f))
+                            shape = RoundedCornerShape(8.dp),
+                            color = Emerald400.copy(alpha = 0.15f),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.3f))
                         ) {
-                            Text(
-                                text = "✓ MoRTH Sarathi Cleared",
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Emerald600,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
-                            )
+                            Row(
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Icon(
+                                    Icons.Rounded.Verified,
+                                    contentDescription = null,
+                                    tint = Emerald400,
+                                    modifier = Modifier.size(13.dp)
+                                )
+                                Text(
+                                    text = "MoRTH Verified",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Emerald400
+                                )
+                            }
                         }
                     }
 
-                    HorizontalDivider(color = Slate100)
+                    HorizontalDivider(color = MidnightBorder)
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = "Vehicle: ${booking.vehicleModel} (${booking.vehiclePlate})",
-                            fontSize = 11.sp,
-                            color = Slate700,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = booking.transmission,
-                            fontSize = 11.sp,
-                            color = Slate500
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                Icons.Rounded.DirectionsCar,
+                                contentDescription = null,
+                                tint = Gold500,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Text(
+                                text = "${booking.vehicleModel} (${booking.vehiclePlate})",
+                                fontSize = 12.sp,
+                                color = Slate200,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = Midnight950,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
+                        ) {
+                            Text(
+                                text = booking.transmission,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Slate400,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                            )
+                        }
                     }
                 }
             }
 
-            // 4-Digit Security OTP Handshake
+            // 4-Digit Security OTP Handshake Card
             Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = Slate900,
+                shape = RoundedCornerShape(20.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f)),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(18.dp),
+                    modifier = Modifier.padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(
-                        text = "GIVE THIS 4-DIGIT START OTP TO YOUR CHAUFFEUR",
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Slate400
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Icon(
+                            Icons.Rounded.Key,
+                            contentDescription = null,
+                            tint = Gold500,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text(
+                            text = "START RIDE VERIFICATION CODE",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Gold500,
+                            letterSpacing = 1.sp
+                        )
+                    }
+
                     Text(
                         text = booking.startOtp,
-                        fontSize = 32.sp,
+                        fontSize = 36.sp,
                         fontWeight = FontWeight.Black,
                         fontFamily = FontFamily.Monospace,
-                        color = Emerald500,
-                        letterSpacing = 4.sp
+                        color = Color.White,
+                        letterSpacing = 8.sp
                     )
+
                     Text(
-                        text = "Driver physically cannot start driving without this security code",
-                        fontSize = 10.sp,
+                        text = "Share this secure handshake code only after vehicle inspection",
+                        fontSize = 11.sp,
                         color = Slate400
                     )
                 }
@@ -341,11 +483,26 @@ fun CustomerTrackingScreen(
             // Fast forward simulation button
             Button(
                 onClick = onCompleteTrip,
-                modifier = Modifier.fillMaxWidth().height(48.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Slate900),
-                shape = RoundedCornerShape(12.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Gold500,
+                    contentColor = MidnightDark
+                ),
+                shape = RoundedCornerShape(14.dp)
             ) {
-                Text("Simulate Safe Trip Completion →", fontWeight = FontWeight.Bold)
+                Icon(
+                    Icons.Rounded.CheckCircle,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Simulate Safe Trip Completion",
+                    fontWeight = FontWeight.Black,
+                    fontSize = 14.sp
+                )
             }
         }
     }

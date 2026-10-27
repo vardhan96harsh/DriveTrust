@@ -65,13 +65,13 @@ fun DriverAppCoordinator(
 
     when (currentScreen) {
         DriverAppScreen.LOGIN -> {
-            LoginScreen(
+            DriverLoginScreen(
                 onLoginSuccess = { phone ->
                     driverPhone = phone
                     preferences.driverPhone = phone
                     currentScreen = DriverAppScreen.TERMINAL
                 },
-                onGoToOnboarding = {
+                onGoToOnboard = {
                     currentScreen = DriverAppScreen.ONBOARDING
                 }
             )
