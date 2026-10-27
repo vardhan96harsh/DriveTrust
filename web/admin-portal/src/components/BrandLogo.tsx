@@ -16,36 +16,52 @@ export default function BrandLogo({ className = "w-10 h-10", size = 40 }: BrandL
       className={className}
     >
       <defs>
-        <linearGradient id="sathiBacking" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="dtObsidian" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#0B0F19" />
-          <stop offset="100%" stopColor="#1E293B" />
+          <stop offset="100%" stopColor="#111827" />
         </linearGradient>
-        <linearGradient id="sathiEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#34D399" />
-          <stop offset="100%" stopColor="#10B981" />
+        <linearGradient id="dtGold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#F59E0B" />
+          <stop offset="50%" stopColor="#D97706" />
+          <stop offset="100%" stopColor="#B45309" />
         </linearGradient>
-        <linearGradient id="sathiCyan" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#38BDF8" />
-          <stop offset="100%" stopColor="#0284C7" />
+        <linearGradient id="dtGoldLight" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FDE68A" />
+          <stop offset="100%" stopColor="#F59E0B" />
         </linearGradient>
       </defs>
 
       {/* Modern Squircle Backing */}
-      <rect width="48" height="48" rx="13" fill="url(#sathiBacking)" />
-      <rect x="1" y="1" width="46" height="46" rx="12" stroke="#334155" strokeWidth="1" />
+      <rect width="48" height="48" rx="14" fill="url(#dtObsidian)" />
+      <rect x="1" y="1" width="46" height="46" rx="13" stroke="url(#dtGold)" strokeWidth="1.2" strokeOpacity="0.6" />
 
-      {/* Connected Infinity Path / S Letter Curve */}
+      {/* Luxury Shield Contour */}
       <path
-        d="M33 16 C33 12, 17 12, 17 21 C17 28, 31 24, 31 31 C31 37, 15 37, 15 32"
-        stroke="url(#sathiEmerald)"
-        strokeWidth="3.5"
+        d="M24 10 L34 14.5 V23.5 C34 29.5 29.8 35 24 38 C18.2 35 14 29.5 14 23.5 V14.5 L24 10 Z"
+        stroke="url(#dtGoldLight)"
+        strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="#1E293B"
+        fillOpacity="0.4"
       />
 
-      {/* Live Connection Dot */}
-      <circle cx="33" cy="16" r="3" fill="url(#sathiCyan)" />
-      <circle cx="15" cy="32" r="3" fill="#10B981" />
+      {/* Monogram Monolith 'DT' */}
+      <text
+        x="24"
+        y="27"
+        textAnchor="middle"
+        fontFamily="sans-serif"
+        fontWeight="900"
+        fontSize="12"
+        fill="url(#dtGoldLight)"
+        letterSpacing="0.5"
+      >
+        DT
+      </text>
+
+      {/* Trust Crown Dot */}
+      <circle cx="24" cy="15" r="1.8" fill="#F59E0B" />
     </svg>
   );
 }

@@ -3,8 +3,8 @@ import "./globals.css";
 import AdminShell from "@/components/AdminShell";
 
 export const metadata: Metadata = {
-  title: "Sathi Operations | Command Center",
-  description: "Aapki Gaadi, Aapka Sathi • Enterprise command portal for verified on-demand chauffeur dispatch, fleet management, and telematics.",
+  title: "DriveTrust Operations | Command Center",
+  description: "Aapki Gaadi, Aapka Chauffeur • Enterprise command portal for verified on-demand chauffeur dispatch, fleet insurance, and telematics.",
 };
 
 export default function RootLayout({

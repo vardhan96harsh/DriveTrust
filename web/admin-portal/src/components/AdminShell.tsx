@@ -32,6 +32,10 @@ import {
   Car,
   LogOut,
   Sparkles,
+  Radio,
+  Clock,
+  CalendarCheck,
+  ShieldAlert,
 } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
 import { getAdminSession, logoutAdmin, AdminUser } from "@/lib/adminAuthStore";
@@ -71,6 +75,14 @@ const NAV_SECTIONS: NavSection[] = [
         label: "Book by Phone (Call Center)",
         icon: <PhoneCall className="w-4 h-4 text-blue-600" />,
         keywords: ["booking", "call", "offline", "phone", "create", "concierge", "phone concierge"],
+      },
+      {
+        href: "/trips",
+        label: "Live Dispatch & Trips Console",
+        icon: <Car className="w-4 h-4 text-amber-500" />,
+        badge: "DISPATCH",
+        badgeColor: "bg-amber-500/10 text-amber-700 border border-amber-300 font-semibold",
+        keywords: ["trips", "dispatch", "active", "bookings", "rides", "reassign", "otp", "console"],
       },
       {
         href: "/book",
@@ -127,6 +139,14 @@ const NAV_SECTIONS: NavSection[] = [
         icon: <Compass className="w-4 h-4 text-slate-700" />,
         keywords: ["zone", "region", "vidisha", "bhopal", "geofence", "kml", "polygon", "operating zones"],
       },
+      {
+        href: "/fleet",
+        label: "Vehicle Fleet & Insurance Registry",
+        icon: <ShieldAlert className="w-4 h-4 text-emerald-600" />,
+        badge: "₹10L COVER",
+        badgeColor: "bg-emerald-500/10 text-emerald-700 border border-emerald-300 font-semibold",
+        keywords: ["fleet", "vehicles", "cars", "insurance", "transmission", "automatic", "manual", "sedan", "suv"],
+      },
     ],
   },
   {
@@ -150,6 +170,12 @@ const NAV_SECTIONS: NavSection[] = [
         icon: <Briefcase className="w-4 h-4 text-blue-600" />,
         keywords: ["hotel", "resort", "retainer", "monthly", "gstin", "b2b", "corporate"],
       },
+      {
+        href: "/shifts",
+        label: "Chauffeur Shifts & Roster",
+        icon: <CalendarCheck className="w-4 h-4 text-indigo-600" />,
+        keywords: ["shift", "roster", "attendance", "morning", "night safe", "duty", "slots"],
+      },
     ],
   },
   {
@@ -172,6 +198,12 @@ const NAV_SECTIONS: NavSection[] = [
         label: "Coupons & Promo Codes",
         icon: <Megaphone className="w-4 h-4 text-violet-500" />,
         keywords: ["coupon", "discount", "broadcast", "push", "marketing", "promos"],
+      },
+      {
+        href: "/broadcast",
+        label: "Push Broadcast Dispatcher",
+        icon: <Radio className="w-4 h-4 text-rose-500" />,
+        keywords: ["broadcast", "alert", "announcement", "push notification", "incentive", "weather"],
       },
       {
         href: "/analytics",
@@ -304,14 +336,14 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-base tracking-tight text-slate-900">
-                  Sathi
+                  DriveTrust
                 </span>
                 <span className="hidden sm:inline-block px-2 py-0.5 rounded-md text-[10px] font-bold font-mono bg-slate-900 text-white tracking-wider uppercase">
                   OPS
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
-                Aapki Gaadi, Aapka Sathi • MP Hubs
+                Aapki Gaadi, Aapka Chauffeur • MP-40 / MP-04 Hubs
               </p>
             </div>
           </Link>
