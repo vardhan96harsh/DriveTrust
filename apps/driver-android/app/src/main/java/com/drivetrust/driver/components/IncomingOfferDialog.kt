@@ -187,6 +187,23 @@ fun IncomingOfferDialog(
                                 color = Slate400
                             )
                         }
+
+                        // Transit Travel Allowance Badge
+                        Surface(
+                            shape = RoundedCornerShape(8.dp),
+                            color = Gold500.copy(alpha = 0.12f),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.3f)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text("Travel Allowance to Pickup:", fontSize = 10.sp, color = Slate300)
+                                Text("~20-25 Mins (5.2 km)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Gold500)
+                            }
+                        }
                     }
                 }
 

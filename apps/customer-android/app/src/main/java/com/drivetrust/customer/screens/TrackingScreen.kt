@@ -222,11 +222,25 @@ fun CustomerTrackingScreen(
                                 }
                             }
                             Text(
-                                text = "ETA: ~12 Mins to Pickup",
+                                text = "ETA: ~${booking.driverEtaMinutes} Mins to Pickup",
                                 color = Color.White,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold
                             )
+                            Surface(
+                                shape = RoundedCornerShape(4.dp),
+                                color = Gold500.copy(alpha = 0.15f),
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.3f))
+                            ) {
+                                Text(
+                                    text = "CHAUFFEUR COMMUTING TO GARAGE",
+                                    fontSize = 8.sp,
+                                    fontWeight = FontWeight.Black,
+                                    color = Gold500,
+                                    letterSpacing = 0.4.sp,
+                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
                         }
 
                         Row(

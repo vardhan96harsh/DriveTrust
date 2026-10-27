@@ -37,7 +37,7 @@ struct CustomerRideTrackingView: View {
                             .frame(width: 44, height: 44)
                             .foregroundColor(.green)
                             .shadow(color: .green.opacity(0.5), radius: 10)
-                        Text("\(driverName) (0.4 km)")
+                        Text("\(driverName) • En Route (~4.8 km travel)")
                             .font(.system(size: 11, weight: .bold, design: .monospaced))
                             .foregroundColor(.white)
                             .padding(.horizontal, 8)
@@ -82,6 +82,9 @@ struct CustomerRideTrackingView: View {
                         Text(bookingStatus.replacingOccurrences(of: "_", with: " "))
                             .font(.system(size: 18, weight: .black))
                             .foregroundColor(.white)
+                        Text("ETA: ~20-25 Mins (Chauffeur Traveling to Location)")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(.yellow)
                     }
 
                     Spacer()

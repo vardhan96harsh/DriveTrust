@@ -315,6 +315,11 @@ export default function TripsDispatchPage() {
                     <td className="py-3.5 px-4">
                       <div className="font-semibold text-slate-800">{trip.driverName}</div>
                       <div className="text-[11px] text-slate-500 font-mono mt-0.5">{trip.driverPhone}</div>
+                      {(trip.state === "ACCEPTED" || trip.state === "SEARCHING" || trip.state === "IN_PROGRESS") && (
+                        <div className="text-[10px] text-amber-700 font-bold mt-0.5">
+                          Commute ETA: ~20-25 mins
+                        </div>
+                      )}
                     </td>
 
                     {/* Route */}

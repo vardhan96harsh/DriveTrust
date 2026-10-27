@@ -127,8 +127,8 @@ data class TripBooking(
 
     // 4. Security PIN Handshake & ETA
     val startOtp: String = "8492",
-    val reportingTime: String = "Immediate (~8 mins)",
-    val driverEtaMinutes: Int = 3,
+    val reportingTime: String = "Chauffeur En Route (~20-25 mins)",
+    val driverEtaMinutes: Int = 20,
 
     // 5. Assigned Commercial Chauffeur Details
     val assignedDriverId: String = "drv-01",

@@ -226,7 +226,7 @@ fun CustomerSearchingChauffeurScreen(
                                         }
                                     }
                                     Text("DL: ${booking.assignedDriverDL}", fontSize = 11.sp, color = Slate500)
-                                    Text("Arriving in ~${booking.driverEtaMinutes} mins at pickup", fontSize = 11.sp, color = Emerald600, fontWeight = FontWeight.Bold)
+                                    Text("Arriving in ~${booking.driverEtaMinutes} mins (Chauffeur En Route to Location)", fontSize = 11.sp, color = Emerald600, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }

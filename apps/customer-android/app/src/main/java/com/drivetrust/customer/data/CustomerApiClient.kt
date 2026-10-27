@@ -186,7 +186,7 @@ class CustomerApiClient(
                         lat = json.optDouble("lat", 23.5262),
                         lng = json.optDouble("lng", 77.8211),
                         bearing = json.optDouble("bearing", 45.0).toFloat(),
-                        etaMins = json.optInt("eta_mins", 6)
+                        etaMins = json.optInt("eta_mins", 22)
                     )
                 )
             } else {
