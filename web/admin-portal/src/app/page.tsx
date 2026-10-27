@@ -20,6 +20,10 @@ import {
   CheckCircle2,
   RefreshCw,
   UserCheck,
+  Info,
+  HelpCircle,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import RealStreetMap from "@/components/RealStreetMap";
 import {
@@ -46,6 +50,7 @@ export default function DashboardPage() {
   const [selectedReassignTrip, setSelectedReassignTrip] = useState<LiveBooking | null>(null);
   const [targetDriverId, setTargetDriverId] = useState<string>("");
   const [reassignReason, setReassignReason] = useState<string>("DRIVER_UNRESPONSIVE");
+  const [showQuickGuide, setShowQuickGuide] = useState(true);
 
   const refreshDashboardData = () => {
     setLiveBookings(getLiveBookings());
@@ -224,6 +229,96 @@ export default function DashboardPage() {
             <span>New Booking</span>
           </Link>
         </div>
+      </div>
+
+      {/* Operations Quick Guide / Plain Language Overview */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-5 border border-slate-700/80 shadow-lg">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0">
+              <HelpCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-sm md:text-base font-extrabold tracking-tight text-white">
+                  Operations Desk Master Reference (सरल ऑपरेशन्स गाइड)
+                </h2>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  HOW EVERYTHING WORKS
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 mt-0.5">
+                Key rules for desk operators managing on-demand drivers, dispatches, and emergency safety.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setShowQuickGuide(!showQuickGuide)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-600 transition cursor-pointer"
+          >
+            <span>{showQuickGuide ? "Hide Details" : "Show Quick Rules"}</span>
+            {showQuickGuide ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+          </button>
+        </div>
+
+        {showQuickGuide && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-4 mt-4 border-t border-slate-700/80 text-xs">
+            <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 space-y-1">
+              <div className="font-bold text-amber-300 flex items-center gap-1.5">
+                <span>🚘 Private Chauffeur Model</span>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Drivers drive the <strong>customer&apos;s own car</strong> (sedan, SUV, or luxury). We do not own cabs or taxi fleets.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 space-y-1">
+              <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                <span>⏱️ Commute Allowance (~20-25m)</span>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Chauffeurs need transit time to travel to the customer&apos;s garage. The app displays a realistic <strong>~20-25 min arrival timer</strong>.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 space-y-1">
+              <div className="font-bold text-sky-300 flex items-center gap-1.5">
+                <span>⚡ On-Demand (No Rigid Shifts)</span>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Drivers are independent gig partners. They toggle <strong>Online/Offline</strong> when ready. No fixed shifts or penalties for resting.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 space-y-1">
+              <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                <span>🔑 4-Digit Secret Start OTP</span>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Passenger provides 4-digit PIN upon arrival. Driver enters it in app to begin the meter (visible to admin in <strong>/trips</strong>).
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 space-y-1">
+              <div className="font-bold text-purple-300 flex items-center gap-1.5">
+                <span>🔁 When to Re-assign Drivers</span>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Reassign only if: (1) Customer requests change, (2) Driver delayed &gt;10 mins, (3) Driver unreachable, or (4) Gearbox mismatch.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 space-y-1">
+              <div className="font-bold text-rose-300 flex items-center gap-1.5">
+                <span>🛡️ Police 112 &amp; ₹10L Insurance</span>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Every booking is insured for ₹10 Lakh transit liability. Emergency button directly rings National ERSS 112 Control Room (<strong>/emergency</strong>).
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* KPI Metrics Grid */}

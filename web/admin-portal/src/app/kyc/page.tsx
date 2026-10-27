@@ -108,6 +108,52 @@ export default function KYCPage() {
         </div>
       </div>
 
+      {/* 3-Step Clerk Verification Checklist */}
+      <div className="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-md">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+          <div className="flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs">
+              ✓
+            </span>
+            <h3 className="text-sm font-bold tracking-tight text-white">
+              Operator 3-Step Verification Standard (सत्यापन प्रक्रिया)
+            </h3>
+          </div>
+          <span className="text-[10px] font-mono font-bold text-amber-300 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded">
+            MANDATORY COMPLIANCE
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div className="p-3 rounded-xl bg-slate-800/70 border border-slate-700/60 space-y-1">
+            <div className="font-bold text-amber-300 flex items-center gap-1.5">
+              <span>Step 1: MoRTH Sarathi DL</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              Verify driving license status on the national registry. Confirm validity date and commercial endorsement (TRANS/LMV).
+            </p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-slate-800/70 border border-slate-700/60 space-y-1">
+            <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+              <span>Step 2: Police Background Check</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              Confirm no pending criminal FIRs or reckless driving convictions recorded with MP State Police or local Thana.
+            </p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-slate-800/70 border border-slate-700/60 space-y-1">
+            <div className="font-bold text-sky-300 flex items-center gap-1.5">
+              <span>Step 3: Biometric Match (&gt;95%)</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              Facial selfie photo must match Aadhaar card photo with at least 95% AI confidence before clicking &quot;Approve&quot;.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Driver Records List */}
       <div className="space-y-6">
         {records.map((rec) => (

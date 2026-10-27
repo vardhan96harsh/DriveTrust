@@ -178,6 +178,39 @@ export default function TripsDispatchPage() {
         </div>
       </div>
 
+      {/* Dispatch Operations Cheatsheet */}
+      <div className="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-4 text-xs text-amber-950 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-amber-900">
+            <span className="w-5 h-5 rounded-md bg-amber-200 flex items-center justify-center text-amber-800 text-[11px] font-black">ℹ️</span>
+            <span>Live Dispatch &amp; Reassignment Rules (सरल ट्रिप नियम)</span>
+          </div>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded">
+            OPERATOR DISPATCH PROTOCOL
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-[11px] leading-relaxed">
+          <div className="p-2.5 rounded-xl bg-white/90 border border-amber-200/70">
+            <div className="font-bold text-slate-900 mb-0.5">⏱️ Commute ETA (~20-25m)</div>
+            <p className="text-slate-600">
+              When a booking is accepted, the chauffeur is commuting to the client&apos;s garage. Realistic city arrival ETA is ~20 to 25 mins.
+            </p>
+          </div>
+          <div className="p-2.5 rounded-xl bg-white/90 border border-amber-200/70">
+            <div className="font-bold text-slate-900 mb-0.5">🔢 Start OTP Code</div>
+            <p className="text-slate-600">
+              Displayed in the table for desk operators. The passenger shares this 4-digit code with the chauffeur to initiate meter tracking.
+            </p>
+          </div>
+          <div className="p-2.5 rounded-xl bg-white/90 border border-amber-200/70">
+            <div className="font-bold text-slate-900 mb-0.5">🔁 1-Click Reassignment</div>
+            <p className="text-slate-600">
+              Use &quot;Reassign&quot; strictly for: Customer Request, Driver Delayed &gt;10m, Driver Unreachable, or Transmission Mismatch.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Quick Stats Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">

@@ -150,6 +150,22 @@ export default function ConciergeBookingPage() {
         </div>
       </div>
 
+      {/* Operator Phone Script & Commute Rule */}
+      <div className="bg-blue-50/80 border border-blue-200/90 rounded-2xl p-4 text-xs text-blue-950 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-blue-900">
+            <span className="w-5 h-5 rounded-md bg-blue-200 flex items-center justify-center text-blue-800 text-[11px] font-black">📞</span>
+            <span>Telephone Operator Script &amp; Arrival Promise (फोन बुकिंग गाइड)</span>
+          </div>
+          <span className="text-[10px] font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
+            ESTIMATED ARRIVAL: ~20-25 MINS
+          </span>
+        </div>
+        <p className="text-[11px] leading-relaxed text-blue-900/90">
+          <strong>What to say to customer on call:</strong> &quot;Namaste, your DriveTrust chauffeur is being dispatched to drive your car. Since our chauffeur travels across the city to your garage, please expect arrival in <strong>~20 to 25 minutes</strong>. A 4-digit start OTP has been generated for your safety.&quot;
+        </p>
+      </div>
+
       {/* Main Grid: Form & Recent Dispatches */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Booking Form */}

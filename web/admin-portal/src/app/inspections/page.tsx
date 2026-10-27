@@ -180,6 +180,22 @@ export default function VehicleInspectionsPage() {
         </div>
       </div>
 
+      {/* Purpose Explainer Banner */}
+      <div className="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-4 text-xs text-amber-950 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-amber-900">
+            <span className="w-5 h-5 rounded-md bg-amber-200 flex items-center justify-center text-amber-800 text-[11px] font-black">🔍</span>
+            <span>Why Handover Audits Are Conducted (सरल इंस्पेक्शन नियम)</span>
+          </div>
+          <span className="text-[10px] font-mono font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">
+            ZERO BLAME &amp; COMPLETE TRANSPARENCY
+          </span>
+        </div>
+        <p className="text-[11px] leading-relaxed text-amber-900/90">
+          Because DriveTrust chauffeurs operate <strong>customer-owned vehicles</strong>, every ride requires a 4-point handover audit before driving: (1) Odometer reading, (2) Fuel level %, (3) Pre-existing exterior scratches/dents, and (4) Valuables check. This prevents false damage disputes and protects both car owners and chauffeurs.
+        </p>
+      </div>
+
       {/* Metrics Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
         <div className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-xs">

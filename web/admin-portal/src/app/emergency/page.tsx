@@ -129,6 +129,45 @@ export default function EmergencyPage() {
         </div>
       </div>
 
+      {/* 3-Step Emergency Response SOP Protocol */}
+      <div className="bg-rose-950/90 text-white rounded-2xl p-5 border border-rose-800 shadow-md">
+        <div className="flex items-center justify-between pb-3 border-b border-rose-900 mb-3">
+          <div className="flex items-center gap-2 font-bold text-rose-200">
+            <span className="w-6 h-6 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs font-black">!</span>
+            <span>Emergency Operations Standard Operating Procedure (आपातकालीन SOP)</span>
+          </div>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-rose-300 bg-rose-900/60 px-2.5 py-0.5 rounded border border-rose-700">
+            TARGET RESOLUTION: &lt; 3 MINUTES
+          </span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div className="p-3 rounded-xl bg-rose-900/40 border border-rose-800/60 space-y-1">
+            <div className="font-bold text-rose-300 flex items-center gap-1.5">
+              <span>Step 1: Immediate Callback (&lt;30s)</span>
+            </div>
+            <p className="text-rose-100/80 text-[11px] leading-relaxed">
+              Click &quot;Acknowledge&quot; to halt audio alarm. Call passenger and driver simultaneously to verify vehicle safety status.
+            </p>
+          </div>
+          <div className="p-3 rounded-xl bg-rose-900/40 border border-rose-800/60 space-y-1">
+            <div className="font-bold text-amber-300 flex items-center gap-1.5">
+              <span>Step 2: Police 112 Dispatch</span>
+            </div>
+            <p className="text-rose-100/80 text-[11px] leading-relaxed">
+              If client reports danger or call is unreachable, assign nearest Police Thana (e.g. Kotwali Vidisha) &amp; share GPS telemetry.
+            </p>
+          </div>
+          <div className="p-3 rounded-xl bg-rose-900/40 border border-rose-800/60 space-y-1">
+            <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+              <span>Step 3: Verification &amp; Archive</span>
+            </div>
+            <p className="text-rose-100/80 text-[11px] leading-relaxed">
+              Once passenger confirms safety, log resolution notes with operator signature and mark incident safely resolved.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Metric Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className={`rounded-2xl border p-4 shadow-xs ${activeCount > 0 ? "bg-rose-50 border-rose-300" : "bg-white border-slate-200"}`}>

@@ -240,6 +240,39 @@ export default function ChauffeursManagementPage() {
         </div>
       </div>
 
+      {/* Chauffeur Model & Statuses Explanation Banner */}
+      <div className="bg-amber-50/70 border border-amber-200/90 rounded-xl p-4 text-xs text-amber-950 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-amber-900">
+            <span className="w-5 h-5 rounded-md bg-amber-200/80 flex items-center justify-center text-amber-800 text-[11px] font-black">i</span>
+            <span>How Chauffeurs Work on DriveTrust (सरल ड्राइवर गाइड)</span>
+          </div>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded">
+            ON-DEMAND PARTNER MODEL
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-[11px] leading-relaxed">
+          <div className="p-2.5 rounded-lg bg-white/80 border border-amber-200/70">
+            <div className="font-bold text-slate-900 mb-0.5">🟢 Online vs ⚪ Offline Duty</div>
+            <p className="text-slate-600">
+              Drivers toggle their status in the app. There are <strong>no rigid shifts</strong>. Only Online drivers receive automatic trip dispatches.
+            </p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-white/80 border border-amber-200/70">
+            <div className="font-bold text-slate-900 mb-0.5">🕹️ Transmission Capabilities</div>
+            <p className="text-slate-600">
+              Matches client cars: <strong>Manual</strong> (stick-shift), <strong>Automatic</strong> (AT/DCT/CVT), or <strong>Luxury</strong> (German premium cars).
+            </p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-white/80 border border-amber-200/70">
+            <div className="font-bold text-slate-900 mb-0.5">⏱️ Commute Transit Window</div>
+            <p className="text-slate-600">
+              Chauffeurs are given <strong>~20-25 mins</strong> to travel across the city to the customer&apos;s garage before trip handover.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Metrics Row - Minimalist, Professional */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
         <div className="bg-white rounded-xl p-4 border border-slate-200/90 shadow-xs">

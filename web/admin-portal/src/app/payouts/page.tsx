@@ -211,7 +211,7 @@ export default function PayoutsSettlementPage() {
               const url = window.URL.createObjectURL(blob);
               const a = document.createElement("a");
               a.href = url;
-              a.download = `sathi-payouts-${new Date().toISOString().slice(0, 10)}.csv`;
+              a.download = `drivetrust-payouts-${new Date().toISOString().slice(0, 10)}.csv`;
               a.click();
               window.URL.revokeObjectURL(url);
             }}
@@ -233,6 +233,37 @@ export default function PayoutsSettlementPage() {
         </div>
       </div>
 
+      {/* Payout Calculation & Settlement Formula Explainer */}
+      <div className="bg-emerald-50/70 border border-emerald-200/90 rounded-2xl p-4 text-xs text-emerald-950 space-y-2.5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-emerald-900">
+            <span className="w-5 h-5 rounded-md bg-emerald-200/80 flex items-center justify-center text-emerald-800 text-[11px] font-black">₹</span>
+            <span>How Chauffeur Payouts Are Calculated (सरल पेमेंट नियम)</span>
+          </div>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+            AUTOMATED UPI / IMPS SETTLEMENT
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-1 text-[11px] leading-relaxed">
+          <div className="p-2.5 rounded-xl bg-white/90 border border-emerald-200">
+            <div className="font-bold text-slate-900 mb-0.5">1. Gross Fare (100%)</div>
+            <p className="text-slate-600">Total tariff charged to customer based on hours and kilometers driven.</p>
+          </div>
+          <div className="p-2.5 rounded-xl bg-white/90 border border-emerald-200">
+            <div className="font-bold text-amber-900 mb-0.5">2. Less Commission (-15%)</div>
+            <p className="text-slate-600">DriveTrust platform fee covers GPS tracking, support, and ₹10L transit insurance.</p>
+          </div>
+          <div className="p-2.5 rounded-xl bg-white/90 border border-emerald-200">
+            <div className="font-bold text-rose-900 mb-0.5">3. Less Tax TDS (-1%)</div>
+            <p className="text-slate-600">Statutory Section 194O TDS deposited against driver&apos;s PAN card with Govt of India.</p>
+          </div>
+          <div className="p-2.5 rounded-xl bg-emerald-600 text-white border border-emerald-700 shadow-xs">
+            <div className="font-bold text-white mb-0.5">4. Net Chauffeur Pay (84%)</div>
+            <p className="text-emerald-100">Directly transferred to driver&apos;s UPI ID or Bank Account via ICICI Corporate API.</p>
+          </div>
+        </div>
+      </div>
+
       {/* KPI Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
         <div className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-xs">
@@ -249,7 +280,7 @@ export default function PayoutsSettlementPage() {
 
         <div className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-xs">
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono block mb-1">
-            Sathi 15% Take Rate
+            DriveTrust Platform Take Rate (15%)
           </span>
           <div className="text-2xl font-black text-emerald-700">
             ₹{totalCommissionEarned.toLocaleString("en-IN", { maximumFractionDigits: 0 })}
