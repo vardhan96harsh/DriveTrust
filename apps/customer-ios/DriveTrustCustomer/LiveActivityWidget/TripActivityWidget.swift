@@ -2,13 +2,14 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-@main
+@available(iOS 16.1, *)
 struct DriveTrustWidgets: WidgetBundle {
     var body: some Widget {
         TripLiveActivityWidget()
     }
 }
 
+@available(iOS 16.1, *)
 struct TripLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TripActivityAttributes.self) { context in

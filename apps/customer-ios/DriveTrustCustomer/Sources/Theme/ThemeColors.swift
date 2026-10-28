@@ -15,6 +15,8 @@ extension Color {
     static let emerald500 = Color(red: 0.063, green: 0.725, blue: 0.506)       // #10B981
     static let emerald600 = Color(red: 0.020, green: 0.596, blue: 0.416)       // #059669
 
+    static let slate100 = Color(red: 0.949, green: 0.961, blue: 0.976)         // #F1F5F9
+    static let slate200 = Color(red: 0.886, green: 0.910, blue: 0.941)         // #E2E8F0
     static let slate300 = Color(red: 0.796, green: 0.835, blue: 0.882)         // #CBD5E1
     static let slate400 = Color(red: 0.580, green: 0.639, blue: 0.722)         // #94A3B8
     static let slate500 = Color(red: 0.392, green: 0.455, blue: 0.545)         // #64748B
