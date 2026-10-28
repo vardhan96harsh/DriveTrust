@@ -30,6 +30,8 @@ import {
   Volume2,
   Smartphone,
   Download,
+  ExternalLink,
+  Radio,
 } from "lucide-react";
 import {
   ServiceMode,
@@ -40,10 +42,26 @@ import {
   addVehicleToGarage,
   saveCustomerTrip,
   confirmCustomerHandover,
+  acceptTripAsDriver,
   DEFAULT_ACTIVE_TRIP,
 } from "@/lib/customerBookingStore";
 import { CustomerVehicle, getActiveCustomer } from "@/lib/userStore";
+import {
+  validateBookingLocation,
+  BookingValidationResult,
+  getRegions,
+  Region,
+} from "@/lib/regionStore";
 import BrandLogo from "@/components/BrandLogo";
+
+const PRESET_LANDMARKS = [
+  { name: "Vidisha Railway Station, Station Rd", coords: [23.5262, 77.8211] as [number, number], rto: "MP-40" },
+  { name: "Collectorate Civil Lines, Vidisha", coords: [23.5350, 77.8115] as [number, number], rto: "MP-40" },
+  { name: "Sanchi Stupa Heritage Gate (SH-19)", coords: [23.4793, 77.7397] as [number, number], rto: "MP-40" },
+  { name: "DB City Mall / MP Nagar Zone-1, Bhopal", coords: [23.2332, 77.4334] as [number, number], rto: "MP-04" },
+  { name: "Raja Bhoj International Airport, Bhopal", coords: [23.2875, 77.3378] as [number, number], rto: "MP-04" },
+  { name: "Rani Kamlapati Station & Arera Colony, Bhopal", coords: [23.2167, 77.4398] as [number, number], rto: "MP-04" },
+];
 
 export default function CustomerBookingPage() {
   // Booking Form State
@@ -56,9 +74,13 @@ export default function CustomerBookingPage() {
   const [isScheduled, setIsScheduled] = useState(false);
   const [scheduleDateTime, setScheduleDateTime] = useState("");
 
-  // Locations
+  // Locations & Coordinates
   const [pickupLocation, setPickupLocation] = useState("Vidisha Railway Station, Station Rd");
+  const [pickupCoords, setPickupCoords] = useState<[number, number]>([23.5262, 77.8211]);
   const [dropoffLocation, setDropoffLocation] = useState("Collectorate Civil Lines, Vidisha");
+  const [dropoffCoords, setDropoffCoords] = useState<[number, number]>([23.5350, 77.8115]);
+  const [regionValidation, setRegionValidation] = useState<BookingValidationResult | null>(null);
+  const [matchingCountdown, setMatchingCountdown] = useState<number>(30);
 
   // Protection Add-on
   const [insuranceProtection, setInsuranceProtection] = useState(true);
@@ -201,13 +223,52 @@ export default function CustomerBookingPage() {
     showToast(`✅ ${newBrand} ${newModel} added to your personal garage!`);
   };
 
+  // Geofence check
+  useEffect(() => {
+    const res = validateBookingLocation(pickupCoords[0], pickupCoords[1]);
+    setRegionValidation(res);
+  }, [pickupCoords]);
+
+  // Matching 30s countdown
+  useEffect(() => {
+    if (currentStep !== "CONFIRMING") {
+      setMatchingCountdown(30);
+      return;
+    }
+    const timer = setInterval(() => {
+      setMatchingCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [currentStep]);
+
+  const handleSelectPresetLocation = (preset: typeof PRESET_LANDMARKS[0]) => {
+    setPickupLocation(preset.name);
+    setPickupCoords(preset.coords);
+    showToast(`📍 Selected ${preset.name} (${preset.rto})`);
+  };
+
   const handleConfirmBooking = () => {
     if (!selectedVehicle) {
       showToast("❌ Please select a vehicle from your garage.");
       return;
     }
+
+    // Strict Geofence & Zone Status Validation
+    const validation = validateBookingLocation(pickupCoords[0], pickupCoords[1]);
+    if (!validation.isAllowed) {
+      showToast(`⛔ ${validation.message}`);
+      return;
+    }
+
     const activeCust = getActiveCustomer();
-    const bookingCode = `BK-VID-${Math.floor(1000 + Math.random() * 9000)}`;
+    const rto = validation.matchedRegion?.rtoCode?.replace(/[^A-Za-z0-9]/g, "") || "MP40";
+    const bookingCode = `BK-${rto}-${Math.floor(1000 + Math.random() * 9000)}`;
     const newTrip: CustomerTrip = {
       bookingId: bookingCode,
       serviceMode,
@@ -217,29 +278,55 @@ export default function CustomerBookingPage() {
       vehicle: selectedVehicle,
       pickupAddress: pickupLocation,
       dropoffAddress: dropoffLocation,
+      pickupCoords,
+      dropoffCoords,
+      zoneId: validation.matchedRegion?.id,
+      zoneName: validation.matchedRegion?.name,
+      rtoCode: validation.matchedRegion?.rtoCode,
       scheduledTime: isScheduled && scheduleDateTime ? scheduleDateTime : "NOW",
       isScheduled,
       driverProtectionInsurance: insuranceProtection,
       fareEstimated: fareDetails.total,
       otp: activeCust?.permanentPin || "4892",
-      assignedDriver: {
-        id: "drv-01",
-        name: "Rajesh Sharma",
-        phone: "+91 98261 44001",
-        rating: 4.95,
-        totalTrips: 342,
-        rtoCode: "MP-40 (Vidisha)",
-        sarathiVerified: true,
-      },
       handoverAccepted: false,
-      status: "DRIVER_ASSIGNED",
+      status: "MATCHING", // Dispatched to drivers in this operating zone!
       createdAt: new Date().toISOString(),
       trackingToken: `track-${bookingCode.toLowerCase()}`,
     };
+
     saveCustomerTrip(newTrip);
     setActiveTrip(newTrip);
-    setCurrentStep("MATCHED");
-    showToast(`🎉 Chauffeur Rajesh Sharma assigned for your ${selectedVehicle.brand}!`);
+    setCurrentStep("CONFIRMING");
+    showToast(`📡 Ride request broadcast to active chauffeurs in ${validation.matchedRegion?.name}!`);
+  };
+
+  const handleSimulateDriverAccept = () => {
+    if (!activeTrip) return;
+    const assigned = acceptTripAsDriver(activeTrip.bookingId, {
+      id: "drv-01",
+      name: "Rajesh Sharma",
+      phone: "+91 98261 44001",
+      rating: 4.95,
+      totalTrips: 342,
+      rtoCode: activeTrip.rtoCode || "MP-40 (Vidisha)",
+      sarathiVerified: true,
+    });
+    if (assigned) {
+      setActiveTrip(assigned);
+      setCurrentStep("MATCHED");
+      showToast("🎉 Chauffeur Rajesh Sharma accepted your ride!");
+    }
+  };
+
+  const handleCancelMatching = () => {
+    if (!activeTrip) return;
+    saveCustomerTrip({
+      ...activeTrip,
+      status: "CANCELLED",
+    });
+    setActiveTrip(null);
+    setCurrentStep("FORM");
+    showToast("Request cancelled.");
   };
 
   const handleAcceptHandover = () => {
@@ -315,6 +402,20 @@ export default function CustomerBookingPage() {
           </div>
         </Link>
         <div className="flex items-center gap-2">
+          <Link
+            href="/customer"
+            className="text-xs font-bold text-blue-700 hover:text-blue-900 px-3 py-1.5 rounded-xl border border-blue-200 bg-blue-50 flex items-center gap-1.5 shadow-xs"
+          >
+            <Key className="w-3.5 h-3.5 text-amber-500" />
+            <span>Sathi Pass</span>
+          </Link>
+          <Link
+            href="/customer/register"
+            className="text-xs font-bold text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hidden sm:flex items-center gap-1"
+          >
+            <User className="w-3.5 h-3.5 text-slate-500" />
+            <span>Register</span>
+          </Link>
           <Link
             href="/driver"
             className="text-xs font-bold text-emerald-800 hover:text-emerald-950 px-3 py-1.5 rounded-xl border border-emerald-300 bg-emerald-50 flex items-center gap-1.5 shadow-sm"
@@ -485,16 +586,41 @@ export default function CustomerBookingPage() {
           {/* Locations Input */}
           <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
             <div>
-              <label className="text-[11px] font-bold text-slate-500 flex items-center gap-1 mb-1">
-                <MapPin className="w-3.5 h-3.5 text-emerald-600" /> Pickup Point (Chauffeur will arrive here)
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="text-[11px] font-bold text-slate-500 flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-emerald-600" /> Pickup Point (Chauffeur will arrive here)
+                </label>
+                <span className="text-[10px] font-bold text-slate-400">
+                  {pickupCoords[0].toFixed(4)}, {pickupCoords[1].toFixed(4)}
+                </span>
+              </div>
               <input
                 type="text"
                 value={pickupLocation}
                 onChange={(e) => setPickupLocation(e.target.value)}
                 className="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold text-slate-900"
               />
+
+              {/* Landmark Presets */}
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <span className="text-[10px] font-bold text-slate-400 self-center mr-1">Quick Hubs:</span>
+                {PRESET_LANDMARKS.map((preset) => (
+                  <button
+                    key={preset.name}
+                    type="button"
+                    onClick={() => handleSelectPresetLocation(preset)}
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition ${
+                      pickupLocation === preset.name
+                        ? "bg-slate-900 text-white border-slate-900 shadow-xs"
+                        : "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200"
+                    }`}
+                  >
+                    {preset.name.split(",")[0]} ({preset.rto})
+                  </button>
+                ))}
+              </div>
             </div>
+
             {serviceMode !== "HOURLY_RENTAL" && (
               <div>
                 <label className="text-[11px] font-bold text-slate-500 flex items-center gap-1 mb-1">
@@ -506,6 +632,53 @@ export default function CustomerBookingPage() {
                   onChange={(e) => setDropoffLocation(e.target.value)}
                   className="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold text-slate-900"
                 />
+              </div>
+            )}
+
+            {/* Operating Zone & Geofence Status Badge */}
+            {regionValidation && (
+              <div
+                className={`p-3 rounded-xl border text-xs flex items-start gap-2.5 transition ${
+                  regionValidation.isAllowed
+                    ? "bg-emerald-50/80 border-emerald-200 text-emerald-900"
+                    : regionValidation.status === "REGION_OFFLINE"
+                    ? "bg-rose-50 border-rose-300 text-rose-900"
+                    : "bg-amber-50 border-amber-300 text-amber-900"
+                }`}
+              >
+                {regionValidation.isAllowed ? (
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                ) : (
+                  <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                )}
+                <div>
+                  <div className="font-extrabold flex items-center gap-1.5">
+                    <span>
+                      {regionValidation.isAllowed
+                        ? `Operational Zone: ${regionValidation.matchedRegion?.name} (${regionValidation.matchedRegion?.rtoCode})`
+                        : regionValidation.status === "REGION_OFFLINE"
+                        ? `Operating Zone Offline: ${regionValidation.matchedRegion?.name}`
+                        : "Location Outside Operating Geofence"}
+                    </span>
+                    {regionValidation.isAllowed && (
+                      <span className="text-[9px] bg-emerald-600 text-white font-black px-1.5 py-0.2 rounded-full uppercase">
+                        Active
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] opacity-90 mt-0.5 leading-tight">
+                    {regionValidation.message}
+                  </p>
+                  {!regionValidation.isAllowed && (
+                    <Link
+                      href="/regions"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-600 hover:underline mt-1.5"
+                    >
+                      <span>Manage Geofence &amp; Operating Zones in Studio</span>
+                      <ChevronRight className="w-3 h-3" />
+                    </Link>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -549,10 +722,98 @@ export default function CustomerBookingPage() {
               </div>
               <button
                 onClick={handleConfirmBooking}
-                className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black text-sm tracking-wide transition shadow-md flex items-center gap-2"
+                disabled={regionValidation !== null && !regionValidation.isAllowed}
+                className={`px-6 py-3 rounded-xl font-black text-sm tracking-wide transition shadow-md flex items-center gap-2 ${
+                  regionValidation !== null && !regionValidation.isAllowed
+                    ? "bg-slate-700 text-slate-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-500 text-white"
+                }`}
               >
                 <span>Request Chauffeur</span>
                 <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 1.5: BROADCASTING & MATCHING WITH CHAUFFEURS IN ZONE */}
+      {currentStep === "CONFIRMING" && activeTrip && (
+        <div className="space-y-6 animate-fadeIn">
+          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xl text-center space-y-4">
+            {/* Pulsing Radar Ring */}
+            <div className="relative w-24 h-24 mx-auto my-2 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping" />
+              <div className="absolute inset-2 rounded-full bg-blue-500/30 animate-pulse" />
+              <div className="relative w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg">
+                <Radio className="w-8 h-8 animate-spin" style={{ animationDuration: "3s" }} />
+              </div>
+            </div>
+
+            <div>
+              <span className="text-[11px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                Active Zone Dispatch Radar
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 mt-2">
+                Searching for Chauffeur in {activeTrip.zoneName || "Vidisha (MP-40)"}
+              </h2>
+              <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
+                Broadcasting ride offer to verified drivers authorized in this operating zone.
+              </p>
+            </div>
+
+            {/* Live 30s Countdown Pill */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white text-xs font-mono font-bold shadow-xs">
+              <Clock className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>Chauffeur Acceptance Window: {matchingCountdown}s</span>
+            </div>
+
+            {/* Trip Details Card */}
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span className="text-slate-500 font-bold">Booking Reference</span>
+                <span className="font-mono font-extrabold text-slate-900">{activeTrip.bookingId}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-500 font-bold">Your Car</span>
+                <span className="font-bold text-slate-900">{activeTrip.vehicle.brand} {activeTrip.vehicle.model} ({activeTrip.vehicle.transmission})</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-500 font-bold">Pickup Point</span>
+                <span className="font-bold text-slate-900 text-right max-w-[200px] truncate">{activeTrip.pickupAddress}</span>
+              </div>
+              <div className="flex justify-between items-center pt-2 border-t border-slate-200">
+                <span className="text-slate-500 font-bold">Fare (Est.)</span>
+                <span className="font-black text-slate-900 text-sm">₹{activeTrip.fareEstimated}</span>
+              </div>
+            </div>
+
+            {/* Dual Actions for Live Multi-Window or 1-Click Demo */}
+            <div className="space-y-2 pt-2">
+              <Link
+                href="/driver"
+                target="_blank"
+                className="w-full py-3 rounded-xl bg-slate-900 text-white font-extrabold text-xs hover:bg-slate-800 transition flex items-center justify-center gap-2 shadow-md"
+              >
+                <span>Open Driver Partner Cockpit (/driver) to Accept Duty</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              </Link>
+
+              <button
+                type="button"
+                onClick={handleSimulateDriverAccept}
+                className="w-full py-2.5 rounded-xl bg-emerald-600 text-white font-extrabold text-xs hover:bg-emerald-500 transition flex items-center justify-center gap-1.5 shadow-sm"
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>Simulate Driver Acceptance (Instant Demo Match)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleCancelMatching}
+                className="w-full py-2 rounded-xl text-slate-500 hover:text-rose-600 font-bold text-xs transition"
+              >
+                Cancel Request
               </button>
             </div>
           </div>
@@ -947,6 +1208,31 @@ export default function CustomerBookingPage() {
           </div>
         </div>
       )}
+      {/* BOTTOM PERSISTENT NAVIGATION BAR */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-30 py-2.5 px-4 shadow-lg">
+        <div className="max-w-md mx-auto flex items-center justify-around text-center text-[10px] font-bold">
+          <Link href="/book" className="text-blue-600 flex flex-col items-center gap-1">
+            <Navigation className="w-4 h-4" />
+            <span>Book Ride</span>
+          </Link>
+          <Link href="/customer" className="text-slate-500 hover:text-blue-600 flex flex-col items-center gap-1">
+            <Key className="w-4 h-4 text-amber-500" />
+            <span>Sathi Pass</span>
+          </Link>
+          <Link href="/customer/register" className="text-slate-500 hover:text-blue-600 flex flex-col items-center gap-1">
+            <User className="w-4 h-4" />
+            <span>New Profile</span>
+          </Link>
+          <Link href="/track" className="text-slate-500 hover:text-emerald-600 flex flex-col items-center gap-1">
+            <Sparkles className="w-4 h-4" />
+            <span>Live Radar</span>
+          </Link>
+          <Link href="/driver" className="text-emerald-800 hover:text-emerald-950 flex flex-col items-center gap-1">
+            <Smartphone className="w-4 h-4 text-emerald-600" />
+            <span>Driver App ↗</span>
+          </Link>
+        </div>
+      </nav>
     </div>
   );
 }

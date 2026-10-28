@@ -1,16 +1,20 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"math"
 	"net/http"
+	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
 
 	"drivetrust/pkg/h3util"
 	"drivetrust/pkg/logger"
+	"drivetrust/pkg/pgxpool"
 	"drivetrust/pkg/rediscache"
 	authservice "drivetrust/services/auth-service"
 	billingservice "drivetrust/services/billing-service"
@@ -21,6 +25,7 @@ import (
 
 type Server struct {
 	logger     *logger.Logger
+	pool       *pgxpool.Pool
 	cache      *rediscache.Client
 	auth       *authservice.Service
 	dispatch   *dispatchservice.Engine
@@ -35,7 +40,29 @@ type Server struct {
 
 func main() {
 	log := logger.New("api-gateway")
-	cache := rediscache.NewClient("localhost:6379", "RedisAuthSecret123!")
+
+	// Read Postgres config from environment
+	pgHost := getEnv("POSTGRES_HOST", "localhost")
+	pgPort, _ := strconv.Atoi(getEnv("POSTGRES_PORT", "5432"))
+	pgUser := getEnv("POSTGRES_USER", "drivetrust_admin")
+	pgPass := getEnv("POSTGRES_PASSWORD", "SecretProdPassword123!")
+	pgDB := getEnv("POSTGRES_DB", "drivetrust_db")
+
+	pool, _ := pgxpool.New(pgxpool.Config{
+		Host:     pgHost,
+		Port:     pgPort,
+		User:     pgUser,
+		Password: pgPass,
+		Database: pgDB,
+		MaxConns: 25,
+	}, log)
+
+	// Read Redis config from environment
+	redisHost := getEnv("REDIS_HOST", "localhost")
+	redisPort := getEnv("REDIS_PORT", "6379")
+	redisPass := getEnv("REDIS_PASSWORD", "RedisAuthSecret123!")
+	redisAddr := fmt.Sprintf("%s:%s", redisHost, redisPort)
+	cache := rediscache.NewClient(redisAddr, redisPass)
 
 	auth, err := authservice.NewService(cache, log)
 	if err != nil {
@@ -49,6 +76,7 @@ func main() {
 
 	srv := &Server{
 		logger:          log,
+		pool:            pool,
 		cache:           cache,
 		auth:            auth,
 		dispatch:        dispatch,
@@ -70,6 +98,7 @@ func main() {
 	// 2. Auth Endpoints
 	mux.HandleFunc("/api/v1/auth/send-otp", srv.handleSendOTP)
 	mux.HandleFunc("/api/v1/auth/verify-otp", srv.handleVerifyOTP)
+	mux.HandleFunc("/api/v1/auth/admin/login", srv.handleAdminLogin)
 	mux.HandleFunc("/api/v1/auth/logout", srv.handleLogout)
 
 	// 3. Driver KYC
@@ -96,61 +125,79 @@ func main() {
 	mux.HandleFunc("/api/v1/telematics/ping", srv.handleTelemetryPing)
 	mux.HandleFunc("/api/v1/telematics/driver-score", srv.handleDriverSafetyScore)
 
-	// Wrap with Global Middlewares: CORS, JSON Logger, Rate Limit, and Idempotency
+	// Wrap with Global Middlewares: CORS, JSON Logger
 	handler := srv.applyMiddlewares(mux)
 
-	port := ":8080"
+	port := getEnv("PORT", "8080")
+	if !strings.HasPrefix(port, ":") {
+		port = ":" + port
+	}
 	log.Info(fmt.Sprintf("DriveTrust Ultra API Gateway running on port %s", port), nil)
 	if err := http.ListenAndServe(port, handler); err != nil {
 		log.Error("Server terminated", map[string]interface{}{"error": err.Error()})
 	}
 }
 
+func getEnv(key, defaultVal string) string {
+	if val := os.Getenv(key); val != "" {
+		return val
+	}
+	return defaultVal
+}
+
 func (s *Server) seedDrivers() {
 	s.driverPool = []dispatchservice.DriverCandidate{
 		{
-			DriverID:             "c1f7a4b2-8c10-4c7b-b56d-e4cfa093c834",
-			FullName:             "Rajesh Kumar",
-			RatingAvg:            4.95,
-			SafetyScore:          98,
+			DriverID:               "c1f7a4b2-8c10-4c7b-b56d-e4cfa093c834",
+			FullName:               "Rajesh Kumar",
+			RatingAvg:              4.95,
+			SafetyScore:            98,
 			SupportedTransmissions: []string{"MANUAL", "AUTOMATIC"},
-			CurrentLocation:      h3util.LatLng{Lat: 23.5262, Lng: 77.8211}, // Vidisha City Center
-			H3Index:              h3util.LatLngToH3(23.5262, 77.8211, 8),
-			IsOnline:             true,
-			KycStatus:            "APPROVED",
+			CurrentLocation:        h3util.LatLng{Lat: 23.5262, Lng: 77.8211}, // Vidisha City Center
+			H3Index:                h3util.LatLngToH3(23.5262, 77.8211, 8),
+			IsOnline:               true,
+			KycStatus:              "APPROVED",
+			RtoCode:                "MP-40",
+			ZoneID:                 "zone-vidisha",
 		},
 		{
-			DriverID:             "d2e8b5c3-9d21-5d8c-c67e-f5dfb104d945",
-			FullName:             "Amit Sharma",
-			RatingAvg:            4.91,
-			SafetyScore:          96,
+			DriverID:               "d2e8b5c3-9d21-5d8c-c67e-f5dfb104d945",
+			FullName:               "Amit Sharma",
+			RatingAvg:              4.91,
+			SafetyScore:            96,
 			SupportedTransmissions: []string{"MANUAL", "AUTOMATIC", "LUXURY"},
-			CurrentLocation:      h3util.LatLng{Lat: 23.5312, Lng: 77.8175}, // Vidisha North
-			H3Index:              h3util.LatLngToH3(23.5312, 77.8175, 8),
-			IsOnline:             true,
-			KycStatus:            "APPROVED",
+			CurrentLocation:        h3util.LatLng{Lat: 23.5312, Lng: 77.8175}, // Vidisha North
+			H3Index:                h3util.LatLngToH3(23.5312, 77.8175, 8),
+			IsOnline:               true,
+			KycStatus:              "APPROVED",
+			RtoCode:                "MP-40",
+			ZoneID:                 "zone-vidisha",
 		},
 		{
-			DriverID:             "e3f9c6d4-ae32-6e9d-d78f-a6eac215e056",
-			FullName:             "Vikram Singh",
-			RatingAvg:            4.87,
-			SafetyScore:          95,
+			DriverID:               "e3f9c6d4-ae32-6e9d-d78f-a6eac215e056",
+			FullName:               "Vikram Singh",
+			RatingAvg:              4.87,
+			SafetyScore:            95,
 			SupportedTransmissions: []string{"MANUAL", "AUTOMATIC"},
-			CurrentLocation:      h3util.LatLng{Lat: 23.2599, Lng: 77.4126}, // Bhopal MP Nagar
-			H3Index:              h3util.LatLngToH3(23.2599, 77.4126, 8),
-			IsOnline:             true,
-			KycStatus:            "APPROVED",
+			CurrentLocation:        h3util.LatLng{Lat: 23.2599, Lng: 77.4126}, // Bhopal MP Nagar
+			H3Index:                h3util.LatLngToH3(23.2599, 77.4126, 8),
+			IsOnline:               true,
+			KycStatus:              "APPROVED",
+			RtoCode:                "MP-04",
+			ZoneID:                 "zone-bhopal",
 		},
 		{
-			DriverID:             "f4a0d7e5-bf43-7fae-e89a-b7fbd326f167",
-			FullName:             "Sunil Gowda",
-			RatingAvg:            4.88,
-			SafetyScore:          94,
+			DriverID:               "f4a0d7e5-bf43-7fae-e89a-b7fbd326f167",
+			FullName:               "Sunil Gowda",
+			RatingAvg:              4.88,
+			SafetyScore:            94,
 			SupportedTransmissions: []string{"AUTOMATIC", "LUXURY"},
-			CurrentLocation:      h3util.LatLng{Lat: 12.9720, Lng: 77.5950}, // Bangalore MG Road
-			H3Index:              h3util.LatLngToH3(12.9720, 77.5950, 8),
-			IsOnline:             true,
-			KycStatus:            "APPROVED",
+			CurrentLocation:        h3util.LatLng{Lat: 12.9720, Lng: 77.5950}, // Bangalore MG Road
+			H3Index:                h3util.LatLngToH3(12.9720, 77.5950, 8),
+			IsOnline:               true,
+			KycStatus:              "APPROVED",
+			RtoCode:                "KA-01",
+			ZoneID:                 "zone-bangalore",
 		},
 	}
 }
@@ -159,7 +206,17 @@ func (s *Server) seedDrivers() {
 func (s *Server) applyMiddlewares(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// CORS headers
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		allowedOrigins := os.Getenv("CORS_ALLOWED_ORIGINS")
+		if allowedOrigins == "" {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+		} else {
+			origin := r.Header.Get("Origin")
+			if origin != "" && strings.Contains(allowedOrigins, origin) {
+				w.Header().Set("Access-Control-Allow-Origin", origin)
+			} else {
+				w.Header().Set("Access-Control-Allow-Origin", "*")
+			}
+		}
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Idempotency-Key")
 
@@ -174,12 +231,34 @@ func (s *Server) applyMiddlewares(next http.Handler) http.Handler {
 }
 
 func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+	defer cancel()
+
+	pgHealthy := false
+	if s.pool != nil {
+		pgHealthy = s.pool.Ping(ctx) == nil
+	}
+
+	redisHealthy := false
+	if s.cache != nil {
+		redisHealthy = s.cache.IsLive()
+	}
+
+	status := "HEALTHY"
+	if !pgHealthy || !redisHealthy {
+		status = "DEGRADED"
+	}
+
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"status":      "HEALTHY",
+		"status":      status,
 		"service":     "drivetrust-api-gateway",
 		"version":     "1.0.0-PROD",
 		"timestamp":   time.Now().UTC().Format(time.RFC3339),
-		"environment": "production",
+		"environment": getEnv("ENVIRONMENT", "production"),
+		"checks": map[string]bool{
+			"postgresql": pgHealthy,
+			"redis":      redisHealthy,
+		},
 	})
 }
 
@@ -188,9 +267,33 @@ func (s *Server) handleJWKS(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(jwks)
 }
 
+func (s *Server) handleAdminLogin(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, `{"error":"method not allowed"}`, http.StatusMethodNotAllowed)
+		return
+	}
+
+	var body struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, `{"error":"invalid json"}`, http.StatusBadRequest)
+		return
+	}
+
+	tokens, err := s.auth.LoginAdmin(body.Email, body.Password)
+	if err != nil {
+		http.Error(w, fmt.Sprintf(`{"error":"%s"}`, err.Error()), http.StatusUnauthorized)
+		return
+	}
+
+	json.NewEncoder(w).Encode(tokens)
+}
+
 func (s *Server) handleSendOTP(w http.ResponseWriter, r *http.Request) {
 	var body struct {
-		PhoneNumber string                `json:"phone_number"`
+		PhoneNumber string               `json:"phone_number"`
 		Role        authservice.UserRole `json:"role"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -254,8 +357,8 @@ func (s *Server) handleKYCPresignedURL(w http.ResponseWriter, r *http.Request) {
 func (s *Server) handleKYCSubmit(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted)
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"status":      "UNDER_REVIEW",
-		"message":     "Driver documents submitted to Parivahan API & manual review queue",
+		"status":       "UNDER_REVIEW",
+		"message":      "Driver documents submitted to Parivahan API & manual review queue",
 		"submitted_at": time.Now().UTC(),
 	})
 }
@@ -285,13 +388,12 @@ func (s *Server) handleBookingEstimate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Compute Haversine distance
 	distKm := h3util.HaversineDistanceKm(
 		h3util.LatLng{Lat: body.PickupLat, Lng: body.PickupLng},
 		h3util.LatLng{Lat: body.DropoffLat, Lng: body.DropoffLng},
 	)
 	if distKm < 2.0 {
-		distKm = 10.0 // Default demo distance
+		distKm = 10.0
 	}
 
 	breakdown, err := s.billing.CalculateEstimate(body.CityName, body.ServiceType, distKm, body.PackageHours, body.Days)
@@ -628,6 +730,14 @@ func (s *Server) handleDriverLocationUpdate(w http.ResponseWriter, r *http.Reque
 	s.driverLocations[body.DriverID] = h3util.LatLng{Lat: body.Lat, Lng: body.Lng}
 	s.mu.Unlock()
 
+	// Update in Redis cache
+	_ = s.cache.UpdateDriverPosition(r.Context(), rediscache.DriverPosition{
+		DriverID:  body.DriverID,
+		Lat:       body.Lat,
+		Lng:       body.Lng,
+		H3Index:   h3util.LatLngToH3(body.Lat, body.Lng, 8),
+		UpdatedAt: time.Now(),
+	})
+
 	json.NewEncoder(w).Encode(map[string]bool{"success": true})
 }
-

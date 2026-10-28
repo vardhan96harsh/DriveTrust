@@ -10,8 +10,8 @@ cd /d "%~dp0"
 echo [1/4] Checking and staging files...
 git add .
 
-echo [2/4] Creating initial commit...
-git commit -m "Initial commit: DriveTrust platform - Android apps, Go backend services, Next.js admin portal"
+echo [2/4] Creating commit...
+git commit -m "fix: resolve Xcode iOS missing paths, standalone dockers, and CI triggers"
 
 echo [3/4] Ensuring branch is 'main'...
 git branch -M main
@@ -23,14 +23,16 @@ if %ERRORLEVEL% EQU 0 (
     echo.
     echo ========================================================
     echo SUCCESS: Code successfully pushed to GitHub!
-    echo View repo at: https://github.com/vardhan96harsh/DriveTrust
+    echo Check GitHub Actions builds at:
+    echo https://github.com/vardhan96harsh/DriveTrust/actions
     echo ========================================================
 ) else (
     echo.
     echo ========================================================
-    echo If push was rejected because the remote has existing files:
-    echo Run: git pull origin main --rebase
-    echo Then run: git push -u origin main
+    echo Push encountered a conflict or error.
+    echo Trying: git pull origin main --rebase
+    git pull origin main --rebase
+    git push -u origin main
     echo ========================================================
 )
 

@@ -63,6 +63,11 @@ export interface CustomerTrip {
   driverProtectionInsurance: boolean; // ₹29 add-on
   fareEstimated: number;
   otp: string;
+  pickupCoords?: [number, number];
+  dropoffCoords?: [number, number];
+  zoneId?: string;
+  zoneName?: string;
+  rtoCode?: string;
   assignedDriver?: {
     id: string;
     name: string;
@@ -84,6 +89,11 @@ export interface CustomerTrip {
     right?: string;
   };
   finalOdometer?: number;
+  cancellationReason?: string;
+  cancelledBy?: "CUSTOMER" | "DRIVER" | "SUPER_ADMIN";
+  reassignedBy?: string;
+  reassignReason?: string;
+  adminOverrideNotes?: string;
   status:
     | "DRAFT"
     | "MATCHING"
@@ -318,4 +328,76 @@ export function getActiveDriverTrip(): CustomerTrip | undefined {
       t.status === "TRIP_ACTIVE"
   );
 }
+
+export function declineTripAsDriver(bookingId: string): void {
+  const trips = getCustomerTrips();
+  const trip = trips.find((t) => t.bookingId === bookingId);
+  if (!trip) return;
+  const updated: CustomerTrip = {
+    ...trip,
+    status: "CANCELLED",
+    cancelledBy: "DRIVER",
+    cancellationReason: "Chauffeur declined incoming assignment",
+  };
+  saveCustomerTrip(updated);
+}
+
+export function cancelTrip(
+  bookingId: string,
+  reason: string = "Customer requested cancellation",
+  cancelledBy: "CUSTOMER" | "DRIVER" | "SUPER_ADMIN" = "CUSTOMER"
+): CustomerTrip | null {
+  const trips = getCustomerTrips();
+  const trip = trips.find((t) => t.bookingId === bookingId);
+  if (!trip) return null;
+  const updated: CustomerTrip = {
+    ...trip,
+    status: "CANCELLED",
+    cancelledBy,
+    cancellationReason: reason,
+  };
+  saveCustomerTrip(updated);
+  return updated;
+}
+
+export function superAdminReassignTrip(
+  bookingId: string,
+  newDriver: CustomerTrip["assignedDriver"],
+  adminName: string = "Harsh (Super Admin)",
+  reason: string = "Chauffeur reassignment requested by customer"
+): CustomerTrip | null {
+  const trips = getCustomerTrips();
+  const trip = trips.find((t) => t.bookingId === bookingId);
+  if (!trip) return null;
+  const updated: CustomerTrip = {
+    ...trip,
+    assignedDriver: newDriver,
+    status: "DRIVER_ASSIGNED",
+    reassignedBy: adminName,
+    reassignReason: reason,
+    adminOverrideNotes: `Chauffeur manually reassigned to ${newDriver?.name} (${newDriver?.rtoCode}) by ${adminName} on ${new Date().toISOString()}`,
+  };
+  saveCustomerTrip(updated);
+  return updated;
+}
+
+export function superAdminUpdateTrip(
+  bookingId: string,
+  updates: Partial<CustomerTrip>,
+  adminName: string = "Harsh (Super Admin)"
+): CustomerTrip | null {
+  const trips = getCustomerTrips();
+  const trip = trips.find((t) => t.bookingId === bookingId);
+  if (!trip) return null;
+  const updated: CustomerTrip = {
+    ...trip,
+    ...updates,
+    bookingId, // preserve original booking ID
+    adminOverrideNotes: `Trip parameters modified by ${adminName} on ${new Date().toISOString()}`,
+  };
+  saveCustomerTrip(updated);
+  return updated;
+}
+
+
 

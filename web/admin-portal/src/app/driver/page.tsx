@@ -43,15 +43,19 @@ import {
   CustomerTrip,
   getCustomerTrips,
   acceptTripAsDriver,
+  declineTripAsDriver,
   markDriverArrivedAtPickup,
   startTripWithOtp,
   completeTripAsDriver,
   saveCustomerTrip,
 } from "@/lib/customerBookingStore";
+import { getRegions, Region, isPointInPolygon } from "@/lib/regionStore";
 
 export default function DriverPartnerCockpitPage() {
-  // Duty Status
+  // Duty Status & Operating Zone
   const [isOnline, setIsOnline] = useState(true);
+  const [availableZones, setAvailableZones] = useState<Region[]>([]);
+  const [selectedZoneId, setSelectedZoneId] = useState<string>("zone-vidisha");
   const [activeTab, setActiveTab] = useState<"DUTY" | "WALLET" | "SCORECARD">("DUTY");
 
   // Active Trip State
@@ -122,10 +126,23 @@ export default function DriverPartnerCockpitPage() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
+  // Initialize regions
+  useEffect(() => {
+    const regions = getRegions();
+    setAvailableZones(regions);
+    if (regions.length > 0 && !regions.some((r) => r.id === selectedZoneId)) {
+      setSelectedZoneId(regions[0].id);
+    }
+  }, []);
+
   // Check for trips from storage or custom event
   const refreshTrips = () => {
+    if (!isOnline) {
+      setIncomingTrip(null);
+      return;
+    }
+
     const all = getCustomerTrips();
-    const matching = all.find((t) => t.status === "MATCHING");
     const active = all.find(
       (t) =>
         t.status === "DRIVER_ASSIGNED" ||
@@ -137,7 +154,22 @@ export default function DriverPartnerCockpitPage() {
     if (active) {
       setActiveTrip(active);
       setIncomingTrip(null);
-    } else if (matching) {
+      return;
+    }
+
+    const matching = all.find((t) => {
+      if (t.status !== "MATCHING") return false;
+      if (selectedZoneId === "ALL") return true;
+      if (t.zoneId && t.zoneId === selectedZoneId) return true;
+      if (t.pickupCoords && availableZones.length > 0) {
+        const zone = availableZones.find((z) => z.id === selectedZoneId);
+        if (zone && isPointInPolygon(t.pickupCoords, zone.polygonCoords)) return true;
+      }
+      if (!t.zoneId && !t.pickupCoords) return true;
+      return false;
+    });
+
+    if (matching) {
       setIncomingTrip(matching);
       setActiveTrip(null);
     } else {
@@ -159,7 +191,7 @@ export default function DriverPartnerCockpitPage() {
       window.removeEventListener("storage", handleUpdate);
       window.removeEventListener("dt_trip_updated", handleUpdate);
     };
-  }, []);
+  }, [isOnline, selectedZoneId, availableZones]);
 
   // Countdown timer for incoming trip alert
   useEffect(() => {
@@ -168,6 +200,7 @@ export default function DriverPartnerCockpitPage() {
       setIncomingCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
+          declineTripAsDriver(incomingTrip.bookingId);
           setIncomingTrip(null);
           return 30;
         }
@@ -198,6 +231,9 @@ export default function DriverPartnerCockpitPage() {
   };
 
   const handleDeclineRide = () => {
+    if (incomingTrip) {
+      declineTripAsDriver(incomingTrip.bookingId);
+    }
     setIncomingTrip(null);
     showToast("Request dismissed. Radar continuing search.");
   };
@@ -266,6 +302,7 @@ export default function DriverPartnerCockpitPage() {
   };
 
   const handleSimulateIncoming = () => {
+    const activeZoneObj = availableZones.find((z) => z.id === selectedZoneId) || availableZones[0];
     const mockTrip: CustomerTrip = {
       bookingId: `BK-EXEC-${Math.floor(1000 + Math.random() * 9000)}`,
       serviceMode: "CITY_POINT",
@@ -291,6 +328,11 @@ export default function DriverPartnerCockpitPage() {
       status: "MATCHING",
       createdAt: new Date().toISOString(),
       trackingToken: "track-exec",
+      zoneId: activeZoneObj?.id || "zone-vidisha",
+      zoneName: activeZoneObj?.name || "Vidisha Urban Cluster",
+      rtoCode: activeZoneObj?.rtoCode || "MP-40",
+      pickupCoords: [23.5255, 77.818],
+      dropoffCoords: [23.531, 77.811],
     };
     saveCustomerTrip(mockTrip);
     setIncomingTrip(mockTrip);
@@ -339,8 +381,8 @@ export default function DriverPartnerCockpitPage() {
       {/* Luxury Chauffeur App Bar */}
       <header className="sticky top-0 z-40 bg-[#0B0F19]/90 border-b border-slate-800/80 backdrop-blur-xl px-4 py-3 shadow-md">
         <div className="max-w-md mx-auto flex items-center justify-between">
-          {/* Driver Avatar & Verified Status */}
-          <div className="flex items-center gap-3">
+          {/* Driver Avatar & Verified Status (Links to Digital ID Profile) */}
+          <Link href="/driver/profile" className="flex items-center gap-3 hover:opacity-90 transition">
             <div className="relative">
               <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-slate-800 to-slate-700 border border-slate-600 flex items-center justify-center font-bold text-white text-sm shadow-inner">
                 RS
@@ -369,7 +411,7 @@ export default function DriverPartnerCockpitPage() {
                 <span>Vidisha Hub MP-40</span>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Luxury Tactile Duty Switch */}
           <button
@@ -390,6 +432,31 @@ export default function DriverPartnerCockpitPage() {
             />
             <span>{isOnline ? "ON DUTY" : "OFF DUTY"}</span>
           </button>
+        </div>
+
+        {/* Operating Zone Patrol Selector */}
+        <div className="max-w-md mx-auto mt-2.5 pt-2 border-t border-slate-800/70 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-1.5 text-slate-400">
+            <Compass className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="text-[11px] font-mono text-slate-300">Operating Zone:</span>
+          </div>
+          <select
+            value={selectedZoneId}
+            onChange={(e) => {
+              setSelectedZoneId(e.target.value);
+              showToast(`Operating zone filtered to ${e.target.options[e.target.selectedIndex].text}`);
+            }}
+            className="bg-slate-900 border border-slate-700 text-emerald-400 text-xs font-semibold rounded-lg px-2.5 py-1 outline-none cursor-pointer hover:border-emerald-500/50 transition max-w-[210px] truncate"
+          >
+            {availableZones.map((z) => (
+              <option key={z.id} value={z.id} className="bg-slate-900 text-white">
+                {z.name} ({z.rtoCode}) {z.isActive ? "• Active" : "• Offline"}
+              </option>
+            ))}
+            <option value="ALL" className="bg-slate-900 text-white">
+              All Active Zones (Fleet Dispatch)
+            </option>
+          </select>
         </div>
 
         {/* Segmented Luxury Tab Selector */}
@@ -646,9 +713,17 @@ export default function DriverPartnerCockpitPage() {
                     <p className="text-xs text-slate-300 font-bold mt-1">
                       {incomingTrip.vehicle.brand} {incomingTrip.vehicle.model}
                     </p>
-                    <span className="inline-block mt-1 bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] font-bold px-2 py-0.5 rounded">
-                      {incomingTrip.vehicle.transmission} TRANSMISSION
-                    </span>
+                    <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                      <span className="inline-block bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] font-bold px-2 py-0.5 rounded">
+                        {incomingTrip.vehicle.transmission} TRANSMISSION
+                      </span>
+                      {incomingTrip.zoneName && (
+                        <span className="inline-flex items-center gap-1 bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded">
+                          <MapPin className="w-2.5 h-2.5 text-emerald-400" />
+                          {incomingTrip.zoneName} ({incomingTrip.rtoCode || "RTO"})
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   <div className="text-right">
@@ -1020,30 +1095,46 @@ export default function DriverPartnerCockpitPage() {
         )}
       </main>
 
-      {/* Persistent Bottom Bar */}
+      {/* Persistent Bottom Bar with Full Driver Ecosystem Navigation */}
       <footer className="fixed bottom-0 left-0 right-0 bg-[#0B0F19]/95 border-t border-slate-800/90 py-2.5 px-4 z-40 backdrop-blur-md">
         <div className="max-w-md mx-auto flex items-center justify-between text-xs">
+          <Link
+            href="/driver"
+            className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition font-bold"
+          >
+            <Gauge className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Cockpit</span>
+          </Link>
+          <span className="text-slate-800">|</span>
+          <Link
+            href="/driver/profile"
+            className="flex items-center gap-1.5 text-slate-400 hover:text-white transition font-medium"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Digital ID</span>
+          </Link>
+          <span className="text-slate-800">|</span>
+          <Link
+            href="/driver/register"
+            className="flex items-center gap-1.5 text-slate-400 hover:text-white transition font-medium"
+          >
+            <User className="w-3.5 h-3.5 text-blue-400" />
+            <span>Join Hub</span>
+          </Link>
+          <span className="text-slate-800">|</span>
           <Link
             href="/book"
             className="flex items-center gap-1.5 text-slate-400 hover:text-white transition font-medium"
           >
-            <Car className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Customer App</span>
+            <Car className="w-3.5 h-3.5 text-amber-400" />
+            <span>Customer</span>
           </Link>
-          <span className="text-slate-700">|</span>
-          <Link
-            href="/live-map"
-            className="flex items-center gap-1.5 text-slate-400 hover:text-white transition font-medium"
-          >
-            <Navigation className="w-3.5 h-3.5 text-blue-400" />
-            <span>Fleet Radar</span>
-          </Link>
-          <span className="text-slate-700">|</span>
+          <span className="text-slate-800">|</span>
           <Link
             href="/"
-            className="flex items-center gap-1.5 text-slate-400 hover:text-white transition font-medium"
+            className="flex items-center gap-1 text-slate-400 hover:text-white transition font-medium"
           >
-            <span>Admin Tower</span>
+            <span>Admin ↗</span>
           </Link>
         </div>
       </footer>

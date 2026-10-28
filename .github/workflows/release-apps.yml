@@ -3,6 +3,8 @@ name: Mobile Apps Build & Release Pipeline
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     tags:
       - 'v*.*.*'
 
@@ -60,5 +62,12 @@ jobs:
             -scheme DriveTrustCustomer \
             -destination 'generic/platform=iOS Simulator' \
             -configuration Release \
+            -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             build
+
+      - name: Upload iOS App Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-customer-app
+          path: apps/customer-ios/build/Build/Products/Release-iphonesimulator/DriveTrustCustomer.app

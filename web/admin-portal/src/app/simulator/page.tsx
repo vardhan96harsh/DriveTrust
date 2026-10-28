@@ -79,7 +79,7 @@ type StepState =
   | "IN_PROGRESS"
   | "COMPLETED";
 
-type ViewMode = "SPLIT" | "CUSTOMER" | "DRIVER";
+type ViewMode = "SPLIT" | "CUSTOMER" | "DRIVER" | "SUPER_ADMIN";
 type CityPreset = "VIDISHA" | "BHOPAL" | "BHOPAL_VIDISHA" | "BANGALORE";
 
 export default function GuidedSimulatorPage() {
@@ -740,6 +740,17 @@ export default function GuidedSimulatorPage() {
               }`}
             >
               Driver
+            </button>
+            <button
+              onClick={() => setViewMode("SUPER_ADMIN")}
+              className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1 ${
+                viewMode === "SUPER_ADMIN"
+                  ? "bg-slate-900 text-white shadow-xs font-bold"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <ShieldCheck className="w-3 h-3 text-emerald-500" />
+              <span>Super Admin</span>
             </button>
           </div>
 
@@ -2209,6 +2220,205 @@ export default function GuidedSimulatorPage() {
           </div>
         )}
       </div>
+
+      {/* ============================================================== */}
+      {/* 3. SUPER ADMIN COMMAND & MISSION CONTROL STATION               */}
+      {/* ============================================================== */}
+      {viewMode === "SUPER_ADMIN" && (
+        <div className="w-full max-w-4xl mx-auto rounded-3xl bg-slate-900 border border-slate-800 text-white p-6 shadow-2xl space-y-6 animate-in fade-in duration-200">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-black text-white tracking-tight">Super Admin Mission Control</h2>
+                  <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    RBAC LEVEL 0: ROOT
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Authenticated as <strong>Harsh (Founder &amp; Super Admin)</strong> • admin@sathi.in
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Link
+                href="/regions"
+                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition"
+              >
+                Geofence Studio ↗
+              </Link>
+              <Link
+                href="/pricing"
+                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition"
+              >
+                Tariff Engine ↗
+              </Link>
+              <Link
+                href="/"
+                className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition shadow-sm"
+              >
+                Full Admin Console ↗
+              </Link>
+            </div>
+          </div>
+
+          {/* Quick Metrics Bar */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div className="p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/80">
+              <span className="text-[10px] text-slate-400 uppercase font-bold font-mono">Commission Split</span>
+              <div className="text-xl font-black text-white mt-1 font-mono">80% / 20%</div>
+              <span className="text-[10px] text-emerald-400 font-semibold">Chauffeur Guarantee</span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/80">
+              <span className="text-[10px] text-slate-400 uppercase font-bold font-mono">Active Hubs</span>
+              <div className="text-xl font-black text-emerald-400 mt-1 font-mono">2 Live</div>
+              <span className="text-[10px] text-slate-400">Vidisha &amp; Bhopal</span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/80">
+              <span className="text-[10px] text-slate-400 uppercase font-bold font-mono">MoRTH Compliance</span>
+              <div className="text-xl font-black text-white mt-1 font-mono">100% Verified</div>
+              <span className="text-[10px] text-emerald-400 font-semibold">Sarathi Digilocker Sync</span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/80">
+              <span className="text-[10px] text-slate-400 uppercase font-mono font-bold">Trip State</span>
+              <div className="text-base font-black text-amber-400 mt-1 font-mono">{tripState}</div>
+              <span className="text-[10px] text-slate-400">Ref: {bookingCode}</span>
+            </div>
+          </div>
+
+          {/* Core Super Admin Pillars */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            {/* Pillar 1: Regional Geofence & Hub Leads */}
+            <div className="p-4 rounded-2xl bg-slate-800/40 border border-slate-700/80 space-y-3">
+              <div className="flex items-center justify-between border-b border-slate-700/60 pb-2">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-emerald-400" />
+                  <span className="font-bold text-white">Operating Zones &amp; Hub Managers</span>
+                </div>
+                <span className="text-[10px] text-slate-400 font-mono">KML Polygon Layer</span>
+              </div>
+              <div className="space-y-2">
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-white flex items-center gap-1.5">
+                      <span>Vidisha Hub (MP-40)</span>
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    </div>
+                    <div className="text-[10px] text-slate-400">Hub Lead: Ankit Sharma (ankit.mp40@sathi.in)</div>
+                  </div>
+                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                    Operational
+                  </span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-white flex items-center gap-1.5">
+                      <span>Bhopal Hub (MP-04)</span>
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    </div>
+                    <div className="text-[10px] text-slate-400">Hub Lead: Sunita Patel (sunita.mp04@sathi.in)</div>
+                  </div>
+                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                    Operational
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 2: Dynamic Tariff Authority Lock */}
+            <div className="p-4 rounded-2xl bg-slate-800/40 border border-slate-700/80 space-y-3">
+              <div className="flex items-center justify-between border-b border-slate-700/60 pb-2">
+                <div className="flex items-center gap-2">
+                  <Key className="w-4 h-4 text-amber-400" />
+                  <span className="font-bold text-white">Dynamic Tariff Authority Lock</span>
+                </div>
+                <span className="text-[10px] text-amber-300 font-mono bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">
+                  Super Admin Only
+                </span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-700/80 space-y-1.5">
+                <div className="flex justify-between text-slate-300">
+                  <span>Current Booking Total:</span>
+                  <span className="font-mono font-bold text-white">₹{fare}.00</span>
+                </div>
+                <div className="flex justify-between text-slate-400 text-[11px]">
+                  <span>Platform Commission (20%):</span>
+                  <span className="font-mono text-emerald-400">₹{Math.round(fare * 0.2)}.00</span>
+                </div>
+                <div className="flex justify-between text-slate-400 text-[11px]">
+                  <span>Chauffeur Share (80%):</span>
+                  <span className="font-mono text-emerald-400">₹{Math.round(fare * 0.8)}.00</span>
+                </div>
+                <div className="flex justify-between text-slate-400 text-[11px]">
+                  <span>GST Applicable (5%):</span>
+                  <span className="font-mono text-slate-300">₹{Math.round(fare * 0.05)}.00</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 3: Driver KYC & MoRTH Sarathi Audit */}
+            <div className="p-4 rounded-2xl bg-slate-800/40 border border-slate-700/80 space-y-3">
+              <div className="flex items-center justify-between border-b border-slate-700/60 pb-2">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-blue-400" />
+                  <span className="font-bold text-white">MoRTH Sarathi DL Audit</span>
+                </div>
+                <span className="text-[10px] text-blue-400 font-mono">National Register</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-between">
+                <div>
+                  <div className="font-bold text-white">{driverName}</div>
+                  <div className="text-[10px] text-slate-400 font-mono">DL: {driverDl}</div>
+                  <div className="text-[10px] text-emerald-400 font-semibold mt-0.5">
+                    Endorsement: {transmission === "MANUAL" ? "MANUAL (Class LMV-TR)" : "AUTOMATIC & MANUAL"}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded">
+                    KYC APPROVED
+                  </span>
+                  <div className="text-[10px] text-slate-400 font-mono mt-1">Police Clearance ✓</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 4: Live Fleet Telematics & Safety Desk */}
+            <div className="p-4 rounded-2xl bg-slate-800/40 border border-slate-700/80 space-y-3">
+              <div className="flex items-center justify-between border-b border-slate-700/60 pb-2">
+                <div className="flex items-center gap-2">
+                  <Compass className="w-4 h-4 text-emerald-400" />
+                  <span className="font-bold text-white">Live Vehicle Telemetry &amp; SOS</span>
+                </div>
+                <span className="text-[10px] text-slate-400 font-mono">SH-19 Corridor</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-between">
+                <div>
+                  <div className="font-bold text-white">{carModel} ({carPlate})</div>
+                  <div className="text-[10px] text-slate-400">
+                    Live Speed: <strong className="text-white font-mono">{speed} km/h</strong> • IMU: <strong className="text-emerald-400 font-mono">{gForce.toFixed(2)}g</strong>
+                  </div>
+                </div>
+                <div className="text-right">
+                  {showSOS ? (
+                    <span className="bg-red-500 text-white font-bold text-[10px] px-2 py-0.5 rounded animate-pulse">
+                      SOS BROADCAST ACTIVE
+                    </span>
+                  ) : (
+                    <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded">
+                      ALL TELEMETRY NORMAL
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* CUSTOMIZE ORIGINAL DATA MODAL */}
       {showConfigModal && (

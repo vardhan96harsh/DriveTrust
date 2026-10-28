@@ -1,0 +1,67 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "drivetrust.fullname" . }}-ingress
+  labels:
+    {{- include "drivetrust.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+    nginx.ingress.kubernetes.io/websocket-services: "{{ include "drivetrust.fullname" . }}-api-gateway"
+spec:
+  tls:
+    - hosts:
+        - api.drivetrust.in
+        - admin.drivetrust.in
+      secretName: drivetrust-tls-cert
+  rules:
+    - host: api.drivetrust.in
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "drivetrust.fullname" . }}-api-gateway
+                port:
+                  number: 80
+    - host: admin.drivetrust.in
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "drivetrust.fullname" . }}-admin-portal
+                port:
+                  number: 3000
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "drivetrust.fullname" . }}-gateway-hpa
+  labels:
+    {{- include "drivetrust.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "drivetrust.fullname" . }}-api-gateway
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+

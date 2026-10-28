@@ -55,37 +55,24 @@ interface NavItem {
 
 interface NavSection {
   title: string;
+  isCollapsible?: boolean;
   items: NavItem[];
 }
 
 const NAV_SECTIONS: NavSection[] = [
   {
-    title: "Daily Operations & Trips",
+    title: "⭐ Launch Operations (Vidisha Hub)",
     items: [
       {
         href: "/",
         label: "Dashboard",
-        sublabel: "Live metrics & duty alerts",
-        icon: <LayoutDashboard className="w-4 h-4" />,
+        sublabel: "Launch metrics & live fleet",
+        icon: <LayoutDashboard className="w-4 h-4 text-blue-600" />,
         keywords: ["home", "kpi", "overview", "metrics", "stats", "executive dashboard"],
       },
       {
-        href: "/live-map",
-        label: "Live Map & Tracking",
-        sublabel: "Real-time fleet GPS radar",
-        icon: <Compass className="w-4 h-4 text-emerald-600" />,
-        keywords: ["map", "radar", "fleet", "gps", "drivers", "live fleet radar", "tracking"],
-      },
-      {
-        href: "/concierge",
-        label: "Book by Phone (Call Center)",
-        sublabel: "Create offline ride for callers",
-        icon: <PhoneCall className="w-4 h-4 text-blue-600" />,
-        keywords: ["booking", "call", "offline", "phone", "create", "concierge", "phone concierge"],
-      },
-      {
         href: "/trips",
-        label: "Live Dispatch & Trips Console",
+        label: "Live Dispatch & Trips",
         sublabel: "Active rides, OTPs & reassign",
         icon: <Car className="w-4 h-4 text-amber-500" />,
         badge: "DISPATCH",
@@ -93,163 +80,189 @@ const NAV_SECTIONS: NavSection[] = [
         keywords: ["trips", "dispatch", "active", "bookings", "rides", "reassign", "otp", "console"],
       },
       {
-        href: "/book",
-        label: "Customer Booking Portal",
-        sublabel: "Test customer web app flow",
-        icon: <Car className="w-4 h-4 text-slate-700" />,
-        keywords: ["customer", "book", "garage", "packages", "ride", "user", "web app"],
+        href: "/drivers",
+        label: "Chauffeur Roster",
+        sublabel: "Approved drivers & duty",
+        icon: <UserCheck className="w-4 h-4 text-emerald-600" />,
+        keywords: ["drivers", "chauffeurs", "fleet", "staff", "chauffeur roster"],
       },
       {
-        href: "/driver",
-        label: "Driver Duty App",
-        sublabel: "Test chauffeur cockpit",
-        icon: <Smartphone className="w-4 h-4 text-slate-700" />,
-        keywords: ["driver", "partner", "chauffeur", "cockpit", "duty", "wallet", "app"],
+        href: "/kyc",
+        label: "MoRTH Sarathi License KYC",
+        sublabel: "Driver verification vault",
+        icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />,
+        badge: "VERIFY",
+        badgeColor: "bg-emerald-500/10 text-emerald-700 border border-emerald-300 font-semibold",
+        keywords: ["license", "aadhaar", "driver verification", "dl", "morth", "sarathi", "kyc"],
       },
       {
-        href: "/install",
-        label: "Download Apps (QR / APK)",
-        sublabel: "Mobile APK & scan to test",
-        icon: <Download className="w-4 h-4 text-slate-700" />,
-        keywords: ["install", "mobile", "qr", "phone", "apk", "pwa", "customer", "driver", "apps"],
+        href: "/customers",
+        label: "Customers & Garages",
+        sublabel: "Client accounts & cars",
+        icon: <Users className="w-4 h-4 text-slate-700" />,
+        keywords: ["users", "passengers", "cars", "vehicles", "garage"],
       },
-    ],
-  },
-  {
-    title: "Safety, Police & Fleet",
-    items: [
+      {
+        href: "/pricing",
+        label: "Fares & Pricing Matrix",
+        sublabel: "Vidisha rate matrix & tariffs",
+        icon: <CreditCard className="w-4 h-4 text-slate-700" />,
+        keywords: ["rates", "fares", "per km", "night charge", "pricing zone matrix", "tariffs"],
+      },
+      {
+        href: "/regions",
+        label: "Vidisha Launch Geofence",
+        sublabel: "MP-40 boundary enforcement",
+        icon: <Compass className="w-4 h-4 text-blue-600" />,
+        badge: "MP-40",
+        badgeColor: "bg-blue-500/10 text-blue-700 border border-blue-300 font-bold",
+        keywords: ["zone", "region", "vidisha", "bhopal", "geofence", "kml", "polygon", "operating zones"],
+      },
       {
         href: "/emergency",
-        label: "Emergency SOS Alerts (112)",
-        sublabel: "National Police ERSS desk",
+        label: "Police 112 SOS Desk",
+        sublabel: "National Police ERSS link",
         icon: <AlertOctagon className="w-4 h-4 text-rose-600" />,
         badge: "LIVE 112",
         badgeColor: "bg-rose-600 text-white font-bold animate-pulse",
         keywords: ["emergency", "police", "alarm", "danger", "sos", "24/7 sos incident desk"],
       },
+    ],
+  },
+  {
+    title: "📱 Client & Driver Live Apps",
+    items: [
+      {
+        href: "/book",
+        label: "Customer Booking Portal",
+        sublabel: "Passenger ride booking app",
+        icon: <Car className="w-4 h-4 text-blue-600" />,
+        keywords: ["customer", "book", "garage", "packages", "ride", "user", "web app"],
+      },
+      {
+        href: "/customer",
+        label: "Customer Sathi Pass",
+        sublabel: "Client garage & permanent PIN",
+        icon: <Sparkles className="w-4 h-4 text-amber-500" />,
+        keywords: ["customer", "garage", "pin", "pass", "profile"],
+      },
+      {
+        href: "/driver",
+        label: "Driver Duty Cockpit",
+        sublabel: "Live chauffeur radar & meter",
+        icon: <Smartphone className="w-4 h-4 text-emerald-600" />,
+        keywords: ["driver", "partner", "chauffeur", "cockpit", "duty", "wallet", "app"],
+      },
+      {
+        href: "/driver/profile",
+        label: "Driver Digital ID",
+        sublabel: "MoRTH Sarathi badge card",
+        icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />,
+        keywords: ["driver", "id", "morth", "badge", "license", "credentials"],
+      },
+    ],
+  },
+  {
+    title: "📂 Advanced Operations (Future Rollout)",
+    isCollapsible: true,
+    items: [
+      {
+        href: "/live-map",
+        label: "Live GPS Map Radar",
+        sublabel: "Real-time street map tracking",
+        icon: <Compass className="w-4 h-4 text-emerald-600" />,
+        keywords: ["map", "radar", "fleet", "gps", "drivers", "live fleet radar", "tracking"],
+      },
+      {
+        href: "/concierge",
+        label: "Phone Concierge (Call Center)",
+        sublabel: "Offline phone bookings",
+        icon: <PhoneCall className="w-4 h-4 text-blue-600" />,
+        keywords: ["booking", "call", "offline", "phone", "create", "concierge", "phone concierge"],
+      },
       {
         href: "/telematics",
-        label: "Driver Safety & Speeding",
-        sublabel: "Telematics & rash driving score",
+        label: "Driver Telematics & G-Sensor",
+        sublabel: "Harsh braking & speeding score",
         icon: <Gauge className="w-4 h-4 text-indigo-600" />,
         keywords: ["driving", "speeding", "braking", "safety", "score", "telematics", "rash driving"],
       },
       {
         href: "/inspections",
-        label: "Vehicle Photo Inspection",
-        sublabel: "Pre-trip 4-point handover audit",
+        label: "360° Photo Inspections",
+        sublabel: "Pre-trip vehicle condition audit",
         icon: <Camera className="w-4 h-4 text-amber-600" />,
         keywords: ["dent", "scratch", "photos", "odometer", "fuel", "vehicle 360 audits", "inspection"],
       },
       {
-        href: "/kyc",
-        label: "Driver License Check (KYC)",
-        sublabel: "MoRTH Sarathi verification",
-        icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />,
-        keywords: ["license", "aadhaar", "driver verification", "dl", "morth", "sarathi", "kyc"],
-      },
-      {
-        href: "/regions",
-        label: "Service Cities & Zones",
-        sublabel: "Vidisha & Bhopal geofences",
-        icon: <Compass className="w-4 h-4 text-slate-700" />,
-        keywords: ["zone", "region", "vidisha", "bhopal", "geofence", "kml", "polygon", "operating zones"],
-      },
-      {
         href: "/fleet",
-        label: "Vehicle Fleet & Insurance Registry",
-        sublabel: "Client cars & ₹10L transit cover",
+        label: "Client Fleet & ₹10L Cover",
+        sublabel: "Transit insurance policy registry",
         icon: <ShieldAlert className="w-4 h-4 text-emerald-600" />,
-        badge: "₹10L COVER",
-        badgeColor: "bg-emerald-500/10 text-emerald-700 border border-emerald-300 font-semibold",
-        keywords: ["fleet", "vehicles", "cars", "insurance", "transmission", "automatic", "manual", "sedan", "suv"],
-      },
-    ],
-  },
-  {
-    title: "Drivers & Customers",
-    items: [
-      {
-        href: "/drivers",
-        label: "Drivers List",
-        sublabel: "Approved chauffeurs roster",
-        icon: <UserCheck className="w-4 h-4 text-slate-700" />,
-        keywords: ["drivers", "chauffeurs", "fleet", "staff", "chauffeur roster"],
-      },
-      {
-        href: "/customers",
-        label: "Customers & Cars",
-        sublabel: "Client accounts & garages",
-        icon: <Users className="w-4 h-4 text-slate-700" />,
-        keywords: ["users", "passengers", "cars", "vehicles", "garage"],
+        keywords: ["fleet", "vehicles", "cars", "insurance", "transmission", "automatic", "manual"],
       },
       {
         href: "/corporate",
-        label: "Corporate & Hotel Clients (B2B)",
-        sublabel: "Hotel retainers & 18% GST",
+        label: "Corporate & Hotel Retainers",
+        sublabel: "B2B client contracts & GST billing",
         icon: <Briefcase className="w-4 h-4 text-blue-600" />,
         keywords: ["hotel", "resort", "retainer", "monthly", "gstin", "b2b", "corporate"],
       },
-    ],
-  },
-  {
-    title: "Finance & Management",
-    items: [
       {
         href: "/payouts",
-        label: "Driver Payouts & Earnings",
-        sublabel: "Bank IMPS & commission",
+        label: "Driver Payouts (IMPS)",
+        sublabel: "Bank settlements & net revenue",
         icon: <Wallet className="w-4 h-4 text-emerald-600" />,
         keywords: ["wallet", "nach", "bank", "imps", "commission", "driver settlements", "payouts"],
       },
       {
         href: "/disputes",
-        label: "Complaints & Refunds",
-        sublabel: "Dispute tickets & settlements",
+        label: "Complaints & Lost Items",
+        sublabel: "Ticket resolutions & refunds",
         icon: <MessageSquare className="w-4 h-4 text-rose-500" />,
         keywords: ["refund", "complaint", "lost item", "ticket", "disputes", "grievances"],
       },
       {
         href: "/marketing",
-        label: "Coupons & Promo Codes",
-        sublabel: "Discounts & loyalty codes",
+        label: "Coupons & Promos",
+        sublabel: "Discounts & promotional codes",
         icon: <Megaphone className="w-4 h-4 text-violet-500" />,
         keywords: ["coupon", "discount", "broadcast", "push", "marketing", "promos"],
       },
       {
         href: "/broadcast",
-        label: "Push Broadcast Dispatcher",
-        sublabel: "Fleet-wide alerts & incentives",
+        label: "Fleet Push Broadcast",
+        sublabel: "Weather & incentive announcements",
         icon: <Radio className="w-4 h-4 text-rose-500" />,
         keywords: ["broadcast", "alert", "announcement", "push notification", "incentive", "weather"],
       },
       {
         href: "/analytics",
-        label: "Missed Rides & Area Demand",
-        sublabel: "Unfulfilled demand heatmap",
+        label: "Demand & Zero-Car Drops",
+        sublabel: "Unmet customer demand heatmap",
         icon: <BarChart2 className="w-4 h-4 text-indigo-500" />,
         keywords: ["heatmap", "lost bookings", "unfulfilled", "recruitment", "zero-car drops", "demand"],
       },
       {
-        href: "/pricing",
-        label: "Fares & Rates (Pricing)",
-        sublabel: "Rate cards, night surge & per km",
-        icon: <CreditCard className="w-4 h-4 text-slate-700" />,
-        keywords: ["rates", "fares", "per km", "night charge", "pricing zone matrix", "tariffs"],
-      },
-      {
         href: "/reports",
-        label: "Download Reports (Excel/CSV)",
-        sublabel: "Excel/CSV data backups",
+        label: "Download Excel/CSV Reports",
+        sublabel: "Audit ledger data exports",
         icon: <Download className="w-4 h-4 text-slate-700" />,
         keywords: ["download", "csv", "excel", "backup", "gst", "reports"],
       },
       {
         href: "/audit",
-        label: "Admin Staff & Activity History",
-        sublabel: "RBAC security audit logs",
+        label: "Staff RBAC & Audit Trail",
+        sublabel: "Admin action security history",
         icon: <Shield className="w-4 h-4 text-slate-700" />,
         keywords: ["roles", "logs", "security", "permissions", "history", "rbac", "audit trail"],
+      },
+      {
+        href: "/simulator",
+        label: "End-to-End Sandbox Simulator",
+        sublabel: "Test trips, SOS & dispatch",
+        icon: <Sparkles className="w-4 h-4 text-amber-500" />,
+        keywords: ["simulator", "testing", "sandbox", "test trip"],
       },
     ],
   },
@@ -264,6 +277,14 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isCurrentPathInAdvanced = NAV_SECTIONS.find((s) => s.isCollapsible)?.items.some((i) => i.href === pathname);
+  const [showAdvancedOps, setShowAdvancedOps] = useState(false);
+
+  useEffect(() => {
+    if (isCurrentPathInAdvanced) {
+      setShowAdvancedOps(true);
+    }
+  }, [isCurrentPathInAdvanced]);
 
   // Authentication check & session listener
   useEffect(() => {
@@ -374,6 +395,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         {/* Action Shortcuts & User Profile */}
         <div className="flex items-center gap-2.5">
+          {/* Phase 1 Launch City Indicator */}
+          <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50/90 border border-blue-200/90 text-blue-950 text-xs font-bold">
+            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+            <span>Launch Hub: <strong>Vidisha (MP-40)</strong></span>
+          </div>
+
           {/* Platform Guide Trigger */}
           <button
             onClick={() => setIsGuideOpen(true)}
@@ -434,62 +461,82 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       {/* Main Container */}
       <div className="flex-1 flex overflow-hidden">
         {/* Desktop Left Sidebar */}
-        <aside className="w-64 bg-white/95 border-r border-slate-200/80 p-3.5 hidden lg:flex flex-col gap-6 overflow-y-auto select-none shrink-0 shadow-2xs">
-          {NAV_SECTIONS.map((section, idx) => (
-            <div key={idx}>
-              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2 font-mono">
-                {section.title}
-              </div>
-              <nav className="flex flex-col gap-1">
-                {section.items.map((item) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`px-3 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2.5 ${
-                        isActive
-                          ? "bg-slate-900 text-white font-semibold shadow-xs"
-                          : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
-                      }`}
-                    >
-                      <span className={isActive ? "text-white" : "text-slate-500"}>
-                        {item.icon}
-                      </span>
-                      <div className="truncate flex-1">
-                        <div className="truncate font-semibold">{item.label}</div>
-                        {item.sublabel && (
-                          <div className={`text-[10px] truncate ${isActive ? "text-slate-300" : "text-slate-400 font-normal"}`}>
-                            {item.sublabel}
-                          </div>
-                        )}
-                      </div>
-                      {item.badge && (
-                        <span
-                          className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-bold font-mono shrink-0 ${
+        <aside className="w-64 bg-white/95 border-r border-slate-200/80 p-3.5 hidden lg:flex flex-col gap-5 overflow-y-auto select-none shrink-0 shadow-2xs">
+          {NAV_SECTIONS.map((section, idx) => {
+            const isCollapsible = section.isCollapsible;
+            const isOpen = !isCollapsible || showAdvancedOps;
+
+            return (
+              <div key={idx} className={isCollapsible ? "pt-2 border-t border-slate-100" : ""}>
+                {isCollapsible ? (
+                  <button
+                    onClick={() => setShowAdvancedOps(!showAdvancedOps)}
+                    className="w-full flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-slate-900 px-3 py-1 mb-1 font-mono rounded-lg hover:bg-slate-50 transition cursor-pointer"
+                  >
+                    <span>{section.title}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold">
+                      {showAdvancedOps ? "− Hide" : `+ Show (${section.items.length})`}
+                    </span>
+                  </button>
+                ) : (
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2 font-mono">
+                    {section.title}
+                  </div>
+                )}
+
+                {isOpen && (
+                  <nav className="flex flex-col gap-1">
+                    {section.items.map((item) => {
+                      const isActive = pathname === item.href;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`px-3 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2.5 ${
                             isActive
-                              ? "bg-white/20 text-white"
-                              : item.badgeColor || "bg-slate-100 text-slate-700"
+                              ? "bg-slate-900 text-white font-semibold shadow-xs"
+                              : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
                           }`}
                         >
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-          ))}
+                          <span className={isActive ? "text-white" : "text-slate-500"}>
+                            {item.icon}
+                          </span>
+                          <div className="truncate flex-1">
+                            <div className="truncate font-semibold">{item.label}</div>
+                            {item.sublabel && (
+                              <div className={`text-[10px] truncate ${isActive ? "text-slate-300" : "text-slate-400 font-normal"}`}>
+                                {item.sublabel}
+                              </div>
+                            )}
+                          </div>
+                          {item.badge && (
+                            <span
+                              className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-bold font-mono shrink-0 ${
+                                isActive
+                                  ? "bg-white/20 text-white"
+                                  : item.badgeColor || "bg-slate-100 text-slate-700"
+                              }`}
+                            >
+                              {item.badge}
+                            </span>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </nav>
+                )}
+              </div>
+            );
+          })}
 
           {/* Operational Footer Card */}
-          <div className="mt-auto p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs">
-            <div className="font-semibold text-slate-800 text-[11px] mb-0.5 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Chauffeur Operations Live</span>
+          <div className="mt-auto p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 text-xs">
+            <div className="font-semibold text-blue-900 text-[11px] mb-0.5 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+              <span>Launch Phase 1: Vidisha (MP-40)</span>
             </div>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
-              Hub MP-40 (Vidisha) & MP-04 (Bhopal) active. Direct Police ERSS 112 link active.
+            <p className="text-[11px] text-blue-700/80 leading-relaxed">
+              Platform actively configured for single-city launch. 112 Police ERSS link live.
             </p>
           </div>
         </aside>
@@ -515,45 +562,65 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 </button>
               </div>
 
-              {NAV_SECTIONS.map((section, idx) => (
-                <div key={idx}>
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2 mb-2">
-                    {section.title}
-                  </div>
-                  <nav className="flex flex-col gap-1">
-                    {section.items.map((item) => {
-                      const isActive = pathname === item.href;
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className={`px-3 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2.5 ${
-                            isActive
-                              ? "bg-slate-900 text-white font-semibold"
-                              : "text-slate-700 hover:bg-slate-100"
-                          }`}
-                        >
-                          {item.icon}
-                          <div className="truncate flex-1">
-                            <div>{item.label}</div>
-                            {item.sublabel && (
-                              <div className={`text-[10px] ${isActive ? "text-slate-300" : "text-slate-400"}`}>
-                                {item.sublabel}
+              {NAV_SECTIONS.map((section, idx) => {
+                const isCollapsible = section.isCollapsible;
+                const isOpen = !isCollapsible || showAdvancedOps;
+
+                return (
+                  <div key={idx} className={isCollapsible ? "pt-2 border-t border-slate-100" : ""}>
+                    {isCollapsible ? (
+                      <button
+                        onClick={() => setShowAdvancedOps(!showAdvancedOps)}
+                        className="w-full flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-slate-900 px-2 py-1 mb-1 font-mono rounded-lg hover:bg-slate-50"
+                      >
+                        <span>{section.title}</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold">
+                          {showAdvancedOps ? "− Hide" : `+ Show (${section.items.length})`}
+                        </span>
+                      </button>
+                    ) : (
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2 mb-2 font-mono">
+                        {section.title}
+                      </div>
+                    )}
+
+                    {isOpen && (
+                      <nav className="flex flex-col gap-1">
+                        {section.items.map((item) => {
+                          const isActive = pathname === item.href;
+                          return (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className={`px-3 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2.5 ${
+                                isActive
+                                  ? "bg-slate-900 text-white font-semibold"
+                                  : "text-slate-700 hover:bg-slate-100"
+                              }`}
+                            >
+                              {item.icon}
+                              <div className="truncate flex-1">
+                                <div>{item.label}</div>
+                                {item.sublabel && (
+                                  <div className={`text-[10px] ${isActive ? "text-slate-300" : "text-slate-400"}`}>
+                                    {item.sublabel}
+                                  </div>
+                                )}
                               </div>
-                            )}
-                          </div>
-                          {item.badge && (
-                            <span className="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border">
-                              {item.badge}
-                            </span>
-                          )}
-                        </Link>
-                      );
-                    })}
-                  </nav>
-                </div>
-              ))}
+                              {item.badge && (
+                                <span className="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border">
+                                  {item.badge}
+                                </span>
+                              )}
+                            </Link>
+                          );
+                        })}
+                      </nav>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

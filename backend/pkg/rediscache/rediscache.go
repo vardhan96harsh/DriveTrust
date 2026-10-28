@@ -2,9 +2,12 @@ package rediscache
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"sync"
 	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 // DriverPosition holds real-time location and spatial metadata
@@ -18,8 +21,12 @@ type DriverPosition struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// Client abstracts Redis interactions with thread-safe atomic locking
+// Client abstracts Redis interactions with real redis connection & fallback
 type Client struct {
+	rdb    *redis.Client
+	isLive bool
+
+	// In-memory fallback structures
 	mu           sync.RWMutex
 	driverPos    map[string]DriverPosition
 	h3Registry   map[string]map[string]bool
@@ -32,31 +39,87 @@ type lockEntry struct {
 	expiresAt time.Time
 }
 
-// NewClient initializes a caching client
+// Lua script for atomic driver locking
+const acquireLockLua = `
+if redis.call("EXISTS", KEYS[1]) == 1 then
+    return 0
+else
+    redis.call("SET", KEYS[1], ARGV[1], "PX", ARGV[2])
+    return 1
+end
+`
+
+// Lua script for atomic driver unlock
+const releaseLockLua = `
+if redis.call("GET", KEYS[1]) == ARGV[1] then
+    return redis.call("DEL", KEYS[1])
+else
+    return 0
+end
+`
+
+// NewClient initializes a caching client connecting to real Redis or falling back
 func NewClient(addr, password string) *Client {
-	_ = addr
-	_ = password
-	return &Client{
+	c := &Client{
 		driverPos:    make(map[string]DriverPosition),
 		h3Registry:   make(map[string]map[string]bool),
 		driverLocks:  make(map[string]lockEntry),
 		tokenRevoked: make(map[string]time.Time),
 	}
+
+	if addr != "" {
+		rdb := redis.NewClient(&redis.Options{
+			Addr:        addr,
+			Password:    password,
+			DB:          0,
+			DialTimeout: 200 * time.Millisecond,
+			ReadTimeout: 200 * time.Millisecond,
+			MaxRetries:  0,
+		})
+
+		ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
+		defer cancel()
+
+		if err := rdb.Ping(ctx).Err(); err == nil {
+			c.rdb = rdb
+			c.isLive = true
+		} else {
+			_ = rdb.Close()
+		}
+	}
+
+	return c
+}
+
+// IsLive returns whether real Redis is connected
+func (c *Client) IsLive() bool {
+	return c.isLive
 }
 
 // UpdateDriverPosition records the driver's real-time position and updates H3 cell index registry
 func (c *Client) UpdateDriverPosition(ctx context.Context, pos DriverPosition) error {
+	if c.isLive && c.rdb != nil {
+		posJSON, _ := json.Marshal(pos)
+		pipe := c.rdb.Pipeline()
+		pipe.Set(ctx, fmt.Sprintf("pos:driver:%s", pos.DriverID), posJSON, 30*time.Second)
+		pipe.SAdd(ctx, fmt.Sprintf("h3:cell:%s", pos.H3Index), pos.DriverID)
+		pipe.Expire(ctx, fmt.Sprintf("h3:cell:%s", pos.H3Index), 30*time.Second)
+		_, err := pipe.Exec(ctx)
+		if err == nil {
+			return nil
+		}
+	}
+
+	// In-memory fallback
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-	// If driver was previously registered in an H3 cell, remove from old cell
 	if old, exists := c.driverPos[pos.DriverID]; exists && old.H3Index != pos.H3Index {
 		if cellSet, ok := c.h3Registry[old.H3Index]; ok {
 			delete(cellSet, pos.DriverID)
 		}
 	}
 
-	// Register in new H3 cell set
 	if _, ok := c.h3Registry[pos.H3Index]; !ok {
 		c.h3Registry[pos.H3Index] = make(map[string]bool)
 	}
@@ -68,6 +131,13 @@ func (c *Client) UpdateDriverPosition(ctx context.Context, pos DriverPosition) e
 
 // GetDriversInH3Cell returns all driver IDs currently in a given H3 cell
 func (c *Client) GetDriversInH3Cell(ctx context.Context, h3Cell string) ([]string, error) {
+	if c.isLive && c.rdb != nil {
+		drivers, err := c.rdb.SMembers(ctx, fmt.Sprintf("h3:cell:%s", h3Cell)).Result()
+		if err == nil {
+			return drivers, nil
+		}
+	}
+
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 
@@ -79,7 +149,6 @@ func (c *Client) GetDriversInH3Cell(ctx context.Context, h3Cell string) ([]strin
 	drivers := make([]string, 0, len(cellSet))
 	now := time.Now()
 	for dID := range cellSet {
-		// Verify position is fresh (TTL: 15s)
 		if pos, ok := c.driverPos[dID]; ok && now.Sub(pos.UpdatedAt) <= 15*time.Second {
 			drivers = append(drivers, dID)
 		}
@@ -87,59 +156,26 @@ func (c *Client) GetDriversInH3Cell(ctx context.Context, h3Cell string) ([]strin
 	return drivers, nil
 }
 
-// EvictStalePositions cleans up drivers who have been offline longer than maxAge
-func (c *Client) EvictStalePositions(ctx context.Context, maxAge time.Duration) int {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-
-	now := time.Now()
-	evicted := 0
-	for dID, pos := range c.driverPos {
-		if now.Sub(pos.UpdatedAt) > maxAge {
-			if cellSet, ok := c.h3Registry[pos.H3Index]; ok {
-				delete(cellSet, dID)
-				if len(cellSet) == 0 {
-					delete(c.h3Registry, pos.H3Index)
-				}
-			}
-			delete(c.driverPos, dID)
-			evicted++
-		}
-	}
-	return evicted
-}
-
-// RemoveDriver removes driver position and index upon going offline
-func (c *Client) RemoveDriver(ctx context.Context, driverID string) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-
-	if pos, exists := c.driverPos[driverID]; exists {
-		if cellSet, ok := c.h3Registry[pos.H3Index]; ok {
-			delete(cellSet, driverID)
-			if len(cellSet) == 0 {
-				delete(c.h3Registry, pos.H3Index)
-			}
-		}
-		delete(c.driverPos, driverID)
-	}
-}
-
 // TryAcquireDriverLock attempts atomic acquisition of a driver lock for a booking.
-// Matches Redis Lua script: SET lock:driver:<id> <booking_id> EX <ttl> NX
 func (c *Client) TryAcquireDriverLock(ctx context.Context, driverID, bookingID string, ttl time.Duration) (bool, error) {
+	if c.isLive && c.rdb != nil {
+		key := fmt.Sprintf("lock:driver:%s", driverID)
+		res, err := c.rdb.Eval(ctx, acquireLockLua, []string{key}, bookingID, ttl.Milliseconds()).Int()
+		if err == nil {
+			return res == 1, nil
+		}
+	}
+
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
 	now := time.Now()
 	if entry, exists := c.driverLocks[driverID]; exists {
 		if now.Before(entry.expiresAt) {
-			// Lock is active and held
 			return false, nil
 		}
 	}
 
-	// Acquire lock
 	c.driverLocks[driverID] = lockEntry{
 		bookingID: bookingID,
 		expiresAt: now.Add(ttl),
@@ -149,6 +185,12 @@ func (c *Client) TryAcquireDriverLock(ctx context.Context, driverID, bookingID s
 
 // ReleaseDriverLock releases a lock if it matches the booking
 func (c *Client) ReleaseDriverLock(ctx context.Context, driverID, bookingID string) error {
+	if c.isLive && c.rdb != nil {
+		key := fmt.Sprintf("lock:driver:%s", driverID)
+		_, err := c.rdb.Eval(ctx, releaseLockLua, []string{key}, bookingID).Result()
+		return err
+	}
+
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -158,37 +200,4 @@ func (c *Client) ReleaseDriverLock(ctx context.Context, driverID, bookingID stri
 		}
 	}
 	return nil
-}
-
-// RevokeToken marks a JWT token JTI as revoked
-func (c *Client) RevokeToken(ctx context.Context, jti string, remainingTTL time.Duration) error {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-
-	c.tokenRevoked[jti] = time.Now().Add(remainingTTL)
-	return nil
-}
-
-// IsTokenRevoked checks if a JWT token is revoked
-func (c *Client) IsTokenRevoked(ctx context.Context, jti string) bool {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
-
-	exp, exists := c.tokenRevoked[jti]
-	if !exists {
-		return false
-	}
-	return time.Now().Before(exp)
-}
-
-// GetDriverPosition returns driver position if available
-func (c *Client) GetDriverPosition(ctx context.Context, driverID string) (*DriverPosition, error) {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
-
-	pos, exists := c.driverPos[driverID]
-	if !exists {
-		return nil, fmt.Errorf("driver %s position not found", driverID)
-	}
-	return &pos, nil
 }

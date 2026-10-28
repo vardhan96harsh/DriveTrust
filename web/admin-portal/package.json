@@ -6,7 +6,11 @@
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:roles": "node ../../scripts/test-end-to-end-roles-and-rides.mjs",
+    "test:journeys": "node ../../scripts/full-journeys-e2e.mjs",
+    "test:e2e": "node ../../test-e2e-suite.mjs && node ../../scripts/test-e2e.js",
+    "test:all": "node ../../scripts/test-end-to-end-roles-and-rides.mjs && node ../../scripts/full-journeys-e2e.mjs && node ../../test-e2e-suite.mjs && node ../../scripts/test-e2e.js"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.22",

@@ -108,6 +108,12 @@ export default function DashboardPage() {
     setTimeout(() => setAdminNotification(null), 4000);
   };
 
+  const onlineDriversCount = approvedDrivers.filter((d) => d.isOnline).length;
+  const totalVerifiedDrivers = approvedDrivers.length;
+  const activeTripsCount = liveBookings.filter((b) => b.state !== "CANCELLED" && b.state !== "COMPLETED").length;
+  const todayRevenue = liveBookings.reduce((acc, b) => acc + (b.state !== "CANCELLED" ? b.fare : 0), 0);
+  const driverPayoutsShare = Math.round(todayRevenue * 0.8);
+
   const activeSOS = sosIncidents.filter((inc) => inc.status === "ACTIVE_POLICE_DISPATCHED");
 
   return (
@@ -119,6 +125,44 @@ export default function DashboardPage() {
           <span>{adminNotification}</span>
         </div>
       )}
+
+      {/* SINGLE CITY LAUNCH FOCUS BANNER */}
+      <div className="bg-gradient-to-r from-blue-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-4 sm:p-5 border border-blue-700/50 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-2xl bg-blue-500/20 text-blue-300 border border-blue-400/30 flex items-center justify-center font-black text-sm shrink-0">
+            MP40
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-black uppercase tracking-wider text-blue-300">Phase 1 Launch Hub</span>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-400/30">
+                ● Live Launch City
+              </span>
+            </div>
+            <h2 className="text-sm sm:text-base font-black text-white mt-0.5">
+              Vidisha District (MP-40) · Focused Single-City Launch
+            </h2>
+            <p className="text-xs text-blue-200/80 mt-0.5">
+              All chauffeur roster verification, hourly packages, and dispatch geofences are actively centered on Vidisha. Secondary cities (Bhopal MP-04) can be activated as rollout expands.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            href="/regions"
+            className="px-3.5 py-2 rounded-xl bg-white text-slate-900 font-bold text-xs hover:bg-slate-100 transition shadow-sm"
+          >
+            Vidisha Geofence
+          </Link>
+          <Link
+            href="/trips"
+            className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-sm"
+          >
+            Dispatch Console
+          </Link>
+        </div>
+      </div>
 
       {/* Emergency SOS Critical Incident Banner */}
       {activeSOS.length > 0 && (
@@ -321,41 +365,41 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* KPI Metrics Grid */}
+      {/* DYNAMIC REAL KPI METRICS GRID (CLEAN DATA) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         <MetricCard
           title="Active Online Chauffeurs"
-          value="1,482"
-          change="+18.4%"
+          value={`${onlineDriversCount} Online`}
+          change={`${totalVerifiedDrivers} Total Verified`}
           changeType="positive"
-          subtitle="94.2% verified with MoRTH Sarathi"
+          subtitle="MoRTH Sarathi & Police Cleared"
           icon={<Car className="w-4 h-4" />}
           accentColor="emerald"
         />
         <MetricCard
-          title="Median Dispatch Latency"
-          value="840 ms"
-          change="-120 ms"
+          title="Live Active Dispatches"
+          value={`${activeTripsCount} Active`}
+          change={`${liveBookings.length} Today's Trips`}
           changeType="positive"
-          subtitle="Sub-second matching across operational zones"
+          subtitle="Real-time chauffeur assignments"
           icon={<Clock className="w-4 h-4" />}
           accentColor="blue"
         />
         <MetricCard
-          title="Daily Gross Bookings"
-          value="₹14,82,500"
-          change="+24.8%"
+          title="Launch City Revenue (GMV)"
+          value={`₹${todayRevenue.toLocaleString("en-IN")}`}
+          change={`₹${driverPayoutsShare.toLocaleString("en-IN")} Driver Share`}
           changeType="positive"
-          subtitle="Night safe-drop: 62% volume"
+          subtitle="80% Driver Payout / 20% Platform"
           icon={<CreditCard className="w-4 h-4" />}
           accentColor="amber"
         />
         <MetricCard
-          title="Fleet Safety Index"
-          value="98.2 / 100"
-          change="+0.8 pt"
+          title="Primary Launch Zone"
+          value="Vidisha (MP-40)"
+          change="Launch Phase 1"
           changeType="positive"
-          subtitle="Zero severe telematics alerts in 24 hours"
+          subtitle="Geofence Lock Active"
           icon={<ShieldCheck className="w-4 h-4" />}
           accentColor="purple"
         />
@@ -404,7 +448,7 @@ export default function DashboardPage() {
               {activeZone}
             </span>
             <span className="text-[11px] text-slate-500 mt-0.5 block">
-              {activeZone.includes("Vidisha") ? "RTO Hub MP-40" : "RTO Hub MP-04"}
+              {activeZone.includes("Vidisha") ? "RTO Hub MP-40 (Launch City)" : "RTO Hub MP-04"}
             </span>
           </div>
 
@@ -413,7 +457,7 @@ export default function DashboardPage() {
               Verified Chauffeurs On Duty
             </span>
             <span className="font-extrabold text-emerald-700 text-sm block font-mono">
-              18 Drivers Available
+              {onlineDriversCount} Online ({totalVerifiedDrivers} Registered)
             </span>
             <span className="text-[11px] text-slate-500 mt-0.5 block">
               100% Police Verified &amp; Drug Tested
@@ -422,13 +466,13 @@ export default function DashboardPage() {
 
           <div className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/70">
             <span className="text-[10px] font-bold text-slate-400 uppercase font-mono block mb-1">
-              Average Match Latency
+              Pending KYC Audits
             </span>
-            <span className="font-extrabold text-slate-900 text-sm font-mono block">
-              ~820 ms
+            <span className="font-extrabold text-amber-700 text-sm font-mono block">
+              {pendingDrivers.length} Awaiting Audit
             </span>
-            <span className="text-[11px] text-emerald-700 font-semibold mt-0.5 block">
-              Real-time driver matching
+            <span className="text-[11px] text-slate-500 mt-0.5 block">
+              MoRTH Sarathi check required
             </span>
           </div>
 
@@ -437,7 +481,7 @@ export default function DashboardPage() {
               Geofence Enforcement
             </span>
             <span className="font-extrabold text-blue-700 text-sm block">
-              Active Boundary Lock
+              Vidisha Boundary Lock
             </span>
             <span className="text-[11px] text-slate-500 mt-0.5 block">
               Out-of-zone bookings prevented

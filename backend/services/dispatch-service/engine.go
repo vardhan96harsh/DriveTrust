@@ -21,6 +21,8 @@ type DriverCandidate struct {
 	H3Index              string   `json:"h3_index"`
 	IsOnline             bool     `json:"is_online"`
 	KycStatus            string   `json:"kyc_status"` // APPROVED
+	ZoneID               string   `json:"zone_id,omitempty"`
+	RtoCode              string   `json:"rto_code,omitempty"`
 	DistanceKm           float64  `json:"distance_km"`
 	FinalScore           float64  `json:"final_score"`
 }
@@ -32,6 +34,8 @@ type DispatchRequest struct {
 	TransmissionRequired string        `json:"transmission_required"`
 	ServiceType          string        `json:"service_type"`
 	EstimatedEarnings    float64       `json:"estimated_earnings"`
+	ZoneID               string        `json:"zone_id,omitempty"`
+	RtoCode              string        `json:"rto_code,omitempty"`
 }
 
 type DispatchResult struct {
@@ -67,6 +71,10 @@ func (e *Engine) FindAndDispatch(ctx context.Context, req DispatchRequest, pool 
 		pickupH3 = h3util.LatLngToH3(req.PickupLocation.Lat, req.PickupLocation.Lng, h3util.DefaultResolution)
 	}
 
+	if req.TransmissionRequired == "" {
+		req.TransmissionRequired = "AUTOMATIC"
+	}
+
 	// Expand search ring radius: k=0 (0-500m), k=1 (~1.5km), k=2 (~3km), k=3 (~5km)
 	for ring := 0; ring <= 3; ring++ {
 		e.logger.Debug(fmt.Sprintf("Expanding Uber H3 search ring: k=%d", ring), map[string]interface{}{
@@ -77,6 +85,15 @@ func (e *Engine) FindAndDispatch(ctx context.Context, req DispatchRequest, pool 
 		var candidates []DriverCandidate
 		for _, driver := range pool {
 			if !driver.IsOnline || driver.KycStatus != "APPROVED" {
+				continue
+			}
+
+			// Zone & RTO Geofence Boundary Check:
+			// If request specifies an RTO code or Zone ID, candidate must be authorized for this operating zone
+			if req.RtoCode != "" && driver.RtoCode != "" && driver.RtoCode != req.RtoCode {
+				continue
+			}
+			if req.ZoneID != "" && driver.ZoneID != "" && driver.ZoneID != req.ZoneID {
 				continue
 			}
 
