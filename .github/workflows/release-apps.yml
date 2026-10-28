@@ -21,21 +21,19 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+          cache: gradle
 
       - name: Build Driver App Debug
         working-directory: apps/driver-android
         run: |
-          chmod +x gradlew || true
-          ./gradlew assembleDebug --stacktrace
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Build Customer App Debug
         working-directory: apps/customer-android
         run: |
-          chmod +x gradlew || true
-          ./gradlew assembleDebug --stacktrace
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Upload Android APKs
         uses: actions/upload-artifact@v4
