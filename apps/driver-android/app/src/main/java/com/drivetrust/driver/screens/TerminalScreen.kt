@@ -116,8 +116,9 @@ fun DriverTerminalScreen(
                 color = MidnightCard,
                 border = androidx.compose.foundation.BorderStroke(
                     1.dp,
-                    if (driver.isOnline) Emerald400.copy(alpha = 0.4f) else MidnightBorder
+                    if (driver.isOnline) Mint500.copy(alpha = 0.5f) else MidnightBorder
                 ),
+                shadowElevation = 2.dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -129,12 +130,12 @@ fun DriverTerminalScreen(
                         modifier = Modifier
                             .size(64.dp)
                             .background(
-                                if (driver.isOnline) Emerald400.copy(alpha = 0.15f) else Midnight950,
+                                if (driver.isOnline) Mint50 else Midnight950,
                                 CircleShape
                             )
                             .border(
                                 2.dp,
-                                if (driver.isOnline) Emerald400 else Slate700,
+                                if (driver.isOnline) Mint500 else Slate300,
                                 CircleShape
                             ),
                         contentAlignment = Alignment.Center
@@ -142,25 +143,36 @@ fun DriverTerminalScreen(
                         Icon(
                             imageVector = if (driver.isOnline) Icons.Rounded.GpsFixed else Icons.Rounded.GpsOff,
                             contentDescription = null,
-                            tint = if (driver.isOnline) Emerald400 else Slate500,
+                            tint = if (driver.isOnline) Mint500 else Slate400,
                             modifier = Modifier.size(30.dp)
                         )
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = if (driver.isOnline) "Cockpit Active • Radar Scanning" else "Terminal Offline",
+                            text = if (driver.isOnline) {
+                                if (currentLanguage == "हिन्दी") "कॉकपिट सक्रिय • रडार स्कैनिंग" else "Cockpit Active • Radar Scanning"
+                            } else {
+                                if (currentLanguage == "हिन्दी") "टर्मिनल ऑफ़लाइन" else "Terminal Offline"
+                            },
                             fontSize = 18.sp,
-                            fontWeight = FontWeight.Black,
-                            color = Color.White
+                            fontWeight = FontWeight.Bold,
+                            color = DriverTextPrimary
                         )
                         Text(
-                            text = if (driver.isOnline)
-                                "GPS telemetry active. You are eligible for VIP bookings in 2.5km radius."
-                            else
-                                "Switch duty to ONLINE in the top bar to receive private client bookings.",
+                            text = if (driver.isOnline) {
+                                if (currentLanguage == "हिन्दी")
+                                    "GPS सक्रिय। आप 2.5 किमी के दायरे में VIP बुकिंग के लिए उपलब्ध हैं।"
+                                else
+                                    "GPS telemetry active. You are eligible for VIP bookings in 2.5km radius."
+                            } else {
+                                if (currentLanguage == "हिन्दी")
+                                    "प्राइवेट बुकिंग प्राप्त करने के लिए शीर्ष बार में ड्यूटी चालू (ONLINE) करें।"
+                                else
+                                    "Switch duty to ONLINE in the top bar to receive private client bookings."
+                            },
                             fontSize = 12.sp,
-                            color = Slate400,
+                            color = DriverTextSecondary,
                             lineHeight = 18.sp,
                             modifier = Modifier.padding(top = 4.dp)
                         )
@@ -173,14 +185,18 @@ fun DriverTerminalScreen(
                                 .fillMaxWidth()
                                 .height(50.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Gold500,
-                                contentColor = MidnightDark
+                                containerColor = Mint500,
+                                contentColor = Color.White
                             ),
                             shape = RoundedCornerShape(12.dp)
                         ) {
                             Icon(Icons.Rounded.NotificationsActive, contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Simulate Incoming 30s VIP Offer", fontWeight = FontWeight.Black, fontSize = 13.sp)
+                            Text(
+                                text = if (currentLanguage == "हिन्दी") "VIP राइड टेस्ट ऑफर देखें" else "Simulate Incoming 30s VIP Offer",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 13.sp
+                            )
                         }
                     }
                 }
@@ -191,6 +207,7 @@ fun DriverTerminalScreen(
                 shape = RoundedCornerShape(16.dp),
                 color = MidnightCard,
                 border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                shadowElevation = 1.dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
@@ -204,46 +221,50 @@ fun DriverTerminalScreen(
                     ) {
                         Surface(
                             shape = CircleShape,
-                            color = Midnight950,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                            color = Mint50,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
                             modifier = Modifier.size(40.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
                                     Icons.Rounded.AccessTime,
                                     contentDescription = null,
-                                    tint = Gold500,
+                                    tint = Mint500,
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
                         }
                         Column {
                             Text(
-                                text = "SHIFT & FATIGUE TIMER",
+                                text = if (currentLanguage == "हिन्दी") "शिफ्ट व आराम ट्रैकर" else "SHIFT & FATIGUE TIMER",
                                 fontSize = 9.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Gold500,
                                 letterSpacing = 0.5.sp
                             )
                             Text(
-                                text = if (driver.isOnline) "3h 45m On-Duty Today" else "Shift Paused",
+                                text = if (driver.isOnline) {
+                                    if (currentLanguage == "हिन्दी") "आज 3 घंटे 45 मिनट सक्रिय" else "3h 45m On-Duty Today"
+                                } else {
+                                    if (currentLanguage == "हिन्दी") "शिफ्ट रुकी हुई" else "Shift Paused"
+                                },
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = DriverTextPrimary
                             )
                         }
                     }
 
                     Surface(
                         shape = RoundedCornerShape(8.dp),
-                        color = Midnight950,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
+                        color = Mint50,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint100)
                     ) {
                         Text(
-                            text = "Max 10h / Shift",
+                            text = if (currentLanguage == "हिन्दी") "अधिकतम 10 घंटे" else "Max 10h / Shift",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Emerald400,
+                            color = Mint600,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
@@ -259,6 +280,7 @@ fun DriverTerminalScreen(
                     shape = RoundedCornerShape(16.dp),
                     color = MidnightCard,
                     border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    shadowElevation = 1.dp,
                     modifier = Modifier
                         .weight(1f)
                         .clickable { onOpenWallet() }
@@ -272,16 +294,26 @@ fun DriverTerminalScreen(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Icon(Icons.AutoMirrored.Rounded.ReceiptLong, contentDescription = null, tint = Gold500, modifier = Modifier.size(14.dp))
-                            Text("TODAY'S EARNINGS", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Slate400)
+                            Text(
+                                text = if (currentLanguage == "हिन्दी") "आज की कमाई" else "TODAY'S EARNINGS",
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = DriverTextSecondary
+                            )
                         }
                         Text(
                             text = "₹${driver.walletBalance.toInt()}",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Black,
-                            color = Gold500,
+                            color = DriverTextPrimary,
                             fontFamily = FontFamily.Monospace
                         )
-                        Text("+₹582 pending", fontSize = 10.sp, color = Emerald400, fontWeight = FontWeight.Bold)
+                        Text(
+                            text = if (currentLanguage == "हिन्दी") "+₹582 प्रक्रिया में" else "+₹582 pending",
+                            fontSize = 10.sp,
+                            color = Mint600,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
 
@@ -289,6 +321,7 @@ fun DriverTerminalScreen(
                     shape = RoundedCornerShape(16.dp),
                     color = MidnightCard,
                     border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    shadowElevation = 1.dp,
                     modifier = Modifier
                         .weight(1f)
                         .clickable { onOpenPerformance() }
@@ -302,15 +335,24 @@ fun DriverTerminalScreen(
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Icon(Icons.Rounded.Star, contentDescription = null, tint = Amber500, modifier = Modifier.size(14.dp))
-                            Text("SAFETY INDEX", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Slate400)
+                            Text(
+                                text = if (currentLanguage == "हिन्दी") "सुरक्षा रेटिंग" else "SAFETY INDEX",
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = DriverTextSecondary
+                            )
                         }
                         Text(
                             text = "${driver.rating} ★",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White
+                            color = DriverTextPrimary
                         )
-                        Text("${driver.totalTrips} VIP rides", fontSize = 10.sp, color = Slate400)
+                        Text(
+                            text = if (currentLanguage == "हिन्दी") "${driver.totalTrips} राइड्स पूर्ण" else "${driver.totalTrips} VIP rides",
+                            fontSize = 10.sp,
+                            color = DriverTextSecondary
+                        )
                     }
                 }
             }
@@ -326,12 +368,19 @@ fun DriverTerminalScreen(
                         .weight(1f)
                         .height(48.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Emerald400),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = MidnightCard,
+                        contentColor = Mint600
+                    ),
                     border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
                 ) {
                     Icon(Icons.Rounded.Analytics, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Safety Score (98)", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = if (currentLanguage == "हिन्दी") "सुरक्षा स्कोर (98)" else "Safety Score (98)",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
 
                 OutlinedButton(
@@ -340,12 +389,19 @@ fun DriverTerminalScreen(
                         .weight(1f)
                         .height(48.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Gold500),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = MidnightCard,
+                        contentColor = Gold500
+                    ),
                     border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
                 ) {
                     Icon(Icons.Rounded.Badge, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("KYC Vault & DL", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = if (currentLanguage == "हिन्दी") "केवाईसी और लाइसेंस" else "KYC Vault & DL",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
 
@@ -357,21 +413,27 @@ fun DriverTerminalScreen(
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MidnightCard,
-                    contentColor = Gold500
+                    contentColor = DriverTextPrimary
                 ),
                 border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-                shape = RoundedCornerShape(14.dp)
+                shape = RoundedCornerShape(14.dp),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 1.dp)
             ) {
-                Icon(Icons.Rounded.AccountBalanceWallet, contentDescription = null, modifier = Modifier.size(18.dp))
+                Icon(Icons.Rounded.AccountBalanceWallet, contentDescription = null, tint = Mint500, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Instant UPI Payouts & Settlement Ledger", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Text(
+                    text = if (currentLanguage == "हिन्दी") "तत्काल UPI निकासी और खाता बही" else "Instant UPI Payouts & Settlement Ledger",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp
+                )
             }
 
-            // Driver App Language Settings Row (matching request: change language in settings anytime)
+            // Driver App Language Settings Row (User able to change language in settings anytime)
             Surface(
                 shape = RoundedCornerShape(14.dp),
                 color = MidnightCard,
                 border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                shadowElevation = 1.dp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { showLanguageSheet = true }
@@ -385,29 +447,37 @@ fun DriverTerminalScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        Icon(
-                            Icons.Rounded.Language,
-                            contentDescription = null,
-                            tint = Mint500,
-                            modifier = Modifier.size(20.dp)
-                        )
+                        Surface(
+                            shape = CircleShape,
+                            color = Mint50,
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    Icons.Rounded.Language,
+                                    contentDescription = null,
+                                    tint = Mint500,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        }
                         Column {
                             Text(
-                                text = "App Language / भाषा बदलें",
+                                text = if (currentLanguage == "हिन्दी") "ऐप की भाषा बदलें" else "App Language / भाषा बदलें",
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = DriverTextPrimary
                             )
                             Text(
                                 text = "Current: $currentLanguage",
                                 fontSize = 11.sp,
-                                color = Slate400
+                                color = DriverTextSecondary
                             )
                         }
                     }
                     Text(
-                        text = "Change",
-                        fontSize = 12.sp,
+                        text = if (currentLanguage == "हिन्दी") "बदलें" else "Change",
+                        fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,
                         color = Mint500
                     )

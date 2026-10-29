@@ -49,13 +49,13 @@ fun CustomerTopAppBar(
                 Box(
                     modifier = Modifier
                         .size(42.dp)
-                        .background(MidnightDark, CircleShape)
-                        .border(1.5.dp, Gold500, CircleShape),
+                        .background(Mint50, CircleShape)
+                        .border(1.5.dp, Mint500, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "DT",
-                        color = Gold500,
+                        color = Mint500,
                         fontWeight = FontWeight.Black,
                         fontSize = 16.sp,
                         letterSpacing = 1.sp
@@ -71,13 +71,13 @@ fun CustomerTopAppBar(
                             text = "DriveTrust",
                             fontWeight = FontWeight.Black,
                             fontSize = 17.sp,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = (-0.3).sp
                         )
                         Surface(
                             shape = RoundedCornerShape(4.dp),
-                            color = MidnightDark,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f))
+                            color = Mint50,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f))
                         ) {
                             Row(
                                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
@@ -87,14 +87,14 @@ fun CustomerTopAppBar(
                                 Icon(
                                     imageVector = Icons.Rounded.Shield,
                                     contentDescription = "Verified",
-                                    tint = Gold500,
+                                    tint = Mint500,
                                     modifier = Modifier.size(9.dp)
                                 )
                                 Text(
                                     text = "LUXURY",
                                     fontSize = 8.sp,
                                     fontWeight = FontWeight.Black,
-                                    color = Gold500,
+                                    color = Mint500,
                                     letterSpacing = 0.5.sp
                                 )
                             }
@@ -103,7 +103,7 @@ fun CustomerTopAppBar(
                     Text(
                         text = "Private Chauffeur • $customerName",
                         fontSize = 11.sp,
-                        color = Slate400,
+                        color = CustomerTextSecondary,
                         fontWeight = FontWeight.Medium
                     )
                 }

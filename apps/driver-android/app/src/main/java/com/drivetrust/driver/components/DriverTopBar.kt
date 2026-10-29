@@ -31,7 +31,7 @@ fun DriverTopBar(
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MidnightCard,
-        shadowElevation = 4.dp,
+        shadowElevation = 2.dp,
         border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
     ) {
         Row(
@@ -47,16 +47,16 @@ fun DriverTopBar(
             ) {
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
-                        .background(Midnight950, RoundedCornerShape(12.dp))
-                        .border(1.dp, Gold500.copy(alpha = 0.5f), RoundedCornerShape(12.dp)),
+                        .size(42.dp)
+                        .background(Mint50, RoundedCornerShape(12.dp))
+                        .border(1.dp, Mint100, RoundedCornerShape(12.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = driver.fullName.take(2).uppercase(),
-                        color = Gold500,
+                        color = Mint500,
                         fontWeight = FontWeight.Black,
-                        fontSize = 14.sp
+                        fontSize = 15.sp
                     )
                 }
                 Column {
@@ -66,15 +66,15 @@ fun DriverTopBar(
                     ) {
                         Text(
                             text = driver.fullName.split(" ")[0],
-                            fontWeight = FontWeight.Black,
+                            fontWeight = FontWeight.Bold,
                             fontSize = 15.sp,
-                            color = Color.White
+                            color = DriverTextPrimary
                         )
                         Box(
                             modifier = Modifier
                                 .size(8.dp)
                                 .background(
-                                    if (driver.isOnline) Emerald400 else Red500,
+                                    if (driver.isOnline) Mint500 else Red500,
                                     CircleShape
                                 )
                         )
@@ -84,7 +84,7 @@ fun DriverTopBar(
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Monospace,
-                        color = Gold400
+                        color = Gold500
                     )
                 }
             }
@@ -104,8 +104,8 @@ fun DriverTopBar(
                         Icon(
                             imageVector = Icons.Rounded.Language,
                             contentDescription = "Language",
-                            tint = Gold400,
-                            modifier = Modifier.size(17.dp)
+                            tint = Mint500,
+                            modifier = Modifier.size(18.dp)
                         )
                     }
                 }
@@ -113,8 +113,8 @@ fun DriverTopBar(
                 Button(
                     onClick = onToggleDuty,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (driver.isOnline) Emerald500 else Midnight950,
-                        contentColor = if (driver.isOnline) Color.White else Slate300
+                        containerColor = if (driver.isOnline) Mint500 else Midnight950,
+                        contentColor = if (driver.isOnline) Color.White else DriverTextSecondary
                     ),
                     border = if (driver.isOnline) null else androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                     shape = RoundedCornerShape(10.dp),
@@ -124,13 +124,13 @@ fun DriverTopBar(
                         imageVector = Icons.Rounded.PowerSettingsNew,
                         contentDescription = null,
                         modifier = Modifier.size(14.dp),
-                        tint = if (driver.isOnline) Color.White else Slate400
+                        tint = if (driver.isOnline) Color.White else DriverTextSecondary
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = if (driver.isOnline) "ONLINE" else "OFFLINE",
                         fontSize = 11.sp,
-                        fontWeight = FontWeight.Black
+                        fontWeight = FontWeight.Bold
                     )
                 }
 
@@ -144,7 +144,7 @@ fun DriverTopBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Rounded.Logout,
                         contentDescription = "Exit",
-                        tint = Slate400,
+                        tint = DriverTextSecondary,
                         modifier = Modifier.size(16.dp)
                     )
                 }

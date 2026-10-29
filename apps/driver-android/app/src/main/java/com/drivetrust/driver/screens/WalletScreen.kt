@@ -96,13 +96,13 @@ fun WalletScreen(
             TopAppBar(
                 title = {
                     Column {
-                        Text("Executive Chauffeur Wallet", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White)
-                        Text("Partner: $driverName (Instant Settlement Active)", fontSize = 12.sp, color = Slate400)
+                        Text("Executive Chauffeur Wallet", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = DriverTextPrimary)
+                        Text("Partner: $driverName (Instant Settlement Active)", fontSize = 12.sp, color = DriverTextSecondary)
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back", tint = DriverTextPrimary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -136,29 +136,29 @@ fun WalletScreen(
                             Text("WITHDRAWABLE BALANCE", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Gold500, letterSpacing = 1.sp)
                             Surface(
                                 shape = RoundedCornerShape(20.dp),
-                                color = Emerald400.copy(alpha = 0.15f),
-                                border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.3f))
+                                color = Mint50,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Mint100)
                             ) {
                                 Row(
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Emerald400, modifier = Modifier.size(14.dp))
-                                    Text("Instant UPI / IMPS", color = Emerald400, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                                    Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Mint500, modifier = Modifier.size(14.dp))
+                                    Text("Instant UPI / IMPS", color = Mint600, fontSize = 11.sp, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
-                        Text("₹$currentBalance", fontSize = 42.sp, fontWeight = FontWeight.ExtraBold, color = Color.White)
+                        Text("₹$currentBalance", fontSize = 42.sp, fontWeight = FontWeight.ExtraBold, color = DriverTextPrimary)
                         
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(6.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Rounded.AccountBalance, contentDescription = null, tint = Slate400, modifier = Modifier.size(14.dp))
-                            Text("Linked to HDFC Bank A/c •••• 9812 ($payoutUpiId)", fontSize = 12.sp, color = Slate400)
+                            Icon(Icons.Rounded.AccountBalance, contentDescription = null, tint = DriverTextSecondary, modifier = Modifier.size(14.dp))
+                            Text("Linked to HDFC Bank A/c •••• 9812 ($payoutUpiId)", fontSize = 12.sp, color = DriverTextSecondary)
                         }
 
                         Spacer(modifier = Modifier.height(18.dp))
@@ -166,8 +166,8 @@ fun WalletScreen(
                         if (withdrawalSuccessMsg != null) {
                             Surface(
                                 shape = RoundedCornerShape(10.dp),
-                                color = Emerald400.copy(alpha = 0.12f),
-                                border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.3f)),
+                                color = Mint50,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Row(
@@ -175,10 +175,10 @@ fun WalletScreen(
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Emerald400, modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Mint500, modifier = Modifier.size(18.dp))
                                     Text(
                                         withdrawalSuccessMsg!!,
-                                        color = Emerald400,
+                                        color = Mint600,
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Medium
                                     )
@@ -194,15 +194,15 @@ fun WalletScreen(
                             },
                             modifier = Modifier.fillMaxWidth().height(50.dp),
                             shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Gold500),
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                             enabled = currentBalance > 0 && !isWithdrawing
                         ) {
-                            Icon(Icons.Rounded.Payment, contentDescription = null, tint = MidnightDark, modifier = Modifier.size(18.dp))
+                            Icon(Icons.Rounded.Payment, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 if (isWithdrawing) "Processing Instant Transfer..." else "Request Instant UPI Transfer",
                                 fontWeight = FontWeight.Bold,
-                                color = MidnightDark
+                                color = Color.White
                             )
                         }
                     }
@@ -222,10 +222,10 @@ fun WalletScreen(
                         shape = RoundedCornerShape(14.dp)
                     ) {
                         Column(modifier = Modifier.padding(14.dp)) {
-                            Text("BASE FARES", fontSize = 10.sp, color = Slate400, fontWeight = FontWeight.Bold)
+                            Text("BASE FARES", fontSize = 10.sp, color = DriverTextSecondary, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("₹2,420", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                            Text("4 rides completed", fontSize = 10.sp, color = Slate500)
+                            Text("₹2,420", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = DriverTextPrimary)
+                            Text("4 rides completed", fontSize = 10.sp, color = DriverTextSecondary)
                         }
                     }
 
@@ -239,7 +239,7 @@ fun WalletScreen(
                             Text("TIPS EARNED", fontSize = 10.sp, color = Gold500, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.height(4.dp))
                             Text("₹300", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Gold500)
-                            Text("100% kept by driver", fontSize = 10.sp, color = Slate500)
+                            Text("100% kept by driver", fontSize = 10.sp, color = DriverTextSecondary)
                         }
                     }
 
@@ -250,10 +250,10 @@ fun WalletScreen(
                         shape = RoundedCornerShape(14.dp)
                     ) {
                         Column(modifier = Modifier.padding(14.dp)) {
-                            Text("INCENTIVE", fontSize = 10.sp, color = Emerald400, fontWeight = FontWeight.Bold)
+                            Text("INCENTIVE", fontSize = 10.sp, color = Mint600, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("₹700", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Emerald400)
-                            Text("Zero Cancellation", fontSize = 10.sp, color = Slate500)
+                            Text("₹700", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Mint600)
+                            Text("Zero Cancellation", fontSize = 10.sp, color = DriverTextSecondary)
                         }
                     }
                 }
@@ -266,8 +266,8 @@ fun WalletScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Trip Settlement History", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                    Text("Auto-Settled to Account", fontSize = 11.sp, color = Slate400)
+                    Text("Trip Settlement History", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = DriverTextPrimary)
+                    Text("Auto-Settled to Account", fontSize = 11.sp, color = DriverTextSecondary)
                 }
             }
 
@@ -286,11 +286,11 @@ fun WalletScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column {
-                                Text(trip.customerName, fontWeight = FontWeight.Bold, color = Color.White, fontSize = 14.sp)
-                                Text("${trip.tripId} • ${trip.time}", fontSize = 11.sp, color = Slate400)
+                                Text(trip.customerName, fontWeight = FontWeight.Bold, color = DriverTextPrimary, fontSize = 14.sp)
+                                Text("${trip.tripId} • ${trip.time}", fontSize = 11.sp, color = DriverTextSecondary)
                             }
                             Column(horizontalAlignment = Alignment.End) {
-                                Text(trip.fare, fontWeight = FontWeight.ExtraBold, color = Emerald400, fontSize = 15.sp)
+                                Text(trip.fare, fontWeight = FontWeight.ExtraBold, color = Mint600, fontSize = 15.sp)
                                 if (trip.tip != "₹0") {
                                     Text("+${trip.tip} Tip", color = Gold500, fontSize = 11.sp, fontWeight = FontWeight.Bold)
                                 }
@@ -298,7 +298,7 @@ fun WalletScreen(
                         }
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(trip.route, fontSize = 12.sp, color = Slate300)
+                        Text(trip.route, fontSize = 12.sp, color = DriverTextSecondary)
 
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(
@@ -307,7 +307,7 @@ fun WalletScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text("Rating: ${trip.rating}", fontSize = 11.sp, color = Gold500, fontWeight = FontWeight.Bold)
-                            Text("Payment: Paid via UPI (Direct Credit)", fontSize = 10.sp, color = Slate500)
+                            Text("Payment: Paid via UPI (Direct Credit)", fontSize = 10.sp, color = DriverTextSecondary)
                         }
                     }
                 }
@@ -327,7 +327,7 @@ fun WalletScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Gold500)
-                    Text("Instant UPI Transfer", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 17.sp)
+                    Text("Instant UPI Transfer", color = DriverTextPrimary, fontWeight = FontWeight.Bold, fontSize = 17.sp)
                 }
             },
             text = {
@@ -335,19 +335,19 @@ fun WalletScreen(
                     Text(
                         "Funds are dispatched via NPCI Instant IMPS / UPI 2.0 network directly to your registered VPA.",
                         fontSize = 12.sp,
-                        color = Slate400,
+                        color = DriverTextSecondary,
                         lineHeight = 16.sp
                     )
 
                     OutlinedTextField(
                         value = payoutUpiId,
                         onValueChange = { payoutUpiId = it },
-                        label = { Text("Destination UPI ID", color = Slate400) },
+                        label = { Text("Destination UPI ID", color = DriverTextSecondary) },
                         leadingIcon = { Icon(Icons.Rounded.AccountBalance, contentDescription = null, tint = Gold500) },
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White,
+                            focusedTextColor = DriverTextPrimary,
+                            unfocusedTextColor = DriverTextPrimary,
                             focusedBorderColor = Gold500,
                             unfocusedBorderColor = MidnightBorder
                         ),
@@ -360,9 +360,9 @@ fun WalletScreen(
                         label = { Text("Withdraw Amount (₹)", color = Slate400) },
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White,
-                            focusedBorderColor = Gold500,
+                            focusedTextColor = DriverTextPrimary,
+                            unfocusedTextColor = DriverTextPrimary,
+                            focusedBorderColor = Mint500,
                             unfocusedBorderColor = MidnightBorder
                         ),
                         shape = RoundedCornerShape(10.dp)

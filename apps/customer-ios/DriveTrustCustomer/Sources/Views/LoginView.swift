@@ -23,12 +23,12 @@ struct LoginView: View {
                     HStack {
                         ZStack {
                             Circle()
-                                .fill(Color.midnightDark)
+                                .fill(Color.mint50)
                                 .frame(width: 50, height: 50)
-                                .overlay(Circle().stroke(Color.gold500, lineWidth: 1.5))
+                                .overlay(Circle().stroke(Color.mint500, lineWidth: 1.5))
                             Text("DT")
                                 .font(.system(size: 18, weight: .black))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.mint500)
                         }
                         Spacer()
                     }
@@ -36,28 +36,28 @@ struct LoginView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("DriveTrust Executive")
                             .font(.system(size: 22, weight: .black))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
                         Text("Sign in to request verified luxury chauffeurs for your personal car")
                             .font(.system(size: 12))
-                            .foregroundColor(.slate400)
+                            .foregroundColor(.customerTextSecondary)
                     }
 
                     if !otpSent {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("MOBILE PHONE NUMBER")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.mint500)
                                 .tracking(1)
 
                             HStack {
                                 Image(systemName: "phone.fill")
-                                    .foregroundColor(.gold500)
+                                    .foregroundColor(.mint500)
                                 TextField("Enter Phone", text: $phoneInput)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                     .keyboardType(.phonePad)
                             }
                             .padding(14)
-                            .background(Color.midnightDark)
+                            .background(Color.midnight950)
                             .cornerRadius(12)
                             .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.midnightBorder, lineWidth: 1))
                         }
@@ -74,10 +74,10 @@ struct LoginView: View {
                                 Text("Send 6-Digit Security OTP")
                                     .font(.system(size: 14, weight: .bold))
                             }
-                            .foregroundColor(.midnightDark)
+                            .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
-                            .background(Color.gold500)
+                            .background(Color.mint500)
                             .cornerRadius(12)
                         }
                     } else {
@@ -86,37 +86,37 @@ struct LoginView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("SECURITY CODE DISPATCHED")
                                     .font(.system(size: 9, weight: .bold))
-                                    .foregroundColor(.emerald400)
+                                    .foregroundColor(.mint500)
                                     .tracking(1)
                                 Text("OTP: \(generatedOtp)")
                                     .font(.system(size: 17, weight: .black, design: .monospaced))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                             }
                             Spacer()
                             Button("Auto-Fill") {
                                 enteredOtp = generatedOtp
                             }
                             .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(.emerald400)
+                            .foregroundColor(.mint500)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
-                            .background(Color.emerald400.opacity(0.15))
+                            .background(Color.mint50)
                             .cornerRadius(8)
                         }
                         .padding(12)
-                        .background(Color.emerald400.opacity(0.1))
+                        .background(Color.mint50)
                         .cornerRadius(12)
-                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.emerald400.opacity(0.3), lineWidth: 1))
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.mint500.opacity(0.35), lineWidth: 1))
 
                         HStack {
                             Image(systemName: "lock.fill")
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.mint500)
                             TextField("Enter 6-Digit OTP", text: $enteredOtp)
-                                .foregroundColor(.white)
+                                .foregroundColor(.customerTextPrimary)
                                 .keyboardType(.numberPad)
                         }
                         .padding(14)
-                        .background(Color.midnightDark)
+                        .background(Color.midnight950)
                         .cornerRadius(12)
                         .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.midnightBorder, lineWidth: 1))
 
@@ -138,7 +138,7 @@ struct LoginView: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 14)
-                                .background(Color.emerald600)
+                                .background(Color.mint500)
                                 .cornerRadius(12)
                         }
                     }
@@ -149,18 +149,19 @@ struct LoginView: View {
                         Spacer()
                         Text("New vehicle owner?")
                             .font(.system(size: 12))
-                            .foregroundColor(.slate400)
+                            .foregroundColor(.customerTextSecondary)
                         Button("Register Car") {
                             onGoToRegister()
                         }
                         .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.gold500)
+                        .foregroundColor(.mint500)
                         Spacer()
                     }
                 }
                 .padding(24)
                 .background(Color.midnightCard)
                 .cornerRadius(24)
+                .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
                 .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.midnightBorder, lineWidth: 1))
                 .padding(.horizontal, 20)
 

@@ -1,7 +1,6 @@
 package com.drivetrust.driver.screens
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,22 +45,24 @@ fun DriverWalkthroughScreen(
     onFinishWalkthrough: () -> Unit
 ) {
     var currentPage by remember { mutableIntStateOf(0) }
-    var showLanguageSheetFirst by remember { mutableStateOf(true) }
+    // STEP 1: Language selection pops up immediately upon first login
+    var showLanguageSheet by remember { mutableStateOf(true) }
+    var isTriggeredFromSlide3 by remember { mutableStateOf(false) }
     var currentLanguage by remember { mutableStateOf(initialLanguage) }
 
     val slides = listOf(
         WalkthroughSlide(
             title = if (currentLanguage == "हिन्दी") "चलाएं। कमाएं। सफल बनें।" else "Drive. Earn. Succeed.",
             description = if (currentLanguage == "हिन्दी")
-                "फ्लेक्सिबल समय, अधिक राइड्स और DriveTrust के साथ बेहतरीन कमाई का आनंद लें। आपकी यात्रा, आपका विकास।"
+                "फ्लेक्सिबल समय, अधिक राइड्स और DriveTrust के साथ बेहतरीन कमाई का आनंद लें। आपकी यात्रा, आपका विकास, आपके पुरस्कार।"
             else
                 "Enjoy flexible hours, more rides, and higher earnings with DriveTrust. Your journey, your growth, your rewards.",
             slideType = SlideIllustrationType.DRIVE_SUCCEED
         ),
         WalkthroughSlide(
-            title = if (currentLanguage == "हिन्दी") "त्वरित भुगतान (Instant Payouts)" else "Instant Payouts",
+            title = if (currentLanguage == "हिन्दी") "त्वरित भुगतान" else "Instant Payouts",
             description = if (currentLanguage == "हिन्दी")
-                "बैंक या UPI में तुरंत और बिना किसी परेशानी के निकासी — लाइव कमाई ट्रैक करें और कभी भी पैसे निकालें।"
+                "बैंक या UPI में तुरंत, परेशानी मुक्त निकासी — कमाई को लाइव ट्रैक करें और कभी भी कैश आउट करें।"
             else
                 "Instant, hassle-free withdrawals to bank or UPI — track earnings live and cash out anytime.",
             slideType = SlideIllustrationType.INSTANT_PAYOUTS
@@ -79,7 +80,7 @@ fun DriverWalkthroughScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DriverWhite)
+            .background(Color.White)
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
@@ -90,19 +91,19 @@ fun DriverWalkthroughScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Top Bar with Skip
+            // Top Bar with 'skip' (Matching Screenshots 1, 2, 3)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(top = 4.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "skip",
+                    text = if (currentLanguage == "हिन्दी") "छोड़ें (skip)" else "skip",
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Normal,
-                    color = DriverTextSecondary,
+                    color = Color(0xFF94A3B8),
                     modifier = Modifier
                         .clickable { onFinishWalkthrough() }
                         .padding(horizontal = 12.dp, vertical = 6.dp)
@@ -119,14 +120,14 @@ fun DriverWalkthroughScreen(
             ) {
                 val slide = slides[currentPage]
 
-                // Slide Title
+                // Slide Title (Matching reference styling)
                 Text(
                     text = slide.title,
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = DriverTextPrimary,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFF1E293B),
                     textAlign = TextAlign.Center,
-                    lineHeight = 34.sp
+                    lineHeight = 36.sp
                 )
 
                 Spacer(modifier = Modifier.height(14.dp))
@@ -136,15 +137,15 @@ fun DriverWalkthroughScreen(
                     text = slide.description,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Normal,
-                    color = DriverTextSecondary,
+                    color = Color(0xFF64748B),
                     textAlign = TextAlign.Center,
                     lineHeight = 22.sp,
-                    modifier = Modifier.padding(horizontal = 12.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 )
 
-                Spacer(modifier = Modifier.height(36.dp))
+                Spacer(modifier = Modifier.height(40.dp))
 
-                // Dedicated Vector Illustration
+                // Dedicated High-Fidelity Vector Illustration
                 Box(
                     modifier = Modifier.size(280.dp),
                     contentAlignment = Alignment.Center
@@ -162,36 +163,35 @@ fun DriverWalkthroughScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Page Indicator Dots
+                // Page Indicator Dots (Circular dots matching screenshots 1, 2, 3)
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(bottom = 32.dp)
+                    modifier = Modifier.padding(bottom = 36.dp)
                 ) {
                     repeat(slides.size) { index ->
                         val isSelected = index == currentPage
-                        val width by animateDpAsState(
-                            targetValue = if (isSelected) 22.dp else 8.dp,
-                            label = "dotWidth"
-                        )
                         Box(
                             modifier = Modifier
-                                .height(8.dp)
-                                .width(width)
+                                .size(10.dp)
                                 .clip(CircleShape)
-                                .background(if (isSelected) Mint500 else DriverDotInactive)
+                                .background(if (isSelected) Mint500 else Color(0xFFCBD5E1))
                                 .clickable { currentPage = index }
                         )
                     }
                 }
 
-                // Primary Bottom Action Button: Next -> Next -> Get Started
+                // Primary Bottom Action Button:
+                // Slide 1 & 2 -> "Next"
+                // Slide 3 -> "Choose Language" (Matching Screenshot 3)
                 Button(
                     onClick = {
                         if (currentPage < slides.size - 1) {
                             currentPage++
                         } else {
-                            onFinishWalkthrough()
+                            // On slide 3: opens Choose Language bottom sheet (matching screenshot 3 & 4)
+                            isTriggeredFromSlide3 = true
+                            showLanguageSheet = true
                         }
                     },
                     modifier = Modifier
@@ -205,7 +205,7 @@ fun DriverWalkthroughScreen(
                         text = if (currentPage < slides.size - 1) {
                             if (currentLanguage == "हिन्दी") "आगे बढ़ें (Next)" else "Next"
                         } else {
-                            if (currentLanguage == "हिन्दी") "शुरू करें (Get Started)" else "Get Started"
+                            if (currentLanguage == "हिन्दी") "भाषा चुनें (Choose Language)" else "Choose Language"
                         },
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -213,33 +213,27 @@ fun DriverWalkthroughScreen(
                     )
                 }
 
-                // Dedicated Language Switcher on Slide 3 matching screenshot 3/4
-                if (currentPage == slides.size - 1) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = if (currentLanguage == "हिन्दी") "भाषा बदलें (Choose Language: हिन्दी)" else "Choose Language (${currentLanguage})",
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = DriverTextSecondary,
-                        modifier = Modifier
-                            .clickable { showLanguageSheetFirst = true }
-                            .padding(8.dp)
-                    )
-                }
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
 
-        // STEP 1: Choose Language Bottom Sheet - Pops up FIRST before the 3 screens!
-        if (showLanguageSheetFirst) {
+        // STEP 1 & Slide 3: Choose Language Bottom Sheet (Matching Screenshot 4)
+        if (showLanguageSheet) {
             ChooseLanguageBottomSheet(
                 currentLanguage = currentLanguage,
                 onLanguageConfirmed = { chosen ->
                     currentLanguage = chosen
                     onLanguageSelected(chosen)
-                    showLanguageSheetFirst = false
+                    showLanguageSheet = false
+                    if (isTriggeredFromSlide3) {
+                        onFinishWalkthrough()
+                    }
                 },
                 onDismissRequest = {
-                    showLanguageSheetFirst = false
+                    showLanguageSheet = false
+                    if (isTriggeredFromSlide3) {
+                        onFinishWalkthrough()
+                    }
                 }
             )
         }

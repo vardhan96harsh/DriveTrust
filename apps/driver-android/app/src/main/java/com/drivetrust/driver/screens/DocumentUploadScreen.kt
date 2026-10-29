@@ -39,13 +39,13 @@ fun DocumentUploadScreen(
             TopAppBar(
                 title = {
                     Column {
-                        Text("KYC Verification Vault", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White)
-                        Text("Partner: $driverName (MoRTH Sarathi Audit)", fontSize = 12.sp, color = Slate400)
+                        Text("KYC Verification Vault", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = DriverTextPrimary)
+                        Text("Partner: $driverName (MoRTH Sarathi Audit)", fontSize = 12.sp, color = DriverTextSecondary)
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back", tint = DriverTextPrimary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MidnightCard)
@@ -78,7 +78,7 @@ fun DocumentUploadScreen(
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 "All commercial driving licenses and background clearance certificates are securely encrypted and verified by the DriveTrust Operations Admin before you can go on duty.",
-                                color = Slate300,
+                                color = DriverTextSecondary,
                                 fontSize = 11.sp,
                                 lineHeight = 16.sp
                             )
@@ -91,8 +91,8 @@ fun DocumentUploadScreen(
                 item {
                     Surface(
                         shape = RoundedCornerShape(12.dp),
-                        color = Emerald400.copy(alpha = 0.12f),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.4f)),
+                        color = Mint50,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Row(
@@ -100,10 +100,10 @@ fun DocumentUploadScreen(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Emerald400, modifier = Modifier.size(22.dp))
+                            Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Mint500, modifier = Modifier.size(22.dp))
                             Text(
                                 "Documents successfully synchronized with Admin KYC Vault. Audit complete.",
-                                color = Emerald400,
+                                color = Mint600,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Medium
                             )
@@ -172,11 +172,11 @@ fun DocumentUploadScreen(
                     },
                     modifier = Modifier.fillMaxWidth().height(52.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Gold500)
+                    colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                 ) {
-                    Icon(Icons.Rounded.CloudUpload, contentDescription = null, tint = MidnightDark, modifier = Modifier.size(20.dp))
+                    Icon(Icons.Rounded.CloudUpload, contentDescription = null, tint = Color.White, modifier = Modifier.size(20.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Sync to Operations Admin Vault", fontWeight = FontWeight.Bold, color = MidnightDark)
+                    Text("Sync to Operations Admin Vault", fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }
@@ -193,7 +193,7 @@ fun DocumentItemCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MidnightCard),
-        border = androidx.compose.foundation.BorderStroke(1.dp, if (isUploaded) Emerald400.copy(alpha = 0.3f) else MidnightBorder),
+        border = androidx.compose.foundation.BorderStroke(1.dp, if (isUploaded) Mint500.copy(alpha = 0.4f) else MidnightBorder),
         shape = RoundedCornerShape(14.dp)
     ) {
         Row(
@@ -202,20 +202,20 @@ fun DocumentItemCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f).padding(end = 12.dp)) {
-                Text(title, fontWeight = FontWeight.Bold, color = Color.White, fontSize = 13.sp)
+                Text(title, fontWeight = FontWeight.Bold, color = DriverTextPrimary, fontSize = 13.sp)
                 Spacer(modifier = Modifier.height(3.dp))
-                Text(subtitle, fontSize = 11.sp, color = Slate400, lineHeight = 15.sp)
+                Text(subtitle, fontSize = 11.sp, color = DriverTextSecondary, lineHeight = 15.sp)
             }
 
             Button(
                 onClick = onToggleUpload,
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isUploaded) Emerald400.copy(alpha = 0.15f) else Gold500.copy(alpha = 0.15f)
+                    containerColor = if (isUploaded) Mint50 else Gold50
                 ),
                 border = androidx.compose.foundation.BorderStroke(
                     1.dp,
-                    if (isUploaded) Emerald400.copy(alpha = 0.4f) else Gold500.copy(alpha = 0.4f)
+                    if (isUploaded) Mint500.copy(alpha = 0.5f) else Gold500.copy(alpha = 0.5f)
                 ),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
             ) {
@@ -226,12 +226,12 @@ fun DocumentItemCard(
                     Icon(
                         imageVector = if (isUploaded) Icons.Rounded.CheckCircle else Icons.Rounded.CameraAlt,
                         contentDescription = null,
-                        tint = if (isUploaded) Emerald400 else Gold500,
+                        tint = if (isUploaded) Mint600 else Gold500,
                         modifier = Modifier.size(15.dp)
                     )
                     Text(
                         text = if (isUploaded) "Verified" else "Upload",
-                        color = if (isUploaded) Emerald400 else Gold500,
+                        color = if (isUploaded) Mint600 else Gold500,
                         fontWeight = FontWeight.Bold,
                         fontSize = 11.sp
                     )

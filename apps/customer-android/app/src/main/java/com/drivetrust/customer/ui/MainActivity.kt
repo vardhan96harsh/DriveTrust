@@ -451,9 +451,9 @@ fun CustomerBottomNavBar(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         shape = RoundedCornerShape(24.dp),
-        color = MidnightCard,
-        shadowElevation = 18.dp,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
+        color = CustomerWhite,
+        shadowElevation = 10.dp,
+        border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight)
     ) {
         Row(
             modifier = Modifier
@@ -466,8 +466,8 @@ fun CustomerBottomNavBar(
                 val isActive = item.tab == activeTab
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = if (isActive) Midnight950 else Color.Transparent,
-                    border = if (isActive) androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f)) else null,
+                    color = if (isActive) Mint50 else Color.Transparent,
+                    border = if (isActive) androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f)) else null,
                     modifier = Modifier
                         .clickable { onTabSelected(item.tab) }
                         .padding(horizontal = 2.dp)
@@ -480,15 +480,15 @@ fun CustomerBottomNavBar(
                         Icon(
                             imageVector = item.icon,
                             contentDescription = item.label,
-                            tint = if (isActive) Gold500 else Slate400,
+                            tint = if (isActive) Mint500 else Slate400,
                             modifier = Modifier.size(20.dp)
                         )
                         if (isActive) {
                             Text(
                                 text = item.label,
                                 fontSize = 11.sp,
-                                fontWeight = FontWeight.Black,
-                                color = Color.White
+                                fontWeight = FontWeight.Bold,
+                                color = CustomerTextPrimary
                             )
                         }
                     }

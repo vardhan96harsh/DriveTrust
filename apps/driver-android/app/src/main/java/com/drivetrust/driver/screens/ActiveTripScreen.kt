@@ -124,7 +124,7 @@ fun DriverActiveTripScreen(
                         text = if (!tripStarted) "At Pickup Location" else "Driving Client to Destination",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Black,
-                        color = Color.White
+                        color = DriverTextPrimary
                     )
                 }
 
@@ -149,7 +149,7 @@ fun DriverActiveTripScreen(
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.filledTonalButtonColors(
                             containerColor = MidnightCard,
-                            contentColor = Emerald400
+                            contentColor = Mint600
                         ),
                         border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
                         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
@@ -194,14 +194,14 @@ fun DriverActiveTripScreen(
                         ) {
                             Surface(
                                 shape = CircleShape,
-                                color = Midnight950,
-                                border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f)),
+                                color = Mint50,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
                                 modifier = Modifier.size(40.dp)
                             ) {
                                 Box(contentAlignment = Alignment.Center) {
                                     Text(
                                         text = offer.customerName.take(2).uppercase(),
-                                        color = Gold500,
+                                        color = Mint500,
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 13.sp
                                     )
@@ -212,7 +212,7 @@ fun DriverActiveTripScreen(
                                     text = offer.customerName,
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.Black,
-                                    color = Color.White
+                                    color = DriverTextPrimary
                                 )
                                 Text(
                                     text = offer.customerPhone,
@@ -334,7 +334,7 @@ fun DriverActiveTripScreen(
                                 text = "4-Point Handover Audit",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp,
-                                color = Color.White
+                                color = DriverTextPrimary
                             )
                             Text(
                                 text = if (isInspectionPassed) "Inspection verified with vehicle owner" else "Audit scratch & odometer before start",
@@ -408,9 +408,9 @@ fun DriverActiveTripScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Slate200,
-                                focusedBorderColor = Gold500,
+                                focusedTextColor = DriverTextPrimary,
+                                unfocusedTextColor = DriverTextPrimary,
+                                focusedBorderColor = Mint500,
                                 unfocusedBorderColor = MidnightBorder,
                                 focusedContainerColor = Midnight950,
                                 unfocusedContainerColor = Midnight950
@@ -434,8 +434,8 @@ fun DriverActiveTripScreen(
                                 .fillMaxWidth()
                                 .height(50.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Gold500,
-                                contentColor = MidnightDark
+                                containerColor = Mint500,
+                                contentColor = Color.White
                             ),
                             shape = RoundedCornerShape(12.dp)
                         ) {
@@ -466,8 +466,8 @@ fun DriverActiveTripScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                Box(modifier = Modifier.size(6.dp).background(Emerald400, CircleShape))
-                                Text("IMU SENSOR ACTIVE", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Emerald400)
+                                Box(modifier = Modifier.size(6.dp).background(Mint600, CircleShape))
+                                Text("IMU SENSOR ACTIVE", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Mint600)
                             }
                         }
                         Row(
@@ -475,7 +475,7 @@ fun DriverActiveTripScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("48 km/h", fontSize = 32.sp, fontWeight = FontWeight.Black, color = Color.White, fontFamily = FontFamily.Monospace)
+                            Text("48 km/h", fontSize = 32.sp, fontWeight = FontWeight.Black, color = DriverTextPrimary, fontFamily = FontFamily.Monospace)
                             Surface(
                                 shape = RoundedCornerShape(8.dp),
                                 color = Emerald400.copy(alpha = 0.15f),
@@ -549,8 +549,8 @@ fun DriverQuickChatDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
-                        Text("Chauffeur Chat", fontWeight = FontWeight.Black, fontSize = 16.sp, color = Color.White)
-                        Text("Client: $customerName", fontSize = 11.sp, color = Gold500)
+                        Text("Chauffeur Chat", fontWeight = FontWeight.Black, fontSize = 16.sp, color = DriverTextPrimary)
+                        Text("Client: $customerName", fontSize = 11.sp, color = Mint600)
                     }
                     IconButton(
                         onClick = onDismiss,

@@ -73,7 +73,7 @@ fun AdminVerificationBanner(
                 Text(
                     text = "Commercial Driving License ($licenseNumber) is currently under review in the Admin KYC Vault. Dispatch matching will unlock immediately once approved.",
                     fontSize = 12.sp,
-                    color = Slate300,
+                    color = DriverTextPrimary,
                     lineHeight = 18.sp
                 )
             }
@@ -81,8 +81,8 @@ fun AdminVerificationBanner(
     } else {
         Surface(
             shape = RoundedCornerShape(16.dp),
-            color = Emerald400.copy(alpha = 0.12f),
-            border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.3f)),
+            color = Mint50,
+            border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
@@ -92,14 +92,14 @@ fun AdminVerificationBanner(
             ) {
                 Surface(
                     shape = RoundedCornerShape(10.dp),
-                    color = Emerald400.copy(alpha = 0.2f),
+                    color = Mint100,
                     modifier = Modifier.size(38.dp)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
                             Icons.Rounded.VerifiedUser,
                             contentDescription = null,
-                            tint = Emerald400,
+                            tint = Mint500,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -109,13 +109,13 @@ fun AdminVerificationBanner(
                         text = "ADMIN VERIFIED & CLEARED",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Black,
-                        color = Emerald400,
+                        color = Mint600,
                         letterSpacing = 0.5.sp
                     )
                     Text(
                         text = "MoRTH Sarathi Commercial clearance active. Instant ride offer dispatch ready.",
                         fontSize = 12.sp,
-                        color = Slate300
+                        color = DriverTextSecondary
                     )
                 }
             }

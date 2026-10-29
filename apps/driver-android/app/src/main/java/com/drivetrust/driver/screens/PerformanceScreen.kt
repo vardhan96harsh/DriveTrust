@@ -30,13 +30,13 @@ fun DriverPerformanceScreen(
             TopAppBar(
                 title = {
                     Column {
-                        Text("Chauffeur Safety & Quality Score", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color.White)
-                        Text("Partner: $driverName (Platinum Tier)", fontSize = 12.sp, color = Slate400)
+                        Text("Chauffeur Safety & Quality Score", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = DriverTextPrimary)
+                        Text("Partner: $driverName (Platinum Tier)", fontSize = 12.sp, color = DriverTextSecondary)
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back", tint = DriverTextPrimary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MidnightCard)
@@ -79,8 +79,8 @@ fun DriverPerformanceScreen(
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text("98", fontSize = 60.sp, fontWeight = FontWeight.Black, color = Color.White)
-                        Text("Safety & Smoothness Telematics Index", fontSize = 12.sp, color = Slate400)
+                        Text("98", fontSize = 60.sp, fontWeight = FontWeight.Black, color = DriverTextPrimary)
+                        Text("Safety & Smoothness Telematics Index", fontSize = 12.sp, color = DriverTextSecondary)
 
                         Spacer(modifier = Modifier.height(20.dp))
                         Row(
@@ -120,10 +120,10 @@ fun DriverPerformanceScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Rounded.Sensors, contentDescription = null, tint = Emerald400, modifier = Modifier.size(20.dp))
-                            Text("Live Telematics Stream (Last 30 Days)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                            Icon(Icons.Rounded.Sensors, contentDescription = null, tint = Mint500, modifier = Modifier.size(20.dp))
+                            Text("Live Telematics Stream (Last 30 Days)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = DriverTextPrimary)
                         }
-                        Text("Calculated via phone 3-axis accelerometer and GPS trajectory sampling", fontSize = 11.sp, color = Slate400)
+                        Text("Calculated via phone 3-axis accelerometer and GPS trajectory sampling", fontSize = 11.sp, color = DriverTextSecondary)
 
                         Spacer(modifier = Modifier.height(16.dp))
 
@@ -131,7 +131,7 @@ fun DriverPerformanceScreen(
                             title = "Smooth Braking Compliance",
                             value = "0 harsh brake incidents across 420 km",
                             status = "99% Smooth",
-                            statusColor = Emerald400,
+                            statusColor = Mint600,
                             progress = 0.99f
                         )
 
@@ -143,7 +143,7 @@ fun DriverPerformanceScreen(
                             title = "Cornering & Centrifugal G-Force",
                             value = "Max 0.08 G (Chauffeur Standard < 0.20 G)",
                             status = "Pristine",
-                            statusColor = Emerald400,
+                            statusColor = Mint600,
                             progress = 0.96f
                         )
 
@@ -155,7 +155,7 @@ fun DriverPerformanceScreen(
                             title = "City Speed Limit Adherence",
                             value = "100% compliance with road speed regulations",
                             status = "100% Lawful",
-                            statusColor = Emerald400,
+                            statusColor = Mint600,
                             progress = 1.0f
                         )
                     }
@@ -181,14 +181,14 @@ fun DriverPerformanceScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(Icons.Rounded.Shield, contentDescription = null, tint = Gold500, modifier = Modifier.size(20.dp))
-                                Text("MoRTH Sarathi Verification", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("MoRTH Sarathi Verification", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = DriverTextPrimary)
                             }
                             Surface(
-                                color = Emerald400.copy(alpha = 0.15f),
-                                border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.4f)),
+                                color = Mint50,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
                                 shape = RoundedCornerShape(6.dp)
                             ) {
-                                Text("ADMIN VERIFIED", color = Emerald400, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+                                Text("ADMIN VERIFIED", color = Mint600, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
                             }
                         }
 
@@ -196,7 +196,7 @@ fun DriverPerformanceScreen(
                         Text(
                             "Commercial Driving License and Police Clearance Certificate audited by DriveTrust Operations Admin. Cleared for luxury automatic & manual client vehicles.",
                             fontSize = 11.sp,
-                            color = Slate300,
+                            color = DriverTextSecondary,
                             lineHeight = 16.sp
                         )
                     }
@@ -221,8 +221,8 @@ fun TelemetryMetricRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(title, fontWeight = FontWeight.SemiBold, color = Color.White, fontSize = 13.sp)
-                Text(value, fontSize = 11.sp, color = Slate400)
+                Text(title, fontWeight = FontWeight.SemiBold, color = DriverTextPrimary, fontSize = 13.sp)
+                Text(value, fontSize = 11.sp, color = DriverTextSecondary)
             }
             Surface(
                 color = statusColor.copy(alpha = 0.15f),

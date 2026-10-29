@@ -108,8 +108,8 @@ fun CustomerProfileScreen(
                             )
                         }
                         Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                            Text(name, fontSize = 18.sp, fontWeight = FontWeight.Black, color = Color.White)
-                            Text(phone, fontSize = 12.sp, color = Slate300)
+                            Text(name, fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                            Text(phone, fontSize = 12.sp, color = CustomerTextSecondary)
                             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Surface(shape = RoundedCornerShape(4.dp), color = Slate800) {
                                     Row(

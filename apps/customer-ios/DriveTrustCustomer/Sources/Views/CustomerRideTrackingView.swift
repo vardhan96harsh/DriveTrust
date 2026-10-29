@@ -60,8 +60,8 @@ struct CustomerRideTrackingView: View {
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 8)
-                            .background(selectedMode == mode ? Color.green : Color(red: 0.11, green: 0.15, blue: 0.24))
-                            .foregroundColor(selectedMode == mode ? Color.black : Color.gray)
+                            .background(selectedMode == mode ? Color.mint500 : Color.midnight950)
+                            .foregroundColor(selectedMode == mode ? Color.white : Color.slate500)
                             .cornerRadius(12)
                         }
                     }
@@ -78,13 +78,13 @@ struct CustomerRideTrackingView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(selectedMode.rawValue.uppercased())
                             .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(.green)
+                            .foregroundColor(.mint500)
                         Text(bookingStatus.replacingOccurrences(of: "_", with: " "))
                             .font(.system(size: 18, weight: .black))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
                         Text("ETA: ~20-25 Mins (Chauffeur Traveling to Location)")
                             .font(.system(size: 12, weight: .bold))
-                            .foregroundColor(.yellow)
+                            .foregroundColor(.gold500)
                     }
 
                     Spacer()
@@ -103,26 +103,26 @@ struct CustomerRideTrackingView: View {
                     }
                 }
 
-                Divider().background(Color.gray.opacity(0.3))
+                Divider().background(Color.midnightBorder)
 
                 // Driver Details & Start OTP Pill
                 HStack {
                     Circle()
-                        .fill(Color.blue.opacity(0.2))
+                        .fill(Color.mint50)
                         .frame(width: 48, height: 48)
                         .overlay(
                             Text("RS")
                                 .font(.system(size: 16, weight: .black))
-                                .foregroundColor(.blue)
+                                .foregroundColor(.mint500)
                         )
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(driverName)
                             .font(.system(size: 15, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
                         Text("★ \(String(format: "%.2f", driverRating)) • 1,420 Verified Trips (MP-40)")
                             .font(.system(size: 11))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.customerTextSecondary)
                     }
 
                     Spacer()
@@ -131,13 +131,13 @@ struct CustomerRideTrackingView: View {
                     VStack(alignment: .trailing, spacing: 2) {
                         Text("START OTP")
                             .font(.system(size: 9, weight: .black))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.customerTextSecondary)
                         Text(startOTP)
                             .font(.system(size: 20, weight: .black, design: .monospaced))
-                            .foregroundColor(.green)
+                            .foregroundColor(.mint500)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
-                            .background(Color.green.opacity(0.15))
+                            .background(Color.mint50)
                             .cornerRadius(8)
                     }
                 }
@@ -147,25 +147,26 @@ struct CustomerRideTrackingView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("ESTIMATED FARE")
                             .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.customerTextSecondary)
                         Text("₹\(String(format: "%.2f", estimatedFare))")
                             .font(.system(size: 18, weight: .black))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
                     }
 
                     Spacer()
 
                     Text("Includes Night Surcharge & Return")
                         .font(.system(size: 10))
-                        .foregroundColor(.gray)
+                        .foregroundColor(.customerTextSecondary)
                 }
                 .padding(12)
-                .background(Color(red: 0.11, green: 0.15, blue: 0.24))
+                .background(Color.midnight950)
                 .cornerRadius(12)
             }
             .padding(20)
-            .background(Color(red: 0.08, green: 0.11, blue: 0.18))
+            .background(Color.white)
             .cornerRadius(24, corners: [.topLeft, .topRight])
+            .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: -4)
         }
         .alert("Emergency SOS Triggered", isPresented: $showEmergencySOS) {
             Button("Call Police (112)", role: .destructive) {}

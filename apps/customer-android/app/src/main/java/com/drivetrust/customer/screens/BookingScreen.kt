@@ -179,12 +179,12 @@ fun CustomerBookingScreen(
                                     text = carModel,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 14.sp,
-                                    color = Color.White
+                                    color = CustomerTextPrimary
                                 )
                                 Text(
                                     text = "$carPlate • Automatic Fleet",
                                     fontSize = 11.sp,
-                                    color = Slate400
+                                    color = CustomerTextSecondary
                                 )
                             }
                         }
@@ -257,14 +257,14 @@ fun CustomerBookingScreen(
                             OutlinedTextField(
                                 value = pickupAddress,
                                 onValueChange = { pickupAddress = it },
-                                label = { Text("Pickup Location", color = Slate400, fontSize = 11.sp) },
+                                label = { Text("Pickup Location", color = CustomerTextSecondary, fontSize = 11.sp) },
                                 modifier = Modifier.weight(1f),
-                                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Medium, color = Color.White),
+                                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Medium, color = CustomerTextPrimary),
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = Gold500,
-                                    unfocusedBorderColor = MidnightBorder,
-                                    focusedContainerColor = MidnightDark,
-                                    unfocusedContainerColor = MidnightDark
+                                    focusedBorderColor = Mint500,
+                                    unfocusedBorderColor = CustomerCardBorderLight,
+                                    focusedContainerColor = CustomerWhite,
+                                    unfocusedContainerColor = CustomerInnerSurfaceLight
                                 ),
                                 shape = RoundedCornerShape(10.dp),
                                 trailingIcon = {
@@ -272,7 +272,7 @@ fun CustomerBookingScreen(
                                         locationPickerTarget = "PICKUP"
                                         showLocationPickerModal = true
                                     }) {
-                                        Icon(Icons.Rounded.Search, contentDescription = "Search", tint = Gold500, modifier = Modifier.size(18.dp))
+                                        Icon(Icons.Rounded.Search, contentDescription = "Search", tint = Mint500, modifier = Modifier.size(18.dp))
                                     }
                                 }
                             )
@@ -291,14 +291,14 @@ fun CustomerBookingScreen(
                             OutlinedTextField(
                                 value = dropoffAddress,
                                 onValueChange = { dropoffAddress = it },
-                                label = { Text("Destination", color = Slate400, fontSize = 11.sp) },
+                                label = { Text("Destination", color = CustomerTextSecondary, fontSize = 11.sp) },
                                 modifier = Modifier.weight(1f),
-                                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Medium, color = Color.White),
+                                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Medium, color = CustomerTextPrimary),
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = Gold500,
-                                    unfocusedBorderColor = MidnightBorder,
-                                    focusedContainerColor = MidnightDark,
-                                    unfocusedContainerColor = MidnightDark
+                                    focusedBorderColor = Mint500,
+                                    unfocusedBorderColor = CustomerCardBorderLight,
+                                    focusedContainerColor = CustomerWhite,
+                                    unfocusedContainerColor = CustomerInnerSurfaceLight
                                 ),
                                 shape = RoundedCornerShape(10.dp),
                                 trailingIcon = {
@@ -452,8 +452,8 @@ fun CustomerBookingScreen(
                         ) {
                             Icon(Icons.Rounded.Payment, contentDescription = null, tint = Gold500, modifier = Modifier.size(16.dp))
                             Column {
-                                Text("PAY WITH", fontSize = 8.sp, fontWeight = FontWeight.Bold, color = Slate400)
-                                Text(selectedPaymentType, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("PAY WITH", fontSize = 8.sp, fontWeight = FontWeight.Bold, color = CustomerTextSecondary)
+                                Text(selectedPaymentType, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
                             }
                         }
                     }
@@ -660,20 +660,20 @@ fun CustomerBookingScreen(
                             text = if (locationPickerTarget == "PICKUP") "Select Pickup Landmark" else "Select Destination Landmark",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White
+                            color = CustomerTextPrimary
                         )
                         Text(
                             text = "Vidisha (MP-40) Commercial Chauffeur Network",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
 
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
 
                         popularLandmarks.forEach { landmark ->
                             Surface(
                                 shape = RoundedCornerShape(10.dp),
-                                color = MidnightDark,
+                                color = CustomerInnerSurfaceLight,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
@@ -690,8 +690,8 @@ fun CustomerBookingScreen(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
-                                    Icon(Icons.Rounded.LocationOn, contentDescription = null, tint = Gold500, modifier = Modifier.size(16.dp))
-                                    Text(landmark, fontSize = 12.sp, color = Color.White, fontWeight = FontWeight.Medium)
+                                    Icon(Icons.Rounded.LocationOn, contentDescription = null, tint = Mint500, modifier = Modifier.size(16.dp))
+                                    Text(landmark, fontSize = 12.sp, color = CustomerTextPrimary, fontWeight = FontWeight.Medium)
                                 }
                             }
                         }
@@ -699,10 +699,10 @@ fun CustomerBookingScreen(
                         Button(
                             onClick = { showLocationPickerModal = false },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = Slate800),
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                             shape = RoundedCornerShape(10.dp)
                         ) {
-                            Text("Done", color = Color.White)
+                            Text("Done", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -722,26 +722,26 @@ fun CustomerBookingScreen(
                         modifier = Modifier.padding(20.dp),
                         verticalArrangement = Arrangement.spacedBy(14.dp)
                     ) {
-                        Text("Reserve Advance Chauffeur", fontSize = 16.sp, fontWeight = FontWeight.Black, color = Color.White)
-                        Text("Chauffeur arrives 10 minutes prior to scheduled time with sanitized uniform", fontSize = 11.sp, color = Slate400)
+                        Text("Reserve Advance Chauffeur", fontSize = 16.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                        Text("Chauffeur arrives 10 minutes prior to scheduled time with sanitized uniform", fontSize = 11.sp, color = CustomerTextSecondary)
 
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
 
                         val dates = listOf("Today (Immediate)", "Tomorrow (28 Oct)", "Wednesday (29 Oct)", "Weekend Trip")
-                        Text("SELECT DATE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Gold500)
+                        Text("SELECT DATE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Mint500)
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             items(dates) { d ->
                                 Surface(
                                     shape = RoundedCornerShape(10.dp),
-                                    color = if (scheduledDate == d) Gold500 else MidnightDark,
-                                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                                    color = if (scheduledDate == d) Mint500 else CustomerInnerSurfaceLight,
+                                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                                     modifier = Modifier.clickable { scheduledDate = d }
                                 ) {
                                     Text(
                                         text = d,
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (scheduledDate == d) MidnightDark else Color.White,
+                                        color = if (scheduledDate == d) Color.White else CustomerTextPrimary,
                                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                                     )
                                 }
@@ -749,20 +749,20 @@ fun CustomerBookingScreen(
                         }
 
                         val times = listOf("06:30 AM", "09:00 AM", "01:30 PM", "06:00 PM", "10:30 PM")
-                        Text("SELECT TIME SLOT", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Gold500)
+                        Text("SELECT TIME SLOT", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Mint500)
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             items(times) { t ->
                                 Surface(
                                     shape = RoundedCornerShape(10.dp),
-                                    color = if (scheduledTime == t) Gold500 else MidnightDark,
-                                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                                    color = if (scheduledTime == t) Mint500 else CustomerInnerSurfaceLight,
+                                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                                     modifier = Modifier.clickable { scheduledTime = t }
                                 ) {
                                     Text(
                                         text = t,
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (scheduledTime == t) MidnightDark else Color.White,
+                                        color = if (scheduledTime == t) Color.White else CustomerTextPrimary,
                                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                                     )
                                 }
@@ -775,10 +775,10 @@ fun CustomerBookingScreen(
                                 showScheduleModal = false
                             },
                             modifier = Modifier.fillMaxWidth().height(48.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Gold500),
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                             shape = RoundedCornerShape(10.dp)
                         ) {
-                            Text("Confirm Reservation Slot", fontWeight = FontWeight.Bold, color = MidnightDark)
+                            Text("Confirm Reservation Slot", fontWeight = FontWeight.Bold, color = Color.White)
                         }
                     }
                 }
@@ -790,15 +790,15 @@ fun CustomerBookingScreen(
             Dialog(onDismissRequest = { showPromoPickerModal = false }) {
                 Surface(
                     shape = RoundedCornerShape(20.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerCardLight,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
                         modifier = Modifier.padding(20.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Text("Apply Promo Voucher", fontSize = 16.sp, fontWeight = FontWeight.Black, color = Color.White)
+                        Text("Apply Promo Voucher", fontSize = 16.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
 
                         val coupons = listOf(
                             Pair("WELCOME50", "₹150 Flat Off on first chauffeur booking"),
@@ -810,8 +810,8 @@ fun CustomerBookingScreen(
                         coupons.forEach { (code, desc) ->
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = MidnightDark,
-                                border = androidx.compose.foundation.BorderStroke(1.dp, if (appliedPromoCode == code) Emerald400 else MidnightBorder),
+                                color = CustomerInnerSurfaceLight,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, if (appliedPromoCode == code) Mint500 else CustomerCardBorderLight),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
@@ -831,10 +831,10 @@ fun CustomerBookingScreen(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Column {
-                                        Text(code, fontWeight = FontWeight.Black, fontSize = 13.sp, color = Emerald400)
-                                        Text(desc, fontSize = 11.sp, color = Slate400)
+                                        Text(code, fontWeight = FontWeight.Black, fontSize = 13.sp, color = Mint500)
+                                        Text(desc, fontSize = 11.sp, color = CustomerTextSecondary)
                                     }
-                                    Text(if (appliedPromoCode == code) "Active ✓" else "Apply", color = Gold500, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                    Text(if (appliedPromoCode == code) "Active ✓" else "Apply", color = Mint500, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                                 }
                             }
                         }
@@ -842,9 +842,9 @@ fun CustomerBookingScreen(
                         Button(
                             onClick = { showPromoPickerModal = false },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = Slate800)
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                         ) {
-                            Text("Close", color = Color.White)
+                            Text("Close", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -864,7 +864,7 @@ fun CustomerBookingScreen(
                         modifier = Modifier.padding(20.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Text("Select Payment Method", fontSize = 16.sp, fontWeight = FontWeight.Black, color = Color.White)
+                        Text("Select Payment Method", fontSize = 16.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
 
                         val paymentOptions = listOf(
                             Triple("WALLET", "DT Wallet (Balance: ₹1,240.50)", "Instant one-tap deduction"),
@@ -877,8 +877,8 @@ fun CustomerBookingScreen(
                             val isSelected = selectedPaymentType == type
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = MidnightDark,
-                                border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) Gold500 else MidnightBorder),
+                                color = CustomerInnerSurfaceLight,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) Mint500 else CustomerCardBorderLight),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
@@ -893,11 +893,11 @@ fun CustomerBookingScreen(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Column {
-                                        Text(label, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Color.White)
-                                        Text(sub, fontSize = 10.sp, color = Slate400)
+                                        Text(label, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = CustomerTextPrimary)
+                                        Text(sub, fontSize = 10.sp, color = CustomerTextSecondary)
                                     }
                                     if (isSelected) {
-                                        Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Gold500, modifier = Modifier.size(18.dp))
+                                        Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Mint500, modifier = Modifier.size(18.dp))
                                     }
                                 }
                             }
@@ -906,9 +906,9 @@ fun CustomerBookingScreen(
                         Button(
                             onClick = { showPaymentPickerModal = false },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = Slate800)
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                         ) {
-                            Text("Cancel", color = Color.White)
+                            Text("Cancel", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -939,40 +939,40 @@ fun CustomerBookingScreen(
                             }
                         }
 
-                        Text("Payment Authorization", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Color.White)
-                        Text("Simulated Bank Gateway • Amount: ₹${finalFare.toInt()}.00", fontSize = 12.sp, color = Slate400)
+                        Text("Payment Authorization", fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                        Text("Simulated Bank Gateway • Amount: ₹${finalFare.toInt()}.00", fontSize = 12.sp, color = CustomerTextSecondary)
 
                         Surface(
                             shape = RoundedCornerShape(12.dp),
-                            color = MidnightDark,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                            color = CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                Text("METHOD: $selectedPaymentMethod", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Gold500)
-                                Text("REF: TXN-${(100000..999999).random()}", fontSize = 10.sp, color = Slate400)
+                                Text("METHOD: $selectedPaymentMethod", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Mint500)
+                                Text("REF: TXN-${(100000..999999).random()}", fontSize = 10.sp, color = CustomerTextSecondary)
                             }
                         }
 
                         if (isPaymentProcessing) {
-                            CircularProgressIndicator(color = Gold500, modifier = Modifier.size(36.dp))
-                            Text("Authorizing sandbox transaction...", fontSize = 12.sp, color = Gold500, fontWeight = FontWeight.Bold)
+                            CircularProgressIndicator(color = Mint500, modifier = Modifier.size(36.dp))
+                            Text("Authorizing sandbox transaction...", fontSize = 12.sp, color = Mint500, fontWeight = FontWeight.Bold)
                         } else if (simulatedPaymentSuccess) {
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Emerald400, modifier = Modifier.size(20.dp))
-                                Text("Payment Authorized!", color = Emerald400, fontWeight = FontWeight.Black, fontSize = 14.sp)
+                                Icon(Icons.Rounded.CheckCircle, contentDescription = null, tint = Mint500, modifier = Modifier.size(20.dp))
+                                Text("Payment Authorized!", color = Mint500, fontWeight = FontWeight.Black, fontSize = 14.sp)
                             }
                         } else {
                             Button(
                                 onClick = { isPaymentProcessing = true },
                                 modifier = Modifier.fillMaxWidth().height(48.dp),
                                 shape = RoundedCornerShape(12.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = Gold500)
+                                colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                             ) {
-                                Text("AUTHORIZE PAYMENT (₹${finalFare.toInt()})", fontWeight = FontWeight.Black, color = MidnightDark)
+                                Text("AUTHORIZE PAYMENT (₹${finalFare.toInt()})", fontWeight = FontWeight.Black, color = Color.White)
                             }
                         }
 
@@ -996,8 +996,8 @@ fun CustomerBookingScreen(
             Dialog(onDismissRequest = { showPricingDetailModal = false }) {
                 Surface(
                     shape = RoundedCornerShape(20.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerCardLight,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -1010,50 +1010,50 @@ fun CustomerBookingScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column {
-                                Text("Pricing Breakdown", fontSize = 16.sp, fontWeight = FontWeight.Black, color = Color.White)
-                                Text("Vidisha (MP-40) Chauffeur Matrix", fontSize = 11.sp, color = Slate400)
+                                Text("Pricing Breakdown", fontSize = 16.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                                Text("Vidisha (MP-40) Chauffeur Matrix", fontSize = 11.sp, color = CustomerTextSecondary)
                             }
                             Surface(
                                 shape = RoundedCornerShape(6.dp),
-                                color = Emerald400.copy(alpha = 0.15f),
-                                border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.3f))
+                                color = Mint50,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f))
                             ) {
-                                Text("Zero Hidden Fees", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Emerald400, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+                                Text("Zero Hidden Fees", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Mint500, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
                             }
                         }
 
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
 
                         val driverPayout = Math.round(finalFare * 0.80)
                         val platformTake = Math.round(finalFare * 0.20)
 
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text("Base Chauffeur Package", fontSize = 12.sp, color = Slate300)
-                                Text("₹${grossFare.toInt()}.00", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("Base Chauffeur Package", fontSize = 12.sp, color = CustomerTextSecondary)
+                                Text("₹${grossFare.toInt()}.00", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
                             }
                             if (promoDiscountAmount > 0) {
                                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                    Text("Promo Discount ($appliedPromoCode)", fontSize = 12.sp, color = Emerald400, fontWeight = FontWeight.Bold)
-                                    Text("-₹${promoDiscountAmount.toInt()}.00", fontSize = 12.sp, fontWeight = FontWeight.Black, color = Emerald400)
+                                    Text("Promo Discount ($appliedPromoCode)", fontSize = 12.sp, color = Mint500, fontWeight = FontWeight.Bold)
+                                    Text("-₹${promoDiscountAmount.toInt()}.00", fontSize = 12.sp, fontWeight = FontWeight.Black, color = Mint500)
                                 }
                             }
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text("Transit Guarantee (₹10L Policy)", fontSize = 12.sp, color = Emerald400)
-                                Text("₹0.00 (Included)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Emerald400)
+                                Text("Transit Guarantee (₹10L Policy)", fontSize = 12.sp, color = Mint500)
+                                Text("₹0.00 (Included)", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Mint500)
                             }
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text("GST (5%)", fontSize = 12.sp, color = Slate300)
-                                Text("Included", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("GST (5%)", fontSize = 12.sp, color = CustomerTextSecondary)
+                                Text("Included", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
                             }
                         }
 
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
 
                         Surface(
                             shape = RoundedCornerShape(12.dp),
-                            color = MidnightDark,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f)),
+                            color = CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f)),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Row(
@@ -1062,29 +1062,29 @@ fun CustomerBookingScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column {
-                                    Text("TOTAL NET BILL", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Gold500)
-                                    Text("₹${finalFare.toInt()}.00", fontSize = 20.sp, fontWeight = FontWeight.Black, color = Gold500)
+                                    Text("TOTAL NET BILL", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Mint500)
+                                    Text("₹${finalFare.toInt()}.00", fontSize = 20.sp, fontWeight = FontWeight.Black, color = Mint500)
                                 }
-                                Text("All-inclusive", fontSize = 10.sp, color = Slate400)
+                                Text("All-inclusive", fontSize = 10.sp, color = CustomerTextSecondary)
                             }
                         }
 
                         Surface(
                             shape = RoundedCornerShape(10.dp),
-                            color = MidnightDark,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                            color = CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(modifier = Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text("Chauffeur Net Payout: ₹$driverPayout.00 (80%)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Emerald400)
-                                Text("Platform Take-Rate: ₹$platformTake.00 (20%)", fontSize = 10.sp, color = Slate400)
+                                Text("Chauffeur Net Payout: ₹$driverPayout.00 (80%)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Mint500)
+                                Text("Platform Take-Rate: ₹$platformTake.00 (20%)", fontSize = 10.sp, color = CustomerTextSecondary)
                             }
                         }
 
                         Button(
                             onClick = { showPricingDetailModal = false },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = Slate800),
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             Text("Close Breakdown", fontWeight = FontWeight.Bold, color = Color.White)

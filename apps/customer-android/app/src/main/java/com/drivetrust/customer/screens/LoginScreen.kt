@@ -35,16 +35,17 @@ fun CustomerLoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MidnightDark)
+            .background(CustomerBackgroundLight)
             .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = MidnightCard),
+            colors = CardDefaults.cardColors(containerColor = CustomerCardLight),
             shape = RoundedCornerShape(24.dp),
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight)
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
@@ -54,14 +55,14 @@ fun CustomerLoginScreen(
                 Column {
                     Surface(
                         shape = RoundedCornerShape(12.dp),
-                        color = Midnight950,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.6f)),
+                        color = Mint50,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f)),
                         modifier = Modifier.size(48.dp)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Text(
                                 text = "DT",
-                                color = Gold500,
+                                color = Mint500,
                                 fontWeight = FontWeight.Black,
                                 fontSize = 20.sp
                             )
@@ -72,12 +73,12 @@ fun CustomerLoginScreen(
                         text = "Executive Chauffeur Sign In",
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Black,
-                        color = Color.White
+                        color = CustomerTextPrimary
                     )
                     Text(
                         text = "Hire background-verified professional chauffeurs for your car",
                         fontSize = 12.sp,
-                        color = Slate400
+                        color = CustomerTextSecondary
                     )
                 }
 
@@ -87,7 +88,7 @@ fun CustomerLoginScreen(
                             text = "REGISTERED MOBILE NUMBER",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Gold500,
+                            color = Mint500,
                             letterSpacing = 0.5.sp
                         )
                         OutlinedTextField(
@@ -97,17 +98,17 @@ fun CustomerLoginScreen(
                                 Icon(
                                     Icons.Rounded.Phone,
                                     contentDescription = null,
-                                    tint = Gold500,
+                                    tint = Mint500,
                                     modifier = Modifier.size(18.dp)
                                 )
                             },
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Slate200,
-                                focusedBorderColor = Gold500,
-                                unfocusedBorderColor = MidnightBorder,
-                                focusedContainerColor = Midnight950,
-                                unfocusedContainerColor = Midnight950
+                                focusedTextColor = CustomerTextPrimary,
+                                unfocusedTextColor = CustomerTextPrimary,
+                                focusedBorderColor = Mint500,
+                                unfocusedBorderColor = CustomerCardBorderLight,
+                                focusedContainerColor = CustomerWhite,
+                                unfocusedContainerColor = CustomerInnerSurfaceLight
                             ),
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
@@ -127,20 +128,20 @@ fun CustomerLoginScreen(
                             .fillMaxWidth()
                             .height(50.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Gold500,
-                            contentColor = MidnightDark
+                            containerColor = Mint500,
+                            contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("Send 6-Digit Security OTP", fontWeight = FontWeight.Black, fontSize = 14.sp)
+                        Text("Send 6-Digit Security OTP", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White)
                         Spacer(modifier = Modifier.width(6.dp))
-                        Icon(Icons.Rounded.ArrowForward, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Rounded.ArrowForward, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.White)
                     }
                 } else {
                     Surface(
                         shape = RoundedCornerShape(14.dp),
-                        color = Midnight950,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.4f)),
+                        color = Mint50,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.4f)),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Row(
@@ -153,7 +154,7 @@ fun CustomerLoginScreen(
                                     text = "SANDBOX SIMULATION OTP",
                                     fontSize = 9.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Emerald400,
+                                    color = Mint600,
                                     letterSpacing = 0.5.sp
                                 )
                                 Text(
@@ -161,20 +162,20 @@ fun CustomerLoginScreen(
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Black,
                                     fontFamily = FontFamily.Monospace,
-                                    color = Color.White,
+                                    color = CustomerTextPrimary,
                                     letterSpacing = 2.sp
                                 )
                             }
                             Button(
                                 onClick = { enteredOtp = generatedOtp },
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Emerald400.copy(alpha = 0.2f),
-                                    contentColor = Emerald400
+                                    containerColor = Mint500,
+                                    contentColor = Color.White
                                 ),
                                 shape = RoundedCornerShape(8.dp),
                                 contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
                             ) {
-                                Text("Auto-Fill", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                                Text("Auto-Fill", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Color.White)
                             }
                         }
                     }
@@ -182,22 +183,22 @@ fun CustomerLoginScreen(
                     OutlinedTextField(
                         value = enteredOtp,
                         onValueChange = { enteredOtp = it },
-                        placeholder = { Text("Enter 6-Digit OTP", color = Slate500) },
+                        placeholder = { Text("Enter 6-Digit OTP", color = Slate400) },
                         leadingIcon = {
                             Icon(
                                 Icons.Rounded.Key,
                                 contentDescription = null,
-                                tint = Gold500,
+                                tint = Mint500,
                                 modifier = Modifier.size(18.dp)
                             )
                         },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Slate200,
-                            focusedBorderColor = Gold500,
-                            unfocusedBorderColor = MidnightBorder,
-                            focusedContainerColor = Midnight950,
-                            unfocusedContainerColor = Midnight950
+                            focusedTextColor = CustomerTextPrimary,
+                            unfocusedTextColor = CustomerTextPrimary,
+                            focusedBorderColor = Mint500,
+                            unfocusedBorderColor = CustomerCardBorderLight,
+                            focusedContainerColor = CustomerWhite,
+                            unfocusedContainerColor = CustomerInnerSurfaceLight
                         ),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
@@ -205,7 +206,7 @@ fun CustomerLoginScreen(
                     )
 
                     errorMessage?.let {
-                        Text(text = it, color = Red400, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = it, color = Red600, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
                     }
 
                     Button(
@@ -220,18 +221,18 @@ fun CustomerLoginScreen(
                             .fillMaxWidth()
                             .height(50.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Gold500,
-                            contentColor = MidnightDark
+                            containerColor = Mint500,
+                            contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("Verify & Continue", fontWeight = FontWeight.Black, fontSize = 14.sp)
+                        Text("Verify & Continue", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.White)
                         Spacer(modifier = Modifier.width(6.dp))
-                        Icon(Icons.Rounded.ArrowForward, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Rounded.ArrowForward, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.White)
                     }
                 }
 
-                HorizontalDivider(color = MidnightBorder)
+                HorizontalDivider(color = CustomerCardBorderLight)
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -241,14 +242,14 @@ fun CustomerLoginScreen(
                     Text(
                         text = "New vehicle owner? ",
                         fontSize = 12.sp,
-                        color = Slate400
+                        color = CustomerTextSecondary
                     )
                     TextButton(onClick = onGoToRegister) {
                         Text(
                             text = "Register Your Vehicle",
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp,
-                            color = Gold500
+                            color = Mint500
                         )
                     }
                 }

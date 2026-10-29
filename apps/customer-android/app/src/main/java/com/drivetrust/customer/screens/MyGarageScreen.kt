@@ -57,7 +57,7 @@ fun MyGarageScreen(
                         text = "Executive Fleet Garage",
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Black,
-                        color = Color.White,
+                        color = CustomerTextPrimary,
                         letterSpacing = 0.5.sp
                     )
                     Text(
@@ -161,7 +161,7 @@ fun MyGarageScreen(
                                 modifier = Modifier.size(32.dp)
                             )
                         }
-                        Text("No Vehicles Registered", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Color.White)
+                        Text("No Vehicles Registered", fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                         Text("Register your personal car to request an executive chauffeur", fontSize = 12.sp, color = Slate400)
                         Button(
                             onClick = { showAddDialog = true },
@@ -319,7 +319,7 @@ private fun VehicleCard(
                             "${vehicle.brand} ${vehicle.model}",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White
+                            color = CustomerTextPrimary
                         )
                         Text(
                             vehicle.plate,
@@ -409,8 +409,8 @@ private fun VehicleCard(
                     onClick = onSelect,
                     modifier = Modifier.fillMaxWidth().height(38.dp),
                     shape = RoundedCornerShape(10.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White)
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Mint500)
                 ) {
                     Text("Select For Next Chauffeur Ride", fontSize = 11.sp, fontWeight = FontWeight.Bold)
                 }
@@ -430,25 +430,25 @@ private fun AddVehicleDialog(onDismiss: () -> Unit, onAdd: (CustomerVehicle) -> 
     var hasError by remember { mutableStateOf(false) }
 
     val tfColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = Gold500,
-        unfocusedBorderColor = MidnightBorder,
-        focusedTextColor = Color.White,
-        unfocusedTextColor = Color.White,
-        focusedContainerColor = MidnightDark,
-        unfocusedContainerColor = MidnightDark,
-        focusedLabelColor = Gold400,
-        unfocusedLabelColor = Slate400
+        focusedBorderColor = Mint500,
+        unfocusedBorderColor = CustomerCardBorderLight,
+        focusedTextColor = CustomerTextPrimary,
+        unfocusedTextColor = CustomerTextPrimary,
+        focusedContainerColor = CustomerWhite,
+        unfocusedContainerColor = CustomerInnerSurfaceLight,
+        focusedLabelColor = Mint500,
+        unfocusedLabelColor = CustomerTextSecondary
     )
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(20.dp),
-            color = MidnightCard,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+            color = CustomerCardLight,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Text("Register Vehicle to Garage", fontSize = 17.sp, fontWeight = FontWeight.Black, color = Color.White)
+                Text("Register Vehicle to Garage", fontSize = 17.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                 Text("Enter specifications to ensure certified chauffeur matching.", fontSize = 11.sp, color = Slate400)
 
                 OutlinedTextField(value = brand, onValueChange = { brand = it; hasError = false }, label = { Text("Brand (e.g. Toyota, BMW)") }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp), isError = hasError && brand.isBlank(), colors = tfColors)

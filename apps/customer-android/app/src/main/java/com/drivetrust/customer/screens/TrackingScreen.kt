@@ -107,7 +107,7 @@ fun CustomerTrackingScreen(
                         text = "Chauffeur Approaching",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Black,
-                        color = Color.White
+                        color = CustomerTextPrimary
                     )
                 }
 
@@ -223,7 +223,7 @@ fun CustomerTrackingScreen(
                             }
                             Text(
                                 text = "ETA: ~${booking.driverEtaMinutes} Mins to Pickup",
-                                color = Color.White,
+                                color = CustomerTextPrimary,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold
                             )
@@ -300,12 +300,12 @@ fun CustomerTrackingScreen(
                                 text = "4-Point Handover Audit",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp,
-                                color = Color.White
+                                color = CustomerTextPrimary
                             )
                             Text(
                                 text = if (isHandoverVerified) "Handover verified (zero pre-existing marks)" else "Pre-trip scratch audit pending",
                                 fontSize = 11.sp,
-                                color = if (isHandoverVerified) Emerald400 else Slate400
+                                color = if (isHandoverVerified) Mint500 else CustomerTextSecondary
                             )
                         }
                     }
@@ -313,8 +313,8 @@ fun CustomerTrackingScreen(
                     Button(
                         onClick = { onOpenInspection() },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isHandoverVerified) Emerald400.copy(alpha = 0.2f) else Gold500,
-                            contentColor = if (isHandoverVerified) Emerald400 else MidnightDark
+                            containerColor = if (isHandoverVerified) Mint50 else Mint500,
+                            contentColor = if (isHandoverVerified) Mint500 else Color.White
                         ),
                         shape = RoundedCornerShape(10.dp),
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
@@ -331,8 +331,8 @@ fun CustomerTrackingScreen(
             // Chauffeur Identity Card
             Surface(
                 shape = RoundedCornerShape(18.dp),
-                color = MidnightCard,
-                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                color = CustomerCardLight,
+                border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -350,14 +350,14 @@ fun CustomerTrackingScreen(
                         ) {
                             Surface(
                                 shape = CircleShape,
-                                color = Midnight950,
-                                border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f)),
+                                color = Mint50,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f)),
                                 modifier = Modifier.size(46.dp)
                             ) {
                                 Box(contentAlignment = Alignment.Center) {
                                     Text(
                                         text = booking.assignedDriverName.take(2).uppercase(),
-                                        color = Gold500,
+                                        color = Mint500,
                                         fontWeight = FontWeight.Black,
                                         fontSize = 16.sp
                                     )
@@ -368,7 +368,7 @@ fun CustomerTrackingScreen(
                                     text = booking.assignedDriverName,
                                     fontWeight = FontWeight.Black,
                                     fontSize = 15.sp,
-                                    color = Color.White
+                                    color = CustomerTextPrimary
                                 )
                                 Text(
                                     text = "DL: ${booking.assignedDriverDL}",

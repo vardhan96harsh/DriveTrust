@@ -61,7 +61,7 @@ struct MyGarageView: View {
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text("\(vehicle.brand) \(vehicle.model)")
                                         .font(.system(size: 14, weight: .bold))
-                                        .foregroundColor(isSelected ? .white : .slate200)
+                                        .foregroundColor(isSelected ? .customerTextPrimary : .customerTextSecondary)
 
                                     HStack(spacing: 6) {
                                         Text(vehicle.plate)

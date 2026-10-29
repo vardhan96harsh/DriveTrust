@@ -2,11 +2,11 @@ package com.drivetrust.driver.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Luxury Executive Obsidian Palette
-val Midnight950 = Color(0xFF070A11)
-val MidnightDark = Color(0xFF090D16)
-val MidnightCard = Color(0xFF131A2A)
-val MidnightBorder = Color(0xFF222F47)
+// Clean Executive Light Theme Palette (Pure White & Light Slate)
+val Midnight950 = Color(0xFFF1F5F9)
+val MidnightDark = Color(0xFFF8FAFC)
+val MidnightCard = Color(0xFFFFFFFF)
+val MidnightBorder = Color(0xFFE2E8F0)
 
 val Slate900 = Color(0xFF0F172A)
 val Slate800 = Color(0xFF1E293B)
@@ -19,17 +19,17 @@ val Slate200 = Color(0xFFE2E8F0)
 val Slate100 = Color(0xFFF1F5F9)
 val Slate50 = Color(0xFFF8FAFC)
 
-// Champagne Gold Accents
-val Gold500 = Color(0xFFD4AF37)
-val Gold400 = Color(0xFFE5C07B)
-val Gold600 = Color(0xFFA68019)
-val Gold50 = Color(0xFFFFFDF5)
-val PlatinumText = Color(0xFFF1F5F9)
+// Warm Luxury Gold Accents (High Contrast for Light Theme)
+val Gold500 = Color(0xFFD97706) // Rich Warm Amber Gold
+val Gold400 = Color(0xFFB45309)
+val Gold600 = Color(0xFF92400E)
+val Gold50 = Color(0xFFFFFBEB)
+val PlatinumText = Color(0xFF0F172A) // Deep Slate Charcoal Text
 
 // Emerald Status
 val Emerald600 = Color(0xFF059669)
 val Emerald500 = Color(0xFF10B981)
-val Emerald400 = Color(0xFF34D399)
+val Emerald400 = Color(0xFF059669) // Deep Emerald for crisp readability on light backgrounds
 val Emerald50 = Color(0xFFECFDF5)
 
 // Amber Alerts
@@ -40,7 +40,7 @@ val Amber50 = Color(0xFFFFFBEB)
 // Red SOS
 val Red600 = Color(0xFFDC2626)
 val Red500 = Color(0xFFEF4444)
-val Red400 = Color(0xFFF87171)
+val Red400 = Color(0xFFDC2626)
 val Red50 = Color(0xFFFEF2F2)
 
 // Indigo Business
@@ -55,10 +55,10 @@ val Mint100 = Color(0xFFD1F4E6)
 val Mint50 = Color(0xFFE8F8F2)
 
 val DriverWhite = Color(0xFFFFFFFF)
-val DriverBackgroundLight = Color(0xFFFFFFFF)
-val DriverSurfaceLight = Color(0xFFF8FAFC)
+val DriverBackgroundLight = Color(0xFFF8FAFC)
+val DriverSurfaceLight = Color(0xFFFFFFFF)
 val DriverCardBorderLight = Color(0xFFE2E8F0)
-val DriverTextPrimary = Color(0xFF1E293B)
+val DriverTextPrimary = Color(0xFF0F172A)
 val DriverTextSecondary = Color(0xFF64748B)
 val DriverTextMuted = Color(0xFF94A3B8)
 val DriverDotInactive = Color(0xFFCBD5E1)

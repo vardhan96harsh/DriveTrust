@@ -59,12 +59,12 @@ fun DriverHandoverInspectionScreen(
                     text = "Chauffeur Pre-Trip Vehicle Handover",
                     fontWeight = FontWeight.Black,
                     fontSize = 18.sp,
-                    color = Color.White
+                    color = DriverTextPrimary
                 )
                 Text(
                     text = "Verify vehicle condition & odometer with client before taking the wheel",
                     fontSize = 12.sp,
-                    color = Slate400
+                    color = DriverTextSecondary
                 )
             }
 
@@ -86,16 +86,16 @@ fun DriverHandoverInspectionScreen(
                     ) {
                         Surface(
                             shape = CircleShape,
-                            color = Gold500.copy(alpha = 0.15f),
+                            color = Mint50,
                             modifier = Modifier.size(42.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
-                                Icon(Icons.Rounded.DirectionsCar, contentDescription = null, tint = Gold500, modifier = Modifier.size(24.dp))
+                                Icon(Icons.Rounded.DirectionsCar, contentDescription = null, tint = Mint500, modifier = Modifier.size(24.dp))
                             }
                         }
                         Column {
-                            Text(carModel, fontWeight = FontWeight.Bold, color = Color.White, fontSize = 15.sp)
-                            Text("Automatic Luxury Fleet", fontSize = 11.sp, color = Slate400)
+                            Text(carModel, fontWeight = FontWeight.Bold, color = DriverTextPrimary, fontSize = 15.sp)
+                            Text("Automatic Luxury Fleet", fontSize = 11.sp, color = DriverTextSecondary)
                         }
                     }
                     Surface(
@@ -141,13 +141,13 @@ fun DriverHandoverInspectionScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text(part, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Color.White)
-                            Text(if (checked) status else "Pending confirmation", fontSize = 11.sp, color = if (checked) Emerald400 else Slate400)
+                            Text(part, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = DriverTextPrimary)
+                            Text(if (checked) status else "Pending confirmation", fontSize = 11.sp, color = if (checked) Mint600 else DriverTextSecondary)
                         }
                         Icon(
                             imageVector = if (checked) Icons.Rounded.CheckCircle else Icons.Rounded.RadioButtonUnchecked,
                             contentDescription = null,
-                            tint = if (checked) Emerald400 else Slate500,
+                            tint = if (checked) Mint500 else Slate400,
                             modifier = Modifier.size(22.dp)
                         )
                     }
@@ -160,13 +160,13 @@ fun DriverHandoverInspectionScreen(
                 OutlinedTextField(
                     value = odo,
                     onValueChange = { odo = it },
-                    label = { Text("Starting Odometer", color = Slate400) },
+                    label = { Text("Starting Odometer", color = DriverTextSecondary) },
                     leadingIcon = { Icon(Icons.Rounded.Speed, contentDescription = null, tint = Gold500, modifier = Modifier.size(18.dp)) },
                     modifier = Modifier.weight(1f),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Gold500,
+                        focusedTextColor = DriverTextPrimary,
+                        unfocusedTextColor = DriverTextPrimary,
+                        focusedBorderColor = Mint500,
                         unfocusedBorderColor = MidnightBorder,
                         focusedContainerColor = MidnightCard,
                         unfocusedContainerColor = MidnightCard
@@ -176,13 +176,13 @@ fun DriverHandoverInspectionScreen(
                 OutlinedTextField(
                     value = fuel,
                     onValueChange = { fuel = it },
-                    label = { Text("Fuel / Battery", color = Slate400) },
-                    leadingIcon = { Icon(Icons.Rounded.LocalGasStation, contentDescription = null, tint = Emerald400, modifier = Modifier.size(18.dp)) },
+                    label = { Text("Fuel / Battery", color = DriverTextSecondary) },
+                    leadingIcon = { Icon(Icons.Rounded.LocalGasStation, contentDescription = null, tint = Mint500, modifier = Modifier.size(18.dp)) },
                     modifier = Modifier.weight(1f),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Gold500,
+                        focusedTextColor = DriverTextPrimary,
+                        unfocusedTextColor = DriverTextPrimary,
+                        focusedBorderColor = Mint500,
                         unfocusedBorderColor = MidnightBorder,
                         focusedContainerColor = MidnightCard,
                         unfocusedContainerColor = MidnightCard
@@ -194,12 +194,12 @@ fun DriverHandoverInspectionScreen(
             OutlinedTextField(
                 value = damageNotes,
                 onValueChange = { damageNotes = it },
-                label = { Text("Pre-Trip Noted Scratches / Remarks", color = Slate400) },
+                label = { Text("Pre-Trip Noted Scratches / Remarks", color = DriverTextSecondary) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Gold500,
+                    focusedTextColor = DriverTextPrimary,
+                    unfocusedTextColor = DriverTextPrimary,
+                    focusedBorderColor = Mint500,
                     unfocusedBorderColor = MidnightBorder,
                     focusedContainerColor = MidnightCard,
                     unfocusedContainerColor = MidnightCard
@@ -223,7 +223,7 @@ fun DriverHandoverInspectionScreen(
                     Text(
                         "DriveTrust Transit Shield: Chauffeur is legally insured under commercial transit liability from handover to return.",
                         fontSize = 11.sp,
-                        color = Slate300,
+                        color = DriverTextSecondary,
                         lineHeight = 15.sp
                     )
                 }
@@ -232,7 +232,7 @@ fun DriverHandoverInspectionScreen(
             Button(
                 onClick = onCompleteAudit,
                 modifier = Modifier.fillMaxWidth().height(52.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Emerald600),
+                colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Icon(Icons.Rounded.Check, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))

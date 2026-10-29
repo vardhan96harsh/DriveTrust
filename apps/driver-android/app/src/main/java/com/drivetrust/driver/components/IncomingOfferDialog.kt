@@ -92,10 +92,10 @@ fun IncomingOfferDialog(
                 Box(
                     modifier = Modifier
                         .size(72.dp)
-                        .background(Midnight950, CircleShape)
+                        .background(Mint50, CircleShape)
                         .border(
                             2.dp,
-                            if (countdown <= 10) Red500 else Gold500,
+                            if (countdown <= 10) Red500 else Mint500,
                             CircleShape
                         ),
                     contentAlignment = Alignment.Center
@@ -105,7 +105,7 @@ fun IncomingOfferDialog(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Black,
                         fontFamily = FontFamily.Monospace,
-                        color = if (countdown <= 10) Red400 else Color.White
+                        color = if (countdown <= 10) Red500 else DriverTextPrimary
                     )
                 }
 
@@ -114,12 +114,12 @@ fun IncomingOfferDialog(
                         text = "₹${offer.netDriverPayout.toInt()}.00",
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Black,
-                        color = Gold500
+                        color = Mint600
                     )
                     Text(
                         text = "Net Partner Payout (80% + Travel Allowance)",
                         fontSize = 11.sp,
-                        color = Slate400
+                        color = DriverTextSecondary
                     )
                 }
 
@@ -137,7 +137,7 @@ fun IncomingOfferDialog(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Customer: ${offer.customerName}", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                            Text("Customer: ${offer.customerName}", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = DriverTextPrimary)
                             Surface(
                                 shape = RoundedCornerShape(6.dp),
                                 color = MidnightCard,
@@ -147,7 +147,7 @@ fun IncomingOfferDialog(
                                     text = offer.transmission,
                                     fontSize = 9.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Slate300,
+                                    color = DriverTextSecondary,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                 )
                             }
@@ -167,7 +167,7 @@ fun IncomingOfferDialog(
                                 text = "${offer.vehicleModel} (${offer.vehiclePlate})",
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.SemiBold,
-                                color = Slate200
+                                color = DriverTextPrimary
                             )
                         }
 
@@ -200,7 +200,7 @@ fun IncomingOfferDialog(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("Travel Allowance to Pickup:", fontSize = 10.sp, color = Slate300)
+                                Text("Travel Allowance to Pickup:", fontSize = 10.sp, color = DriverTextSecondary)
                                 Text("~20-25 Mins (5.2 km)", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Gold500)
                             }
                         }
@@ -217,7 +217,7 @@ fun IncomingOfferDialog(
                             .weight(1f)
                             .height(50.dp),
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Slate400),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = DriverTextSecondary),
                         border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder)
                     ) {
                         Text("Decline", fontWeight = FontWeight.Bold, fontSize = 13.sp)
@@ -229,8 +229,8 @@ fun IncomingOfferDialog(
                             .weight(1.5f)
                             .height(50.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Gold500,
-                            contentColor = MidnightDark
+                            containerColor = Mint500,
+                            contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {

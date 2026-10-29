@@ -36,7 +36,7 @@ fun CustomerRideHistoryScreen(
                             "Completed Chauffeur Journeys",
                             fontWeight = FontWeight.Black,
                             fontSize = 17.sp,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
@@ -108,20 +108,20 @@ fun CustomerRideHistoryScreen(
                             }
 
                             Column(horizontalAlignment = Alignment.End) {
-                                Text("₹${ride.fare.toInt()}", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Color.White)
+                                Text("₹${ride.fare.toInt()}", fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                                 if (ride.tip > 0) {
-                                    Text("+₹${ride.tip.toInt()} Tip", fontSize = 11.sp, color = Gold400, fontWeight = FontWeight.Bold)
+                                    Text("+₹${ride.tip.toInt()} Tip", fontSize = 11.sp, color = Mint500, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
                         Spacer(modifier = Modifier.height(10.dp))
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("Chauffeur: ", fontSize = 12.sp, color = Slate400)
-                            Text(ride.driverName, fontSize = 13.sp, fontWeight = FontWeight.Black, color = Color.White)
+                            Text("Chauffeur: ", fontSize = 12.sp, color = CustomerTextSecondary)
+                            Text(ride.driverName, fontSize = 13.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                             Spacer(modifier = Modifier.width(8.dp))
                             Surface(
                                 shape = RoundedCornerShape(4.dp),
