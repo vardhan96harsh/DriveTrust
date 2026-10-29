@@ -17,7 +17,12 @@ class DriverPreferences(context: Context) {
         private const val KEY_IS_ONLINE = "is_duty_online"
         private const val KEY_BANK_ACCOUNT = "bank_account_masked"
         private const val KEY_UPI_ID = "driver_upi_id"
+        private const val KEY_WALKTHROUGH = "has_completed_walkthrough"
     }
+
+    var hasCompletedWalkthrough: Boolean
+        get() = prefs.getBoolean(KEY_WALKTHROUGH, false)
+        set(value) = prefs.edit().putBoolean(KEY_WALKTHROUGH, value).apply()
 
     var authToken: String?
         get() = prefs.getString(KEY_AUTH_TOKEN, null)

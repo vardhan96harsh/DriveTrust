@@ -13,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,47 +35,51 @@ fun DriverOnboardingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MidnightDark)
+            .background(DriverWhite)
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .verticalScroll(rememberScrollState())
-            .padding(24.dp),
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = MidnightCard),
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(elevation = 6.dp, shape = RoundedCornerShape(24.dp), spotColor = Color(0x10000000)),
+            colors = CardDefaults.cardColors(containerColor = DriverWhite),
+            border = androidx.compose.foundation.BorderStroke(1.dp, DriverCardBorderLight),
             shape = RoundedCornerShape(24.dp)
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Surface(
-                        shape = CircleShape,
-                        color = Gold500.copy(alpha = 0.15f),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f)),
-                        modifier = Modifier.size(46.dp)
+                        shape = RoundedCornerShape(14.dp),
+                        color = Mint50,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
+                        modifier = Modifier.size(50.dp)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
-                            Icon(Icons.Rounded.Badge, contentDescription = null, tint = Gold500, modifier = Modifier.size(24.dp))
+                            Icon(Icons.Rounded.Badge, contentDescription = null, tint = Mint500, modifier = Modifier.size(26.dp))
                         }
                     }
                     Column {
                         Text(
-                            text = "Chauffeur Registration",
+                            text = "Driver Partner Registration",
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.Black,
-                            color = Color.White
+                            fontWeight = FontWeight.Bold,
+                            color = DriverTextPrimary
                         )
                         Text(
-                            text = "Submit Commercial DL for MoRTH verification",
+                            text = "Submit Driving License for verified fast onboarding",
                             fontSize = 12.sp,
-                            color = Slate400
+                            color = DriverTextSecondary
                         )
                     }
                 }
@@ -82,95 +87,105 @@ fun DriverOnboardingScreen(
                 OutlinedTextField(
                     value = fullName,
                     onValueChange = { fullName = it },
-                    label = { Text("Full Name (as per DL)", color = Slate400) },
-                    leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null, tint = Gold500) },
+                    label = { Text("Full Name (as per DL)", color = DriverTextSecondary) },
+                    leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null, tint = Mint500) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Gold500,
-                        unfocusedBorderColor = MidnightBorder
+                        focusedTextColor = DriverTextPrimary,
+                        unfocusedTextColor = DriverTextPrimary,
+                        focusedBorderColor = Mint500,
+                        unfocusedBorderColor = DriverCardBorderLight,
+                        focusedContainerColor = DriverWhite,
+                        unfocusedContainerColor = DriverWhite
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(14.dp)
                 )
 
                 OutlinedTextField(
                     value = phone,
                     onValueChange = { phone = it },
-                    label = { Text("Mobile Phone", color = Slate400) },
-                    leadingIcon = { Icon(Icons.Rounded.Phone, contentDescription = null, tint = Gold500) },
+                    label = { Text("Mobile Phone", color = DriverTextSecondary) },
+                    leadingIcon = { Icon(Icons.Rounded.Phone, contentDescription = null, tint = Mint500) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Gold500,
-                        unfocusedBorderColor = MidnightBorder
+                        focusedTextColor = DriverTextPrimary,
+                        unfocusedTextColor = DriverTextPrimary,
+                        focusedBorderColor = Mint500,
+                        unfocusedBorderColor = DriverCardBorderLight,
+                        focusedContainerColor = DriverWhite,
+                        unfocusedContainerColor = DriverWhite
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(14.dp)
                 )
 
                 OutlinedTextField(
                     value = dlNumber,
                     onValueChange = { dlNumber = it },
-                    label = { Text("Commercial Driving License (DL)", color = Slate400) },
-                    leadingIcon = { Icon(Icons.Rounded.DirectionsCar, contentDescription = null, tint = Gold500) },
+                    label = { Text("Commercial Driving License (DL)", color = DriverTextSecondary) },
+                    leadingIcon = { Icon(Icons.Rounded.DirectionsCar, contentDescription = null, tint = Mint500) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Gold500,
-                        unfocusedBorderColor = MidnightBorder
+                        focusedTextColor = DriverTextPrimary,
+                        unfocusedTextColor = DriverTextPrimary,
+                        focusedBorderColor = Mint500,
+                        unfocusedBorderColor = DriverCardBorderLight,
+                        focusedContainerColor = DriverWhite,
+                        unfocusedContainerColor = DriverWhite
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(14.dp)
                 )
 
                 OutlinedTextField(
                     value = rto,
                     onValueChange = { rto = it },
-                    label = { Text("RTO Authority", color = Slate400) },
-                    leadingIcon = { Icon(Icons.Rounded.LocationCity, contentDescription = null, tint = Gold500) },
+                    label = { Text("RTO Authority", color = DriverTextSecondary) },
+                    leadingIcon = { Icon(Icons.Rounded.LocationCity, contentDescription = null, tint = Mint500) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Gold500,
-                        unfocusedBorderColor = MidnightBorder
+                        focusedTextColor = DriverTextPrimary,
+                        unfocusedTextColor = DriverTextPrimary,
+                        focusedBorderColor = Mint500,
+                        unfocusedBorderColor = DriverCardBorderLight,
+                        focusedContainerColor = DriverWhite,
+                        unfocusedContainerColor = DriverWhite
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(14.dp)
                 )
 
                 OutlinedTextField(
                     value = upiId,
                     onValueChange = { upiId = it },
-                    label = { Text("Instant Payout UPI ID (e.g. name@okhdfcbank)", color = Slate400) },
-                    leadingIcon = { Icon(Icons.Rounded.AccountBalance, contentDescription = null, tint = Emerald400) },
+                    label = { Text("Instant Payout UPI ID (e.g. name@okhdfcbank)", color = DriverTextSecondary) },
+                    leadingIcon = { Icon(Icons.Rounded.AccountBalance, contentDescription = null, tint = Mint500) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Gold500,
-                        unfocusedBorderColor = MidnightBorder
+                        focusedTextColor = DriverTextPrimary,
+                        unfocusedTextColor = DriverTextPrimary,
+                        focusedBorderColor = Mint500,
+                        unfocusedBorderColor = DriverCardBorderLight,
+                        focusedContainerColor = DriverWhite,
+                        unfocusedContainerColor = DriverWhite
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(14.dp)
                 )
 
                 Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = MidnightDark,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.3f)),
+                    shape = RoundedCornerShape(14.dp),
+                    color = Mint50,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
-                        modifier = Modifier.padding(12.dp),
+                        modifier = Modifier.padding(14.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Rounded.Shield, contentDescription = null, tint = Gold500, modifier = Modifier.size(20.dp))
+                        Icon(Icons.Rounded.VerifiedUser, contentDescription = null, tint = Mint500, modifier = Modifier.size(22.dp))
                         Text(
-                            text = "New profiles require mandatory verification by Operations Admin in the KYC Vault before going on duty.",
-                            fontSize = 11.sp,
-                            color = Slate300,
-                            lineHeight = 15.sp
+                            text = "DriveTrust guarantees same-day verification and instant direct bank UPI payouts for all rides completed.",
+                            fontSize = 12.sp,
+                            color = DriverTextSecondary,
+                            lineHeight = 16.sp
                         )
                     }
                 }
@@ -181,18 +196,21 @@ fun DriverOnboardingScreen(
                             onOnboardSuccess(fullName, phone, dlNumber)
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Gold500),
-                    shape = RoundedCornerShape(12.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Mint500),
+                    shape = RoundedCornerShape(14.dp),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                 ) {
-                    Text("Submit for Admin Verification", fontWeight = FontWeight.Bold, color = MidnightDark)
+                    Text("Submit for Instant Verification", fontWeight = FontWeight.SemiBold, fontSize = 15.sp, color = Color.White)
                 }
 
                 TextButton(
                     onClick = onBackToLogin,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
-                    Text("Back to Sign In", fontSize = 12.sp, color = Slate400)
+                    Text("Already registered? Sign In", fontSize = 13.sp, color = DriverTextSecondary)
                 }
             }
         }

@@ -6,14 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val LightColorScheme = lightColorScheme(
-    primary = Slate900,
+    primary = Mint500,
     onPrimary = Color.White,
-    secondary = Emerald600,
+    secondary = Mint600,
     onSecondary = Color.White,
-    background = Slate50,
-    surface = Color.White,
-    onBackground = Slate900,
-    onSurface = Slate900
+    background = DriverBackgroundLight,
+    surface = DriverWhite,
+    onBackground = DriverTextPrimary,
+    onSurface = DriverTextPrimary
 )
 
 @Composable

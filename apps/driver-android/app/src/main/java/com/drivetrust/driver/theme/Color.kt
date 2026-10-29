@@ -47,10 +47,35 @@ val Red50 = Color(0xFFFEF2F2)
 val Blue600 = Color(0xFF2563EB)
 val Blue50 = Color(0xFFEFF6FF)
 
+// Vibrant Emerald Mint Onboarding Palette (Matching Reference Screenshots)
+val Mint600 = Color(0xFF009663)
+val Mint500 = Color(0xFF00B779) // Signature Vibrant Mint Green
+val Mint400 = Color(0xFF1FD192)
+val Mint100 = Color(0xFFD1F4E6)
+val Mint50 = Color(0xFFE8F8F2)
+
+val DriverWhite = Color(0xFFFFFFFF)
+val DriverBackgroundLight = Color(0xFFFFFFFF)
+val DriverSurfaceLight = Color(0xFFF8FAFC)
+val DriverCardBorderLight = Color(0xFFE2E8F0)
+val DriverTextPrimary = Color(0xFF1E293B)
+val DriverTextSecondary = Color(0xFF64748B)
+val DriverTextMuted = Color(0xFF94A3B8)
+val DriverDotInactive = Color(0xFFCBD5E1)
+val DriverDotActive = Mint500
+
 object DriverColors {
     val BackgroundDark = MidnightDark
     val SurfaceDark = MidnightCard
     val BorderDark = MidnightBorder
     val AccentGold = Gold500
     val Success = Emerald400
+
+    // Light Theme Palette
+    val BackgroundLight = DriverBackgroundLight
+    val SurfaceLight = DriverSurfaceLight
+    val BorderLight = DriverCardBorderLight
+    val PrimaryMint = Mint500
+    val TextMain = DriverTextPrimary
+    val TextMuted = DriverTextSecondary
 }

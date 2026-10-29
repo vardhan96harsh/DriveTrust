@@ -16,6 +16,7 @@ import com.drivetrust.driver.theme.DriverColors
 import com.drivetrust.driver.theme.DriverTheme
 
 enum class DriverAppScreen {
+    WALKTHROUGH,
     LOGIN,
     ONBOARDING,
     TERMINAL,
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
             DriverTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = DriverColors.BackgroundDark
+                    color = DriverColors.BackgroundLight
                 ) {
                     DriverAppCoordinator(preferences, repository)
                 }
@@ -50,7 +51,12 @@ fun DriverAppCoordinator(
     preferences: DriverPreferences,
     repository: DriverRepository
 ) {
-    var currentScreen by remember { mutableStateOf(DriverAppScreen.LOGIN) }
+    var currentScreen by remember {
+        mutableStateOf(
+            if (!preferences.hasCompletedWalkthrough) DriverAppScreen.WALKTHROUGH
+            else DriverAppScreen.LOGIN
+        )
+    }
 
     // Chauffeur Profile State
     var driverName by remember { mutableStateOf(preferences.driverName) }
@@ -64,6 +70,15 @@ fun DriverAppCoordinator(
     var activeTripOtp by remember { mutableStateOf("4821") }
 
     when (currentScreen) {
+        DriverAppScreen.WALKTHROUGH -> {
+            DriverWalkthroughScreen(
+                onFinishWalkthrough = {
+                    preferences.hasCompletedWalkthrough = true
+                    currentScreen = DriverAppScreen.LOGIN
+                }
+            )
+        }
+
         DriverAppScreen.LOGIN -> {
             DriverLoginScreen(
                 onLoginSuccess = { phone ->

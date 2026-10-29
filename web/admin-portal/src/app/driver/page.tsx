@@ -50,6 +50,7 @@ import {
   saveCustomerTrip,
 } from "@/lib/customerBookingStore";
 import { getRegions, Region, isPointInPolygon } from "@/lib/regionStore";
+import { DriverWalkthroughModal } from "@/components/DriverWalkthroughModal";
 
 export default function DriverPartnerCockpitPage() {
   // Duty Status & Operating Zone
@@ -57,6 +58,16 @@ export default function DriverPartnerCockpitPage() {
   const [availableZones, setAvailableZones] = useState<Region[]>([]);
   const [selectedZoneId, setSelectedZoneId] = useState<string>("zone-vidisha");
   const [activeTab, setActiveTab] = useState<"DUTY" | "WALLET" | "SCORECARD">("DUTY");
+  const [showWalkthrough, setShowWalkthrough] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const seen = localStorage.getItem("drivetrust_driver_walkthrough_completed");
+      if (!seen) {
+        setShowWalkthrough(true);
+      }
+    }
+  }, []);
 
   // Active Trip State
   const [activeTrip, setActiveTrip] = useState<CustomerTrip | null>(null);
@@ -413,25 +424,36 @@ export default function DriverPartnerCockpitPage() {
             </div>
           </Link>
 
-          {/* Luxury Tactile Duty Switch */}
-          <button
-            onClick={() => {
-              setIsOnline(!isOnline);
-              showToast(isOnline ? "Chauffeur status: OFFLINE" : "Chauffeur status: ONLINE • Ready for duty");
-            }}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xs cursor-pointer ${
-              isOnline
-                ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/25"
-                : "bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-white"
-            }`}
-          >
-            <span
-              className={`w-2 h-2 rounded-full ${
-                isOnline ? "bg-emerald-400 animate-pulse shadow-[0_0_6px_#10B981]" : "bg-slate-500"
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowWalkthrough(true)}
+              className="text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full hover:bg-emerald-500/20 transition cursor-pointer flex items-center gap-1"
+              title="View First-Time Introduction"
+            >
+              <Sparkles className="w-3 h-3 text-emerald-400" />
+              <span>Tour</span>
+            </button>
+
+            {/* Luxury Tactile Duty Switch */}
+            <button
+              onClick={() => {
+                setIsOnline(!isOnline);
+                showToast(isOnline ? "Chauffeur status: OFFLINE" : "Chauffeur status: ONLINE • Ready for duty");
+              }}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xs cursor-pointer ${
+                isOnline
+                  ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/25"
+                  : "bg-slate-800/80 text-slate-400 border border-slate-700 hover:text-white"
               }`}
-            />
-            <span>{isOnline ? "ON DUTY" : "OFF DUTY"}</span>
-          </button>
+            >
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  isOnline ? "bg-emerald-400 animate-pulse shadow-[0_0_6px_#10B981]" : "bg-slate-500"
+                }`}
+              />
+              <span>{isOnline ? "ON DUTY" : "OFF DUTY"}</span>
+            </button>
+          </div>
         </div>
 
         {/* Operating Zone Patrol Selector */}
@@ -1138,6 +1160,12 @@ export default function DriverPartnerCockpitPage() {
           </Link>
         </div>
       </footer>
+
+      {/* First-Time Driver Light Theme Onboarding Walkthrough */}
+      <DriverWalkthroughModal
+        isOpen={showWalkthrough}
+        onClose={() => setShowWalkthrough(false)}
+      />
     </div>
   );
 }

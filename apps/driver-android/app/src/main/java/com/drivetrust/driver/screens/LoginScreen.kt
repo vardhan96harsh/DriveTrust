@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -21,7 +22,8 @@ import com.drivetrust.driver.theme.*
 @Composable
 fun DriverLoginScreen(
     onLoginSuccess: (phone: String) -> Unit,
-    onGoToOnboard: () -> Unit
+    onGoToOnboard: () -> Unit,
+    onViewWalkthrough: (() -> Unit)? = null
 ) {
     var phoneInput by remember { mutableStateOf("+91 99801 84920") }
     var otpSent by remember { mutableStateOf(false) }
@@ -32,72 +34,96 @@ fun DriverLoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MidnightDark)
+            .background(DriverWhite)
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = MidnightCard),
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(elevation = 6.dp, shape = RoundedCornerShape(24.dp), spotColor = Color(0x10000000)),
+            colors = CardDefaults.cardColors(containerColor = DriverWhite),
+            border = androidx.compose.foundation.BorderStroke(1.dp, DriverCardBorderLight),
             shape = RoundedCornerShape(24.dp)
         ) {
             Column(
                 modifier = Modifier.padding(26.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(18.dp)
             ) {
-                Column {
-                    Surface(
-                        shape = CircleShape,
-                        color = MidnightDark,
-                        border = androidx.compose.foundation.BorderStroke(1.5.dp, Gold500),
-                        modifier = Modifier.size(50.dp)
-                    ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Text(
-                                text = "DT",
-                                color = Gold500,
-                                fontWeight = FontWeight.Black,
-                                fontSize = 18.sp
+                // Header & Brand Logo
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Top
+                ) {
+                    Column {
+                        Surface(
+                            shape = RoundedCornerShape(14.dp),
+                            color = Mint50,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Mint100),
+                            modifier = Modifier.size(52.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    Icons.Rounded.DirectionsCar,
+                                    contentDescription = null,
+                                    tint = Mint500,
+                                    modifier = Modifier.size(28.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(14.dp))
+                        Text(
+                            text = "Driver Partner Login",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = DriverTextPrimary
+                        )
+                        Text(
+                            text = "Sign in to accept high-fare bookings & track daily payouts",
+                            fontSize = 13.sp,
+                            color = DriverTextSecondary,
+                            lineHeight = 18.sp
+                        )
+                    }
+
+                    if (onViewWalkthrough != null) {
+                        IconButton(onClick = onViewWalkthrough) {
+                            Icon(
+                                Icons.Rounded.HelpOutline,
+                                contentDescription = "View Introduction",
+                                tint = DriverTextSecondary
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(14.dp))
-                    Text(
-                        text = "Chauffeur Terminal",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Black,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Sign in to access partner duty terminal and dispatch offers",
-                        fontSize = 12.sp,
-                        color = Slate400
-                    )
                 }
 
                 if (!otpSent) {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         Text(
-                            text = "REGISTERED CHAUFFEUR PHONE",
-                            fontSize = 10.sp,
+                            text = "MOBILE PHONE NUMBER",
+                            fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Gold500,
-                            letterSpacing = 1.sp
+                            color = DriverTextSecondary,
+                            letterSpacing = 0.5.sp
                         )
                         OutlinedTextField(
                             value = phoneInput,
                             onValueChange = { phoneInput = it },
-                            leadingIcon = { Icon(Icons.Rounded.Phone, contentDescription = null, tint = Gold500) },
+                            leadingIcon = { Icon(Icons.Rounded.Phone, contentDescription = null, tint = Mint500) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                focusedBorderColor = Gold500,
-                                unfocusedBorderColor = MidnightBorder
+                                focusedTextColor = DriverTextPrimary,
+                                unfocusedTextColor = DriverTextPrimary,
+                                focusedBorderColor = Mint500,
+                                unfocusedBorderColor = DriverCardBorderLight,
+                                focusedContainerColor = DriverWhite,
+                                unfocusedContainerColor = DriverWhite
                             ),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(14.dp),
                             singleLine = true
                         )
                     }
@@ -110,19 +136,22 @@ fun DriverLoginScreen(
                                 errorMessage = null
                             }
                         },
-                        modifier = Modifier.fillMaxWidth().height(50.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Gold500),
-                        shape = RoundedCornerShape(12.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Mint500),
+                        shape = RoundedCornerShape(14.dp),
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                     ) {
-                        Icon(Icons.Rounded.Key, contentDescription = null, tint = MidnightDark, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Rounded.Key, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Send 6-Digit Security OTP", fontWeight = FontWeight.Bold, color = MidnightDark)
+                        Text("Send Security OTP", fontWeight = FontWeight.SemiBold, fontSize = 15.sp, color = Color.White)
                     }
                 } else {
                     Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = Emerald400.copy(alpha = 0.12f),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.35f)),
+                        shape = RoundedCornerShape(14.dp),
+                        color = Mint50,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.3f)),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Row(
@@ -132,28 +161,29 @@ fun DriverLoginScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = "SECURITY CODE DISPATCHED",
-                                    fontSize = 9.sp,
+                                    text = "SMS VERIFICATION CODE DISPATCHED",
+                                    fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Emerald400,
-                                    letterSpacing = 1.sp
+                                    color = Mint600,
+                                    letterSpacing = 0.5.sp
                                 )
                                 Spacer(modifier = Modifier.height(2.dp))
                                 Text(
                                     text = "OTP: $generatedOtp",
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Black,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold,
                                     fontFamily = FontFamily.Monospace,
-                                    color = Color.White
+                                    color = DriverTextPrimary
                                 )
                             }
                             Button(
                                 onClick = { enteredOtp = generatedOtp },
-                                colors = ButtonDefaults.buttonColors(containerColor = Emerald400.copy(alpha = 0.2f)),
-                                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
-                                shape = RoundedCornerShape(8.dp)
+                                colors = ButtonDefaults.buttonColors(containerColor = Mint500),
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                             ) {
-                                Text("Auto-Fill", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Emerald400)
+                                Text("Auto-Fill", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
                             }
                         }
                     }
@@ -161,21 +191,23 @@ fun DriverLoginScreen(
                     OutlinedTextField(
                         value = enteredOtp,
                         onValueChange = { enteredOtp = it },
-                        placeholder = { Text("Enter 6-Digit OTP", color = Slate500) },
-                        leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = null, tint = Gold500) },
+                        placeholder = { Text("Enter 6-Digit OTP", color = DriverTextMuted) },
+                        leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = null, tint = Mint500) },
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White,
-                            focusedBorderColor = Gold500,
-                            unfocusedBorderColor = MidnightBorder
+                            focusedTextColor = DriverTextPrimary,
+                            unfocusedTextColor = DriverTextPrimary,
+                            focusedBorderColor = Mint500,
+                            unfocusedBorderColor = DriverCardBorderLight,
+                            focusedContainerColor = DriverWhite,
+                            unfocusedContainerColor = DriverWhite
                         ),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(14.dp),
                         singleLine = true
                     )
 
                     errorMessage?.let {
-                        Text(text = it, color = Color(0xFFEF4444), fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = it, color = Color(0xFFEF4444), fontSize = 12.sp, fontWeight = FontWeight.Medium)
                     }
 
                     Button(
@@ -186,15 +218,18 @@ fun DriverLoginScreen(
                                 errorMessage = "Invalid verification code. Please check SMS."
                             }
                         },
-                        modifier = Modifier.fillMaxWidth().height(50.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Emerald600),
-                        shape = RoundedCornerShape(12.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Mint500),
+                        shape = RoundedCornerShape(14.dp),
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                     ) {
-                        Text("Verify & Open Terminal", fontWeight = FontWeight.Bold, color = Color.White)
+                        Text("Verify & Start Duty", fontWeight = FontWeight.SemiBold, fontSize = 15.sp, color = Color.White)
                     }
                 }
 
-                HorizontalDivider(color = MidnightBorder)
+                HorizontalDivider(color = DriverCardBorderLight)
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -202,16 +237,16 @@ fun DriverLoginScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "New chauffeur partner? ",
-                        fontSize = 12.sp,
-                        color = Slate400
+                        text = "New driver partner? ",
+                        fontSize = 13.sp,
+                        color = DriverTextSecondary
                     )
                     TextButton(onClick = onGoToOnboard) {
                         Text(
-                            text = "Apply & Register DL",
+                            text = "Register Driver License",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            color = Gold500
+                            fontSize = 13.sp,
+                            color = Mint600
                         )
                     }
                 }
