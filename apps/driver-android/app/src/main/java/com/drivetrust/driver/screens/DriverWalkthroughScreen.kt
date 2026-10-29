@@ -198,7 +198,7 @@ fun DriverWalkthroughScreen(
                         .fillMaxWidth()
                         .height(56.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Mint500),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(28.dp),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                 ) {
                     Text(
@@ -210,6 +210,20 @@ fun DriverWalkthroughScreen(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.White
+                    )
+                }
+
+                // Dedicated Language Switcher on Slide 3 matching screenshot 3/4
+                if (currentPage == slides.size - 1) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = if (currentLanguage == "हिन्दी") "भाषा बदलें (Choose Language: हिन्दी)" else "Choose Language (${currentLanguage})",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = DriverTextSecondary,
+                        modifier = Modifier
+                            .clickable { showLanguageSheetFirst = true }
+                            .padding(8.dp)
                     )
                 }
             }

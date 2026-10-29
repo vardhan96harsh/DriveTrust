@@ -51,11 +51,9 @@ fun DriverAppCoordinator(
     preferences: DriverPreferences,
     repository: DriverRepository
 ) {
+    // App opens directly to LOGIN first
     var currentScreen by remember {
-        mutableStateOf(
-            if (!preferences.hasCompletedWalkthrough) DriverAppScreen.WALKTHROUGH
-            else DriverAppScreen.LOGIN
-        )
+        mutableStateOf(DriverAppScreen.LOGIN)
     }
 
     // Chauffeur Profile State
@@ -70,6 +68,27 @@ fun DriverAppCoordinator(
     var activeTripOtp by remember { mutableStateOf("4821") }
 
     when (currentScreen) {
+        DriverAppScreen.LOGIN -> {
+            DriverLoginScreen(
+                onLoginSuccess = { phone ->
+                    driverPhone = phone
+                    preferences.driverPhone = phone
+                    // After first login: show Step 1 (Language) & Step 2 (Walkthrough)
+                    if (!preferences.hasCompletedWalkthrough) {
+                        currentScreen = DriverAppScreen.WALKTHROUGH
+                    } else {
+                        currentScreen = DriverAppScreen.TERMINAL
+                    }
+                },
+                onGoToOnboard = {
+                    currentScreen = DriverAppScreen.ONBOARDING
+                },
+                onViewWalkthrough = {
+                    currentScreen = DriverAppScreen.WALKTHROUGH
+                }
+            )
+        }
+
         DriverAppScreen.WALKTHROUGH -> {
             DriverWalkthroughScreen(
                 initialLanguage = preferences.selectedLanguage,
@@ -78,23 +97,8 @@ fun DriverAppCoordinator(
                 },
                 onFinishWalkthrough = {
                     preferences.hasCompletedWalkthrough = true
-                    currentScreen = DriverAppScreen.LOGIN
-                }
-            )
-        }
-
-        DriverAppScreen.LOGIN -> {
-            DriverLoginScreen(
-                onLoginSuccess = { phone ->
-                    driverPhone = phone
-                    preferences.driverPhone = phone
+                    // After completing walkthrough, enter Terminal directly
                     currentScreen = DriverAppScreen.TERMINAL
-                },
-                onGoToOnboard = {
-                    currentScreen = DriverAppScreen.ONBOARDING
-                },
-                onViewWalkthrough = {
-                    currentScreen = DriverAppScreen.WALKTHROUGH
                 }
             )
         }

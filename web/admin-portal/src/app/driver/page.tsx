@@ -62,19 +62,26 @@ export default function DriverPartnerCockpitPage() {
   const [showWalkthrough, setShowWalkthrough] = useState<boolean>(false);
   const [driverLanguage, setDriverLanguage] = useState<string>("English");
   const [showLanguageSettingsModal, setShowLanguageSettingsModal] = useState<boolean>(false);
+  const [showLoginDialog, setShowLoginDialog] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const seen = localStorage.getItem("drivetrust_driver_walkthrough_completed");
-      if (!seen) {
-        setShowWalkthrough(true);
-      }
       const savedLang = localStorage.getItem("drivetrust_selected_language");
       if (savedLang) {
         setDriverLanguage(savedLang);
       }
     }
   }, []);
+
+  const handleLoginCompleted = () => {
+    setShowLoginDialog(false);
+    const seen = localStorage.getItem("drivetrust_driver_walkthrough_completed");
+    if (!seen) {
+      setShowWalkthrough(true); // Triggers Step 1 (Language) and Step 2 (Walkthrough) right after login!
+    } else {
+      showToast("Signed in successfully to Driver Partner Cockpit");
+    }
+  };
 
   // Active Trip State
   const [activeTrip, setActiveTrip] = useState<CustomerTrip | null>(null);

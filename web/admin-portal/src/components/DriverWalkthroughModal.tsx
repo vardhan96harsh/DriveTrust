@@ -130,12 +130,22 @@ export function DriverWalkthroughModal({
           {/* Action Button: Next -> Next -> Get Started */}
           <button
             onClick={handleNext}
-            className="w-full py-4 bg-[#00B779] hover:bg-[#009e66] active:scale-[0.99] text-white font-bold rounded-2xl text-base shadow-lg shadow-[#00B779]/25 transition cursor-pointer flex items-center justify-center"
+            className="w-full py-4 bg-[#00B779] hover:bg-[#009e66] active:scale-[0.99] text-white font-bold rounded-[28px] text-base shadow-lg shadow-[#00B779]/25 transition cursor-pointer flex items-center justify-center"
           >
             {currentSlide < slides.length - 1
               ? (selectedLanguage === "हिन्दी" ? "आगे बढ़ें (Next)" : "Next")
               : (selectedLanguage === "हिन्दी" ? "शुरू करें (Get Started)" : "Get Started")}
           </button>
+
+          {/* Change Language on Slide 3 */}
+          {currentSlide === slides.length - 1 && (
+            <button
+              onClick={() => setShowLanguageSheet(true)}
+              className="mt-3 text-xs font-semibold text-slate-500 hover:text-slate-800 transition cursor-pointer"
+            >
+              {selectedLanguage === "हिन्दी" ? "भाषा बदलें (Choose Language: हिन्दी)" : `Choose Language (${selectedLanguage})`}
+            </button>
+          )}
         </div>
 
         {/* STEP 1: Choose Language Bottom Sheet - Pops up FIRST before the 3 screens */}
@@ -159,7 +169,9 @@ export function DriverWalkthroughModal({
                       className="flex items-center gap-4 cursor-pointer select-none py-1"
                     >
                       {/* High-Fidelity Circular Radio Button matching screenshot */}
-                      <div className="w-[22px] h-[22px] rounded-full border-[2.5px] border-slate-800 flex items-center justify-center shrink-0">
+                      <div className={`w-[22px] h-[22px] rounded-full border-[2.5px] flex items-center justify-center shrink-0 ${
+                        isSelected ? "border-slate-800" : "border-slate-300"
+                      }`}>
                         {isSelected && (
                           <div className="w-[10px] h-[10px] rounded-full bg-slate-800" />
                         )}

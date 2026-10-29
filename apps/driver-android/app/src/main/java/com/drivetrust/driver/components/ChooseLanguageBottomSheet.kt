@@ -79,7 +79,7 @@ fun ChooseLanguageBottomSheet(
                                 .size(22.dp)
                                 .border(
                                     width = 2.5.dp,
-                                    color = Color(0xFF1E293B),
+                                    color = if (isSelected) Color(0xFF1E293B) else Color(0xFFCBD5E1),
                                     shape = CircleShape
                                 ),
                             contentAlignment = Alignment.Center
@@ -126,3 +126,4 @@ fun ChooseLanguageBottomSheet(
         }
     }
 }
+

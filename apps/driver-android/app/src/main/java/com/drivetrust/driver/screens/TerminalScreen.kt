@@ -366,6 +366,53 @@ fun DriverTerminalScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Instant UPI Payouts & Settlement Ledger", fontWeight = FontWeight.Bold, fontSize = 13.sp)
             }
+
+            // Driver App Language Settings Row (matching request: change language in settings anytime)
+            Surface(
+                shape = RoundedCornerShape(14.dp),
+                color = MidnightCard,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showLanguageSheet = true }
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Icon(
+                            Icons.Rounded.Language,
+                            contentDescription = null,
+                            tint = Mint500,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Column {
+                            Text(
+                                text = "App Language / भाषा बदलें",
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Text(
+                                text = "Current: $currentLanguage",
+                                fontSize = 11.sp,
+                                color = Slate400
+                            )
+                        }
+                    }
+                    Text(
+                        text = "Change",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Mint500
+                    )
+                }
+            }
         }
     }
 }
