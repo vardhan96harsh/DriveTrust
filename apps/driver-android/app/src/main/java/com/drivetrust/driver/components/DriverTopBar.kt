@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Logout
+import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.PowerSettingsNew
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -24,7 +25,8 @@ import com.drivetrust.driver.theme.*
 fun DriverTopBar(
     driver: DriverProfile,
     onToggleDuty: () -> Unit,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onLanguageClick: (() -> Unit)? = null
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -91,6 +93,23 @@ fun DriverTopBar(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                if (onLanguageClick != null) {
+                    IconButton(
+                        onClick = onLanguageClick,
+                        modifier = Modifier
+                            .size(36.dp)
+                            .background(Midnight950, CircleShape)
+                            .border(1.dp, MidnightBorder, CircleShape)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Language,
+                            contentDescription = "Language",
+                            tint = Gold400,
+                            modifier = Modifier.size(17.dp)
+                        )
+                    }
+                }
+
                 Button(
                     onClick = onToggleDuty,
                     colors = ButtonDefaults.buttonColors(

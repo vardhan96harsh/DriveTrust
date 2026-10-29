@@ -18,11 +18,16 @@ class DriverPreferences(context: Context) {
         private const val KEY_BANK_ACCOUNT = "bank_account_masked"
         private const val KEY_UPI_ID = "driver_upi_id"
         private const val KEY_WALKTHROUGH = "has_completed_walkthrough"
+        private const val KEY_LANGUAGE = "selected_app_language"
     }
 
     var hasCompletedWalkthrough: Boolean
         get() = prefs.getBoolean(KEY_WALKTHROUGH, false)
         set(value) = prefs.edit().putBoolean(KEY_WALKTHROUGH, value).apply()
+
+    var selectedLanguage: String
+        get() = prefs.getString(KEY_LANGUAGE, "English") ?: "English"
+        set(value) = prefs.edit().putString(KEY_LANGUAGE, value).apply()
 
     var authToken: String?
         get() = prefs.getString(KEY_AUTH_TOKEN, null)

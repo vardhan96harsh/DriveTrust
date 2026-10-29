@@ -37,6 +37,7 @@ import {
   Wallet,
   Activity,
   Sparkles,
+  Globe,
   ExternalLink,
 } from "lucide-react";
 import {
@@ -59,12 +60,18 @@ export default function DriverPartnerCockpitPage() {
   const [selectedZoneId, setSelectedZoneId] = useState<string>("zone-vidisha");
   const [activeTab, setActiveTab] = useState<"DUTY" | "WALLET" | "SCORECARD">("DUTY");
   const [showWalkthrough, setShowWalkthrough] = useState<boolean>(false);
+  const [driverLanguage, setDriverLanguage] = useState<string>("English");
+  const [showLanguageSettingsModal, setShowLanguageSettingsModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const seen = localStorage.getItem("drivetrust_driver_walkthrough_completed");
       if (!seen) {
         setShowWalkthrough(true);
+      }
+      const savedLang = localStorage.getItem("drivetrust_selected_language");
+      if (savedLang) {
+        setDriverLanguage(savedLang);
       }
     }
   }, []);
@@ -425,6 +432,15 @@ export default function DriverPartnerCockpitPage() {
           </Link>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowLanguageSettingsModal(true)}
+              className="text-[11px] font-semibold text-slate-300 bg-slate-800/80 border border-slate-700/80 px-2.5 py-1 rounded-full hover:bg-slate-700 transition cursor-pointer flex items-center gap-1"
+              title="Change Language in Settings"
+            >
+              <Globe className="w-3 h-3 text-emerald-400" />
+              <span>{driverLanguage}</span>
+            </button>
+
             <button
               onClick={() => setShowWalkthrough(true)}
               className="text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full hover:bg-emerald-500/20 transition cursor-pointer flex items-center gap-1"
@@ -1161,9 +1177,66 @@ export default function DriverPartnerCockpitPage() {
         </div>
       </footer>
 
+      {/* Language Settings Modal (Anytime Driver Can Change Language) */}
+      {showLanguageSettingsModal && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4 animate-in fade-in duration-200">
+          <div className="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-[32px] p-6 sm:p-8 flex flex-col shadow-2xl animate-in slide-in-from-bottom duration-300 border-t border-slate-100">
+            <h3 className="text-xl font-bold text-slate-900 text-center mb-8">
+              Choose Language
+            </h3>
+
+            <div className="space-y-6 mb-8 px-2">
+              {[
+                { id: "en", name: "English" },
+                { id: "hi", name: "हिन्दी" },
+                { id: "mr", name: "मराठी" },
+              ].map((lang) => {
+                const isSelected = driverLanguage === lang.name;
+                return (
+                  <div
+                    key={lang.id}
+                    onClick={() => {
+                      setDriverLanguage(lang.name);
+                    }}
+                    className="flex items-center gap-4 cursor-pointer select-none py-1"
+                  >
+                    <div className="w-[22px] h-[22px] rounded-full border-[2.5px] border-slate-800 flex items-center justify-center shrink-0">
+                      {isSelected && (
+                        <div className="w-[10px] h-[10px] rounded-full bg-slate-800" />
+                      )}
+                    </div>
+                    <span className="text-[17px] font-normal text-slate-800">
+                      {lang.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  localStorage.setItem("drivetrust_selected_language", driverLanguage);
+                }
+                setShowLanguageSettingsModal(false);
+                showToast(`Language updated to ${driverLanguage}`);
+              }}
+              className="w-full py-4 bg-[#00B779] hover:bg-[#009e66] active:scale-[0.99] text-white font-bold rounded-[24px] text-base shadow-lg shadow-[#00B779]/25 transition cursor-pointer"
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* First-Time Driver Light Theme Onboarding Walkthrough */}
       <DriverWalkthroughModal
         isOpen={showWalkthrough}
+        initialLanguage={driverLanguage}
+        onLanguageChanged={(newLang) => {
+          setDriverLanguage(newLang);
+          showToast(`Language set to ${newLang}`);
+        }}
         onClose={() => setShowWalkthrough(false)}
       />
     </div>

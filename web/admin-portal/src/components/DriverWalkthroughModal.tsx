@@ -1,55 +1,74 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, X, Globe, Shield, Sparkles } from "lucide-react";
+import { Check, X, Globe } from "lucide-react";
 
 interface DriverWalkthroughModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialLanguage?: string;
+  onLanguageChanged?: (lang: string) => void;
 }
 
-export function DriverWalkthroughModal({ isOpen, onClose }: DriverWalkthroughModalProps) {
+export function DriverWalkthroughModal({
+  isOpen,
+  onClose,
+  initialLanguage = "English",
+  onLanguageChanged,
+}: DriverWalkthroughModalProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [showLanguageSheet, setShowLanguageSheet] = useState<boolean>(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("English");
+  const [showLanguageSheet, setShowLanguageSheet] = useState<boolean>(true);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(initialLanguage);
 
   if (!isOpen) return null;
 
   const slides = [
     {
-      title: "Drive. Earn. Succeed.",
+      title: selectedLanguage === "हिन्दी" ? "चलाएं। कमाएं। सफल बनें।" : "Drive. Earn. Succeed.",
       subtitle:
-        "Enjoy flexible hours, more rides, and higher earnings with DriveTrust. Your journey, your growth, your rewards.",
+        selectedLanguage === "हिन्दी"
+          ? "फ्लेक्सिबल समय, अधिक राइड्स और DriveTrust के साथ बेहतरीन कमाई का आनंद लें। आपकी यात्रा, आपका विकास।"
+          : "Enjoy flexible hours, more rides, and higher earnings with DriveTrust. Your journey, your growth, your rewards.",
       illustration: "DRIVE_SUCCEED",
     },
     {
-      title: "Instant Payouts",
+      title: selectedLanguage === "हिन्दी" ? "त्वरित भुगतान (Instant Payouts)" : "Instant Payouts",
       subtitle:
-        "Instant, hassle-free withdrawals to bank or UPI — track earnings live and cash out anytime.",
+        selectedLanguage === "हिन्दी"
+          ? "बैंक या UPI में तुरंत और बिना किसी परेशानी के निकासी — लाइव कमाई ट्रैक करें और कभी भी पैसे निकालें।"
+          : "Instant, hassle-free withdrawals to bank or UPI — track earnings live and cash out anytime.",
       illustration: "INSTANT_PAYOUTS",
     },
     {
-      title: "Boost Your Earnings",
+      title: selectedLanguage === "हिन्दी" ? "अपनी कमाई बढ़ाएं" : "Boost Your Earnings",
       subtitle:
-        "Grow earnings with surge zones, peak-hour incentives, and streak bonuses that reward your hustle.",
+        selectedLanguage === "हिन्दी"
+          ? "सर्ज ज़ोन, पीक-ऑवर इंसेंटिव और स्ट्रीक बोनस के साथ अपनी कमाई को और अधिक बढ़ाएं।"
+          : "Grow earnings with surge zones, peak-hour incentives, and streak bonuses that reward your hustle.",
       illustration: "BOOST_EARNINGS",
     },
   ];
 
   const languages = [
-    { id: "en", name: "English", subtitle: "Default language" },
-    { id: "hi", name: "हिन्दी", subtitle: "Hindi" },
-    { id: "mr", name: "मराठी", subtitle: "Marathi" },
-    { id: "bn", name: "বাংলা", subtitle: "Bengali" },
-    { id: "ta", name: "தமிழ்", subtitle: "Tamil" },
+    { id: "en", name: "English" },
+    { id: "hi", name: "हिन्दी" },
+    { id: "mr", name: "मराठी" },
   ];
 
   const handleNext = () => {
     if (currentSlide < slides.length - 1) {
       setCurrentSlide((prev) => prev + 1);
     } else {
-      setShowLanguageSheet(true);
+      handleFinish();
     }
+  };
+
+  const handleConfirmLanguage = () => {
+    setShowLanguageSheet(false);
+    if (onLanguageChanged) {
+      onLanguageChanged(selectedLanguage);
+    }
+    localStorage.setItem("drivetrust_selected_language", selectedLanguage);
   };
 
   const handleFinish = () => {
@@ -58,8 +77,10 @@ export function DriverWalkthroughModal({ isOpen, onClose }: DriverWalkthroughMod
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-md bg-white text-slate-800 rounded-[28px] shadow-2xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between min-h-[580px] animate-in zoom-in-95 duration-200 border border-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+      {/* Main Walkthrough Container */}
+      <div className="relative w-full max-w-md bg-white text-slate-800 rounded-[32px] shadow-2xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between min-h-[600px] animate-in zoom-in-95 duration-200 border border-slate-100">
+        
         {/* Top Header: Skip Button */}
         <div className="flex items-center justify-end w-full">
           <button
@@ -80,7 +101,7 @@ export function DriverWalkthroughModal({ isOpen, onClose }: DriverWalkthroughMod
             {slides[currentSlide].subtitle}
           </p>
 
-          {/* Clean Vector SVG Illustration */}
+          {/* Clean Vector SVG Illustration matching screenshots */}
           <div className="w-56 h-56 my-6 flex items-center justify-center">
             {currentSlide === 0 && <IllustrationDriveSucceed />}
             {currentSlide === 1 && <IllustrationInstantPayouts />}
@@ -106,74 +127,61 @@ export function DriverWalkthroughModal({ isOpen, onClose }: DriverWalkthroughMod
             ))}
           </div>
 
-          {/* Action Button */}
+          {/* Action Button: Next -> Next -> Get Started */}
           <button
             onClick={handleNext}
             className="w-full py-4 bg-[#00B779] hover:bg-[#009e66] active:scale-[0.99] text-white font-bold rounded-2xl text-base shadow-lg shadow-[#00B779]/25 transition cursor-pointer flex items-center justify-center"
           >
-            {currentSlide < slides.length - 1 ? "Next" : "Choose Language"}
+            {currentSlide < slides.length - 1
+              ? (selectedLanguage === "हिन्दी" ? "आगे बढ़ें (Next)" : "Next")
+              : (selectedLanguage === "हिन्दी" ? "शुरू करें (Get Started)" : "Get Started")}
           </button>
         </div>
 
-        {/* Language Selection Sheet */}
+        {/* STEP 1: Choose Language Bottom Sheet - Pops up FIRST before the 3 screens */}
         {showLanguageSheet && (
-          <div className="absolute inset-0 bg-white z-20 p-6 flex flex-col justify-between animate-in slide-in-from-bottom duration-250">
-            <div>
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#00B779] flex items-center justify-center">
-                    <Globe className="w-4 h-4" />
-                  </div>
-                  <h3 className="font-bold text-lg text-slate-900">Choose Language</h3>
-                </div>
-                <button
-                  onClick={() => setShowLanguageSheet(false)}
-                  className="text-slate-400 hover:text-slate-700 p-1 cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
+          <div className="absolute inset-0 bg-black/55 backdrop-blur-[2px] z-30 flex flex-col justify-end animate-in fade-in duration-200">
+            <div className="bg-white rounded-t-[32px] p-6 sm:p-8 flex flex-col shadow-2xl animate-in slide-in-from-bottom duration-300 border-t border-slate-100">
+              
+              {/* Centered Title matching screenshot */}
+              <h3 className="text-xl font-bold text-slate-900 text-center mb-8">
+                Choose Language
+              </h3>
 
-              <p className="text-xs text-slate-500 mb-4">
-                Select your preferred app language for passenger pickups, fares, and navigation instructions.
-              </p>
-
-              <div className="space-y-2.5">
+              {/* Radio Button Options List */}
+              <div className="space-y-6 mb-8 px-2">
                 {languages.map((lang) => {
                   const isSelected = selectedLanguage === lang.name;
                   return (
-                    <button
+                    <div
                       key={lang.id}
                       onClick={() => setSelectedLanguage(lang.name)}
-                      className={`w-full p-3.5 rounded-xl border flex items-center justify-between transition cursor-pointer text-left ${
-                        isSelected
-                          ? "bg-emerald-50/70 border-[#00B779] text-[#00B779] shadow-sm"
-                          : "bg-white border-slate-200 text-slate-800 hover:border-slate-300"
-                      }`}
+                      className="flex items-center gap-4 cursor-pointer select-none py-1"
                     >
-                      <div>
-                        <div className={`font-bold text-sm ${isSelected ? "text-emerald-700" : "text-slate-800"}`}>
-                          {lang.name}
-                        </div>
-                        <div className="text-xs text-slate-500">{lang.subtitle}</div>
+                      {/* High-Fidelity Circular Radio Button matching screenshot */}
+                      <div className="w-[22px] h-[22px] rounded-full border-[2.5px] border-slate-800 flex items-center justify-center shrink-0">
+                        {isSelected && (
+                          <div className="w-[10px] h-[10px] rounded-full bg-slate-800" />
+                        )}
                       </div>
-                      {isSelected && (
-                        <div className="w-5 h-5 rounded-full bg-[#00B779] text-white flex items-center justify-center text-xs">
-                          <Check className="w-3.5 h-3.5 stroke-[3]" />
-                        </div>
-                      )}
-                    </button>
+
+                      {/* Language Label */}
+                      <span className="text-[17px] font-normal text-slate-800">
+                        {lang.name}
+                      </span>
+                    </div>
                   );
                 })}
               </div>
-            </div>
 
-            <button
-              onClick={handleFinish}
-              className="w-full mt-4 py-4 bg-[#00B779] hover:bg-[#009e66] text-white font-bold rounded-2xl text-base shadow-lg shadow-[#00B779]/25 transition cursor-pointer"
-            >
-              Confirm & Start Duty
-            </button>
+              {/* Vibrant Emerald Mint Confirm Button matching screenshot */}
+              <button
+                onClick={handleConfirmLanguage}
+                className="w-full py-4 bg-[#00B779] hover:bg-[#009e66] active:scale-[0.99] text-white font-bold rounded-[24px] text-base shadow-lg shadow-[#00B779]/25 transition cursor-pointer"
+              >
+                Confirm
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -344,7 +352,7 @@ function IllustrationBoostEarnings() {
         strokeLinecap="round"
       />
 
-      {/* Brown Jacket / Uniform */}
+      {/* Brown Jacket */}
       <path
         d="M 85 130 L 60 162 L 180 162 L 155 130 Z"
         fill="#8B5E3C"

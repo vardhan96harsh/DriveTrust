@@ -8,8 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.drivetrust.driver.components.ChooseLanguageBottomSheet
 import com.drivetrust.driver.theme.*
 
 data class WalkthroughSlide(
@@ -42,26 +41,37 @@ enum class SlideIllustrationType {
 
 @Composable
 fun DriverWalkthroughScreen(
+    initialLanguage: String = "English",
+    onLanguageSelected: (String) -> Unit = {},
     onFinishWalkthrough: () -> Unit
 ) {
     var currentPage by remember { mutableIntStateOf(0) }
-    var showLanguageModal by remember { mutableStateOf(false) }
-    var selectedLanguage by remember { mutableStateOf("English") }
+    var showLanguageSheetFirst by remember { mutableStateOf(true) }
+    var currentLanguage by remember { mutableStateOf(initialLanguage) }
 
     val slides = listOf(
         WalkthroughSlide(
-            title = "Drive. Earn. Succeed.",
-            description = "Enjoy flexible hours, more rides, and higher earnings with DriveTrust. Your journey, your growth, your rewards.",
+            title = if (currentLanguage == "हिन्दी") "चलाएं। कमाएं। सफल बनें।" else "Drive. Earn. Succeed.",
+            description = if (currentLanguage == "हिन्दी")
+                "फ्लेक्सिबल समय, अधिक राइड्स और DriveTrust के साथ बेहतरीन कमाई का आनंद लें। आपकी यात्रा, आपका विकास।"
+            else
+                "Enjoy flexible hours, more rides, and higher earnings with DriveTrust. Your journey, your growth, your rewards.",
             slideType = SlideIllustrationType.DRIVE_SUCCEED
         ),
         WalkthroughSlide(
-            title = "Instant Payouts",
-            description = "Instant, hassle-free withdrawals to bank or UPI — track earnings live and cash out anytime.",
+            title = if (currentLanguage == "हिन्दी") "त्वरित भुगतान (Instant Payouts)" else "Instant Payouts",
+            description = if (currentLanguage == "हिन्दी")
+                "बैंक या UPI में तुरंत और बिना किसी परेशानी के निकासी — लाइव कमाई ट्रैक करें और कभी भी पैसे निकालें।"
+            else
+                "Instant, hassle-free withdrawals to bank or UPI — track earnings live and cash out anytime.",
             slideType = SlideIllustrationType.INSTANT_PAYOUTS
         ),
         WalkthroughSlide(
-            title = "Boost Your Earnings",
-            description = "Grow earnings with surge zones, peak-hour incentives, and streak bonuses that reward your hustle.",
+            title = if (currentLanguage == "हिन्दी") "अपनी कमाई बढ़ाएं" else "Boost Your Earnings",
+            description = if (currentLanguage == "हिन्दी")
+                "सर्ज ज़ोन, पीक-ऑवर इंसेंटिव और स्ट्रीक बोनस के साथ अपनी कमाई को और अधिक बढ़ाएं।"
+            else
+                "Grow earnings with surge zones, peak-hour incentives, and streak bonuses that reward your hustle.",
             slideType = SlideIllustrationType.BOOST_EARNINGS
         )
     )
@@ -134,10 +144,9 @@ fun DriverWalkthroughScreen(
 
                 Spacer(modifier = Modifier.height(36.dp))
 
-                // Dedicated Vector Illustration matching screenshots
+                // Dedicated Vector Illustration
                 Box(
-                    modifier = Modifier
-                        .size(280.dp),
+                    modifier = Modifier.size(280.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     when (slide.slideType) {
@@ -176,13 +185,13 @@ fun DriverWalkthroughScreen(
                     }
                 }
 
-                // Primary Bottom Action Button
+                // Primary Bottom Action Button: Next -> Next -> Get Started
                 Button(
                     onClick = {
                         if (currentPage < slides.size - 1) {
                             currentPage++
                         } else {
-                            showLanguageModal = true
+                            onFinishWalkthrough()
                         }
                     },
                     modifier = Modifier
@@ -193,7 +202,11 @@ fun DriverWalkthroughScreen(
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                 ) {
                     Text(
-                        text = if (currentPage < slides.size - 1) "Next" else "Choose Language",
+                        text = if (currentPage < slides.size - 1) {
+                            if (currentLanguage == "हिन्दी") "आगे बढ़ें (Next)" else "Next"
+                        } else {
+                            if (currentLanguage == "हिन्दी") "शुरू करें (Get Started)" else "Get Started"
+                        },
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.White
@@ -202,18 +215,17 @@ fun DriverWalkthroughScreen(
             }
         }
 
-        // Language Selection Sheet
-        if (showLanguageModal) {
-            LanguageSelectionDialog(
-                selectedLanguage = selectedLanguage,
-                onSelectLanguage = { selectedLanguage = it },
-                onConfirm = {
-                    showLanguageModal = false
-                    onFinishWalkthrough()
+        // STEP 1: Choose Language Bottom Sheet - Pops up FIRST before the 3 screens!
+        if (showLanguageSheetFirst) {
+            ChooseLanguageBottomSheet(
+                currentLanguage = currentLanguage,
+                onLanguageConfirmed = { chosen ->
+                    currentLanguage = chosen
+                    onLanguageSelected(chosen)
+                    showLanguageSheetFirst = false
                 },
-                onDismiss = {
-                    showLanguageModal = false
-                    onFinishWalkthrough()
+                onDismissRequest = {
+                    showLanguageSheetFirst = false
                 }
             )
         }
@@ -229,7 +241,6 @@ private fun DriveSucceedIllustration() {
         val strokeWidth = 5f
         val outlineColor = Color(0xFF1E293B)
         val mintFill = Color(0xFF00B779)
-        val skinColor = Color(0xFFFDE68A)
 
         // Rearview Mirror
         drawRoundRect(
@@ -239,7 +250,6 @@ private fun DriveSucceedIllustration() {
             cornerRadius = CornerRadius(14f, 14f),
             style = Stroke(strokeWidth)
         )
-        // Mirror mount
         drawLine(
             color = outlineColor,
             start = Offset(size.width * 0.46f, size.height * 0.12f),
@@ -288,7 +298,6 @@ private fun DriveSucceedIllustration() {
             radius = 4f,
             center = Offset(size.width * 0.62f, size.height * 0.44f)
         )
-        // Smile curve
         val smile = Path().apply {
             moveTo(size.width * 0.54f, size.height * 0.49f)
             quadraticBezierTo(
@@ -340,7 +349,6 @@ private fun InstantPayoutsIllustration() {
     Canvas(modifier = Modifier.size(240.dp)) {
         val strokeWidth = 5f
         val outlineColor = Color(0xFF1E293B)
-        val mintFill = Color(0xFF00B779)
         val goldCoin = Color(0xFFF59E0B)
         val skyBackdrop = Color(0xFFE0F2FE)
 
@@ -369,7 +377,7 @@ private fun InstantPayoutsIllustration() {
         }
         drawPath(arrowHead, color = outlineColor, style = Stroke(strokeWidth * 1.5f, cap = StrokeCap.Round))
 
-        // Gold Rupee / Dollar Coins
+        // Gold Rupee Coins
         drawCircle(color = goldCoin, radius = 20f, center = Offset(size.width * 0.46f, size.height * 0.36f))
         drawCircle(color = outlineColor, radius = 20f, center = Offset(size.width * 0.46f, size.height * 0.36f), style = Stroke(3f))
         drawCircle(color = goldCoin, radius = 16f, center = Offset(size.width * 0.76f, size.height * 0.50f))
@@ -404,15 +412,13 @@ private fun InstantPayoutsIllustration() {
         drawCircle(color = Color(0xFF334155), radius = 16f, center = Offset(size.width * 0.38f, size.height * 0.72f))
         drawCircle(color = Color(0xFF334155), radius = 16f, center = Offset(size.width * 0.78f, size.height * 0.72f))
 
-        // Chauffeur Standing in Yellow/Mint Jacket
-        // Cap
+        // Chauffeur Standing in Yellow Jacket & Cap
         drawRoundRect(
             color = Color(0xFFFACC15),
             topLeft = Offset(size.width * 0.24f, size.height * 0.42f),
             size = Size(size.width * 0.12f, size.height * 0.05f),
             cornerRadius = CornerRadius(8f, 8f)
         )
-        // Uniform
         drawRoundRect(
             color = Color(0xFFFACC15),
             topLeft = Offset(size.width * 0.22f, size.height * 0.50f),
@@ -437,11 +443,10 @@ private fun BoostEarningsIllustration() {
     Canvas(modifier = Modifier.size(240.dp)) {
         val strokeWidth = 5f
         val outlineColor = Color(0xFF1E293B)
-        val mintAccent = Color(0xFF00B779)
         val coatBrown = Color(0xFF8B5E3C)
         val softBlue = Color(0xFFDCEAF7)
 
-        // Lower Semi-Circle Car Hood/Dashboard
+        // Lower Semi-Circle Dashboard
         drawArc(
             color = softBlue,
             startAngle = 0f,
@@ -473,7 +478,7 @@ private fun BoostEarningsIllustration() {
             style = Stroke(strokeWidth)
         )
 
-        // Hair (Brunette)
+        // Hair
         val hair = Path().apply {
             moveTo(size.width * 0.38f, size.height * 0.36f)
             quadraticBezierTo(size.width * 0.46f, size.height * 0.28f, size.width * 0.56f, size.height * 0.28f)
@@ -487,7 +492,7 @@ private fun BoostEarningsIllustration() {
         drawCircle(color = outlineColor, radius = 12f, center = Offset(size.width * 0.55f, size.height * 0.40f), style = Stroke(3f))
         drawLine(color = outlineColor, start = Offset(size.width * 0.48f, size.height * 0.40f), end = Offset(size.width * 0.52f, size.height * 0.40f), strokeWidth = 3f)
 
-        // Jacket / Coat (Brown)
+        // Jacket
         val coat = Path().apply {
             moveTo(size.width * 0.32f, size.height * 0.54f)
             lineTo(size.width * 0.22f, size.height * 0.68f)
@@ -498,7 +503,7 @@ private fun BoostEarningsIllustration() {
         drawPath(coat, color = coatBrown)
         drawPath(coat, color = outlineColor, style = Stroke(strokeWidth))
 
-        // Seatbelt Diagonal Strap
+        // Seatbelt
         drawLine(
             color = Color(0xFF0F172A),
             start = Offset(size.width * 0.62f, size.height * 0.54f),
@@ -517,126 +522,5 @@ private fun BoostEarningsIllustration() {
             size = Size(size.width * 0.32f, size.height * 0.22f),
             style = Stroke(strokeWidth * 2.2f, cap = StrokeCap.Round)
         )
-    }
-}
-
-// -------------------------------------------------------------
-// Interactive Language Selection Sheet
-// -------------------------------------------------------------
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun LanguageSelectionDialog(
-    selectedLanguage: String,
-    onSelectLanguage: (String) -> Unit,
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    val languages = listOf(
-        Pair("English", "Default language"),
-        Pair("हिन्दी", "Hindi"),
-        Pair("मराठी", "Marathi"),
-        Pair("বাংলা", "Bengali"),
-        Pair("தமிழ்", "Tamil")
-    )
-
-    ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        containerColor = DriverWhite,
-        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 32.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Select App Language",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = DriverTextPrimary
-                )
-                IconButton(onClick = onDismiss) {
-                    Icon(Icons.Rounded.Close, contentDescription = "Close", tint = DriverTextSecondary)
-                }
-            }
-
-            Text(
-                text = "Choose your preferred language for ride offers and GPS instructions.",
-                fontSize = 13.sp,
-                color = DriverTextSecondary,
-                modifier = Modifier.padding(bottom = 18.dp)
-            )
-
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                languages.forEach { (lang, subtitle) ->
-                    val isChosen = selectedLanguage == lang
-                    Surface(
-                        shape = RoundedCornerShape(14.dp),
-                        color = if (isChosen) Mint50 else DriverWhite,
-                        border = androidx.compose.foundation.BorderStroke(
-                            width = if (isChosen) 1.5.dp else 1.dp,
-                            color = if (isChosen) Mint500 else DriverCardBorderLight
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onSelectLanguage(lang) }
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 14.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column {
-                                Text(
-                                    text = lang,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = if (isChosen) Mint600 else DriverTextPrimary
-                                )
-                                Text(
-                                    text = subtitle,
-                                    fontSize = 12.sp,
-                                    color = DriverTextSecondary
-                                )
-                            }
-                            if (isChosen) {
-                                Icon(
-                                    Icons.Rounded.CheckCircle,
-                                    contentDescription = null,
-                                    tint = Mint500,
-                                    modifier = Modifier.size(22.dp)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Button(
-                onClick = onConfirm,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Mint500),
-                shape = RoundedCornerShape(14.dp)
-            ) {
-                Text(
-                    text = "Confirm & Continue",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.White
-                )
-            }
-        }
     }
 }

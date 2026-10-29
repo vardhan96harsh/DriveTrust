@@ -72,6 +72,10 @@ fun DriverAppCoordinator(
     when (currentScreen) {
         DriverAppScreen.WALKTHROUGH -> {
             DriverWalkthroughScreen(
+                initialLanguage = preferences.selectedLanguage,
+                onLanguageSelected = { chosen ->
+                    preferences.selectedLanguage = chosen
+                },
                 onFinishWalkthrough = {
                     preferences.hasCompletedWalkthrough = true
                     currentScreen = DriverAppScreen.LOGIN
@@ -88,6 +92,9 @@ fun DriverAppCoordinator(
                 },
                 onGoToOnboard = {
                     currentScreen = DriverAppScreen.ONBOARDING
+                },
+                onViewWalkthrough = {
+                    currentScreen = DriverAppScreen.WALKTHROUGH
                 }
             )
         }
@@ -143,6 +150,10 @@ fun DriverAppCoordinator(
 
             DriverTerminalScreen(
                 driver = profile,
+                currentLanguage = preferences.selectedLanguage,
+                onLanguageChanged = { newLang ->
+                    preferences.selectedLanguage = newLang
+                },
                 onToggleOnline = {
                     val result = repository.toggleDuty(!isOnline)
                     if (result.isSuccess) {

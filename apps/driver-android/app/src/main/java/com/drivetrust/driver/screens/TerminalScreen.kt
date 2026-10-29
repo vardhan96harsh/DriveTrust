@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.drivetrust.driver.components.AdminVerificationBanner
+import com.drivetrust.driver.components.ChooseLanguageBottomSheet
 import com.drivetrust.driver.components.DriverTopBar
 import com.drivetrust.driver.components.IncomingOfferDialog
 import com.drivetrust.driver.model.DriverProfile
@@ -31,6 +32,8 @@ import com.drivetrust.driver.theme.*
 @Composable
 fun DriverTerminalScreen(
     driver: DriverProfile,
+    currentLanguage: String = "English",
+    onLanguageChanged: (String) -> Unit = {},
     onToggleOnline: () -> Unit,
     onAcceptOffer: (RideOffer) -> Unit,
     onOpenWallet: () -> Unit,
@@ -39,6 +42,7 @@ fun DriverTerminalScreen(
     onLogoutClick: () -> Unit
 ) {
     var showOfferDialog by remember { mutableStateOf(false) }
+    var showLanguageSheet by remember { mutableStateOf(false) }
     var currentOffer by remember {
         mutableStateOf(
             RideOffer(
@@ -76,8 +80,22 @@ fun DriverTerminalScreen(
         DriverTopBar(
             driver = driver,
             onToggleDuty = onToggleOnline,
-            onLogoutClick = onLogoutClick
+            onLogoutClick = onLogoutClick,
+            onLanguageClick = { showLanguageSheet = true }
         )
+
+        if (showLanguageSheet) {
+            ChooseLanguageBottomSheet(
+                currentLanguage = currentLanguage,
+                onLanguageConfirmed = { chosen ->
+                    onLanguageChanged(chosen)
+                    showLanguageSheet = false
+                },
+                onDismissRequest = {
+                    showLanguageSheet = false
+                }
+            )
+        }
 
         Column(
             modifier = Modifier
