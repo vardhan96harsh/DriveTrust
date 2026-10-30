@@ -33,7 +33,7 @@ fun CustomerCompletedRatingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MidnightDark)
+            .background(CustomerBackgroundLight)
     ) {
         CustomerTopAppBar(customerName = booking.customerName, onLogoutClick = onLogoutClick)
 
@@ -48,13 +48,13 @@ fun CustomerCompletedRatingScreen(
             Box(
                 modifier = Modifier
                     .size(68.dp)
-                    .background(Emerald400.copy(alpha = 0.15f), CircleShape),
+                    .background(Mint50, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     Icons.Rounded.CheckCircle,
                     contentDescription = null,
-                    tint = Emerald400,
+                    tint = Mint600,
                     modifier = Modifier.size(40.dp)
                 )
             }
@@ -64,20 +64,21 @@ fun CustomerCompletedRatingScreen(
                     text = "Trip Completed Safely",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Black,
-                    color = Color.White
+                    color = CustomerTextPrimary
                 )
                 Text(
                     text = "Thank you for riding with DriveTrust Ultra Chauffeur",
                     fontSize = 12.sp,
-                    color = Slate400
+                    color = CustomerTextSecondary
                 )
             }
 
             // Star Rating Card
             Surface(
                 shape = RoundedCornerShape(18.dp),
-                color = MidnightCard,
-                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                color = CustomerWhite,
+                border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                shadowElevation = 2.dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -89,7 +90,7 @@ fun CustomerCompletedRatingScreen(
                         text = "RATE CHAUFFEUR ${booking.assignedDriverName.uppercase()}",
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Gold500,
+                        color = Gold600,
                         letterSpacing = 1.sp
                     )
 
@@ -105,7 +106,7 @@ fun CustomerCompletedRatingScreen(
                                 Icon(
                                     imageVector = if (star <= rating) Icons.Rounded.Star else Icons.Rounded.StarBorder,
                                     contentDescription = "$star Stars",
-                                    tint = if (star <= rating) Gold500 else Slate600,
+                                    tint = if (star <= rating) Gold500 else Slate400,
                                     modifier = Modifier.size(32.dp)
                                 )
                             }
@@ -122,7 +123,7 @@ fun CustomerCompletedRatingScreen(
                         },
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = if (rating >= 4) Gold500 else Slate400
+                        color = if (rating >= 4) Gold600 else CustomerTextSecondary
                     )
                 }
             }
@@ -130,8 +131,9 @@ fun CustomerCompletedRatingScreen(
             // Gratuity Tip Card
             Surface(
                 shape = RoundedCornerShape(18.dp),
-                color = MidnightCard,
-                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                color = CustomerWhite,
+                border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                shadowElevation = 2.dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -147,7 +149,7 @@ fun CustomerCompletedRatingScreen(
                             text = "CHAUFFEUR GRATUITY TIP",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Slate400,
+                            color = CustomerTextSecondary,
                             letterSpacing = 0.5.sp
                         )
                         if (tipAmount > 0) {
@@ -155,7 +157,7 @@ fun CustomerCompletedRatingScreen(
                                 text = "+₹$tipAmount credited",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Emerald400
+                                color = Mint600
                             )
                         }
                     }
@@ -168,10 +170,10 @@ fun CustomerCompletedRatingScreen(
                             val isSelected = amt == tipAmount
                             Surface(
                                 shape = RoundedCornerShape(10.dp),
-                                color = if (isSelected) Gold500.copy(alpha = 0.15f) else Midnight950,
+                                color = if (isSelected) Mint50 else CustomerInnerSurfaceLight,
                                 border = androidx.compose.foundation.BorderStroke(
                                     1.dp,
-                                    if (isSelected) Gold500 else MidnightBorder
+                                    if (isSelected) Mint500 else CustomerCardBorderLight
                                 ),
                                 modifier = Modifier.weight(1f),
                                 onClick = { tipAmount = amt }
@@ -184,7 +186,7 @@ fun CustomerCompletedRatingScreen(
                                         text = if (amt == 0) "No Tip" else "₹$amt",
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (isSelected) Gold500 else Slate400
+                                        color = if (isSelected) Mint600 else CustomerTextPrimary
                                     )
                                 }
                             }
@@ -196,11 +198,12 @@ fun CustomerCompletedRatingScreen(
             // Favorite Chauffeur Bookmark Button
             Surface(
                 shape = RoundedCornerShape(14.dp),
-                color = if (isFavorite) Red500.copy(alpha = 0.15f) else MidnightCard,
+                color = if (isFavorite) Red500.copy(alpha = 0.1f) else CustomerWhite,
                 border = androidx.compose.foundation.BorderStroke(
                     1.dp,
-                    if (isFavorite) Red500.copy(alpha = 0.4f) else MidnightBorder
+                    if (isFavorite) Red500.copy(alpha = 0.35f) else CustomerCardBorderLight
                 ),
+                shadowElevation = 2.dp,
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { isFavorite = !isFavorite }
             ) {
@@ -212,7 +215,7 @@ fun CustomerCompletedRatingScreen(
                     Icon(
                         imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
                         contentDescription = null,
-                        tint = if (isFavorite) Red500 else Slate400,
+                        tint = if (isFavorite) Red500 else CustomerTextSecondary,
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -220,7 +223,7 @@ fun CustomerCompletedRatingScreen(
                         text = if (isFavorite) "Saved to Favorite Chauffeurs" else "Add to Favorite Chauffeurs",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
-                        color = if (isFavorite) Red400 else Slate300
+                        color = if (isFavorite) Red600 else CustomerTextPrimary
                     )
                 }
             }
@@ -228,8 +231,9 @@ fun CustomerCompletedRatingScreen(
             // Receipt Breakdown
             Surface(
                 shape = RoundedCornerShape(18.dp),
-                color = MidnightCard,
-                border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                color = CustomerWhite,
+                border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                shadowElevation = 2.dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -240,24 +244,24 @@ fun CustomerCompletedRatingScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Vehicle Driven:", fontSize = 12.sp, color = Slate400)
+                        Text("Vehicle Driven:", fontSize = 12.sp, color = CustomerTextSecondary)
                         Text(
                             "${booking.vehicleModel} (${booking.vehiclePlate})",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = CustomerTextPrimary
                         )
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Total Billed:", fontSize = 12.sp, color = Slate400)
+                        Text("Total Billed:", fontSize = 12.sp, color = CustomerTextSecondary)
                         Text(
                             "₹${(booking.estimatedFare + tipAmount).toInt()}.00",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Black,
-                            color = Gold500
+                            color = Gold600
                         )
                     }
                     Row(
@@ -265,7 +269,7 @@ fun CustomerCompletedRatingScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Payment Status:", fontSize = 12.sp, color = Slate400)
+                        Text("Payment Status:", fontSize = 12.sp, color = CustomerTextSecondary)
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -273,14 +277,14 @@ fun CustomerCompletedRatingScreen(
                             Icon(
                                 Icons.Rounded.CheckCircle,
                                 contentDescription = null,
-                                tint = Emerald400,
+                                tint = Mint600,
                                 modifier = Modifier.size(14.dp)
                             )
                             Text(
                                 "Auto-Debited via UPI (Instant)",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Emerald400
+                                color = Mint600
                             )
                         }
                     }
@@ -293,8 +297,8 @@ fun CustomerCompletedRatingScreen(
                     .fillMaxWidth()
                     .height(52.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Gold500,
-                    contentColor = MidnightDark
+                    containerColor = Mint500,
+                    contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(14.dp)
             ) {

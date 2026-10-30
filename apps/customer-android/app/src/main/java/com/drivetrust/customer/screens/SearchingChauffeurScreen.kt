@@ -68,7 +68,9 @@ fun CustomerSearchingChauffeurScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate900)
+            .background(CustomerBackgroundLight)
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
@@ -76,31 +78,32 @@ fun CustomerSearchingChauffeurScreen(
         // Top status
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(top = 24.dp)
+            modifier = Modifier.padding(top = 16.dp)
         ) {
             Surface(
                 shape = RoundedCornerShape(12.dp),
-                color = Slate800
+                color = if (isChauffeurFound) Mint50 else Color.White,
+                border = androidx.compose.foundation.BorderStroke(1.dp, if (isChauffeurFound) Mint100 else CustomerCardBorderLight)
             ) {
                 Text(
                     text = if (isChauffeurFound) "CHAUFFEUR CONFIRMED ✓" else "CONNECTING TO CHAUFFEUR...",
                     fontSize = 11.sp,
-                    fontWeight = FontWeight.Black,
-                    color = if (isChauffeurFound) Emerald400 else Slate300,
+                    fontWeight = FontWeight.Bold,
+                    color = if (isChauffeurFound) Mint600 else CustomerTextSecondary,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(14.dp))
             Text(
                 text = if (isChauffeurFound) "Chauffeur Found!" else "Finding Your Verified Chauffeur",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Black,
-                color = Color.White
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = CustomerTextPrimary
             )
             Text(
                 text = "Booking #${booking.bookingCode} • ${booking.vehicleModel}",
-                fontSize = 12.sp,
-                color = Slate400
+                fontSize = 13.sp,
+                color = CustomerTextSecondary
             )
         }
 
@@ -115,39 +118,39 @@ fun CustomerSearchingChauffeurScreen(
                     modifier = Modifier
                         .size(200.dp)
                         .scale(pulseScale)
-                        .border(2.dp, Emerald500.copy(alpha = pulseAlpha), CircleShape)
+                        .border(2.dp, Mint500.copy(alpha = pulseAlpha), CircleShape)
                 )
                 // Middle Pulse Ring
                 Box(
                     modifier = Modifier
                         .size(140.dp)
                         .scale(pulseScale * 0.85f)
-                        .border(2.dp, Emerald500.copy(alpha = pulseAlpha), CircleShape)
+                        .border(2.dp, Mint500.copy(alpha = pulseAlpha), CircleShape)
                 )
             }
 
             // Center Radar Orb
             Surface(
                 shape = CircleShape,
-                color = if (isChauffeurFound) Emerald500 else MidnightCard,
-                border = androidx.compose.foundation.BorderStroke(2.dp, if (isChauffeurFound) Emerald400 else Gold500.copy(alpha = 0.5f)),
-                modifier = Modifier.size(90.dp),
-                shadowElevation = 16.dp
+                color = if (isChauffeurFound) Mint500 else Color.White,
+                border = androidx.compose.foundation.BorderStroke(2.dp, if (isChauffeurFound) Mint600 else Mint500),
+                modifier = Modifier.size(96.dp),
+                shadowElevation = 8.dp
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     if (isChauffeurFound) {
                         Icon(
                             imageVector = Icons.Rounded.Check,
                             contentDescription = "Chauffeur Confirmed",
-                            tint = Slate900,
-                            modifier = Modifier.size(42.dp)
+                            tint = Color.White,
+                            modifier = Modifier.size(46.dp)
                         )
                     } else {
                         Icon(
                             imageVector = Icons.Rounded.DirectionsCar,
                             contentDescription = "Scanning Chauffeurs",
-                            tint = Gold400,
-                            modifier = Modifier.size(42.dp)
+                            tint = Mint500,
+                            modifier = Modifier.size(46.dp)
                         )
                     }
                 }
@@ -161,16 +164,18 @@ fun CustomerSearchingChauffeurScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (!isChauffeurFound) {
-                // Step progress pills
+                // Step progress pills in Pure White Card
                 Surface(
-                    shape = RoundedCornerShape(16.dp),
-                    color = Slate800,
+                    shape = RoundedCornerShape(18.dp),
+                    color = Color.White,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         StepStatusRow(
                             stepNumber = "1",
-                            text = "Scanning nearby commercial chauffeurs in Vidisha...",
+                            text = "Scanning nearby commercial chauffeurs...",
                             isDone = searchStep > 1,
                             isActive = searchStep == 1
                         )
@@ -200,9 +205,11 @@ fun CustomerSearchingChauffeurScreen(
                 Surface(
                     shape = RoundedCornerShape(20.dp),
                     color = Color.White,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 4.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -213,45 +220,48 @@ fun CustomerSearchingChauffeurScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Box(
-                                    modifier = Modifier.size(50.dp).background(Slate900, CircleShape),
+                                    modifier = Modifier.size(52.dp).background(Mint50, CircleShape).border(1.dp, Mint100, CircleShape),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    Text("RS", color = Color.White, fontWeight = FontWeight.Black, fontSize = 16.sp)
+                                    Text("RS", color = Mint600, fontWeight = FontWeight.Black, fontSize = 16.sp)
                                 }
                                 Column {
                                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        Text(booking.assignedDriverName, fontSize = 15.sp, fontWeight = FontWeight.Black, color = Slate900)
-                                        Surface(shape = RoundedCornerShape(4.dp), color = Emerald50) {
-                                            Text("★ 4.96", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Emerald600, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+                                        Text(booking.assignedDriverName, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
+                                        Surface(shape = RoundedCornerShape(6.dp), color = Mint50) {
+                                            Text("★ 4.96", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Mint600, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
                                         }
                                     }
-                                    Text("DL: ${booking.assignedDriverDL}", fontSize = 11.sp, color = Slate500)
-                                    Text("Arriving in ~${booking.driverEtaMinutes} mins (Chauffeur En Route to Location)", fontSize = 11.sp, color = Emerald600, fontWeight = FontWeight.Bold)
+                                    Text("DL: ${booking.assignedDriverDL}", fontSize = 12.sp, color = CustomerTextSecondary)
+                                    Text("Arriving in ~${booking.driverEtaMinutes} mins", fontSize = 12.sp, color = Mint600, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
 
                         Surface(
-                            shape = RoundedCornerShape(10.dp),
-                            color = Slate100,
+                            shape = RoundedCornerShape(12.dp),
+                            color = CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Row(
-                                modifier = Modifier.padding(10.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                modifier = Modifier.padding(12.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("Handover Start OTP:", fontSize = 12.sp, color = Slate600)
-                                Text(booking.startOtp, fontSize = 14.sp, fontWeight = FontWeight.Black, color = Slate900)
+                                Text("Handover Start OTP:", fontSize = 13.sp, color = CustomerTextSecondary)
+                                Text(booking.startOtp, fontSize = 16.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                             }
                         }
 
                         Button(
                             onClick = onChauffeurAccepted,
-                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            modifier = Modifier.fillMaxWidth().height(50.dp),
                             shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Slate900)
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                         ) {
-                            Text("PROCEED TO LIVE TRACKING →", fontWeight = FontWeight.Black, color = Color.White)
+                            Text("PROCEED TO LIVE TRACKING →", fontWeight = FontWeight.Bold, color = Color.White)
                         }
                     }
                 }
@@ -273,9 +283,14 @@ private fun StepStatusRow(
     ) {
         Box(
             modifier = Modifier
-                .size(22.dp)
+                .size(24.dp)
                 .background(
-                    if (isDone) Emerald500 else if (isActive) Slate700 else Slate800,
+                    if (isDone) Mint500 else if (isActive) Mint50 else CustomerInnerSurfaceLight,
+                    CircleShape
+                )
+                .border(
+                    1.dp,
+                    if (isDone) Mint500 else if (isActive) Mint500 else CustomerCardBorderLight,
                     CircleShape
                 ),
             contentAlignment = Alignment.Center
@@ -284,23 +299,23 @@ private fun StepStatusRow(
                 Icon(
                     imageVector = Icons.Rounded.Check,
                     contentDescription = "Completed",
-                    tint = Slate900,
-                    modifier = Modifier.size(12.dp)
+                    tint = Color.White,
+                    modifier = Modifier.size(14.dp)
                 )
             } else {
                 Text(
                     text = stepNumber,
-                    color = Color.White,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Black
+                    color = if (isActive) Mint600 else CustomerTextSecondary,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
         Text(
             text = text,
-            fontSize = 11.sp,
-            color = if (isDone || isActive) Color.White else Slate500,
-            fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal
+            fontSize = 12.sp,
+            color = if (isDone || isActive) CustomerTextPrimary else CustomerTextSecondary,
+            fontWeight = if (isActive) FontWeight.SemiBold else FontWeight.Normal
         )
     }
 }

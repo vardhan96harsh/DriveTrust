@@ -30,8 +30,9 @@ fun WhatsAppShareDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(24.dp),
-            color = MidnightCard,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+            color = CustomerWhite,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 4.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -48,24 +49,24 @@ fun WhatsAppShareDialog(
                             text = "Share Live Ride Link",
                             fontWeight = FontWeight.Black,
                             fontSize = 18.sp,
-                            color = Color.White
+                            color = CustomerTextPrimary
                         )
                         Text(
                             text = "Send real-time GPS telemetry link to family & WhatsApp",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
                     }
                     IconButton(
                         onClick = onDismiss,
                         modifier = Modifier
                             .size(32.dp)
-                            .background(Midnight950, CircleShape)
+                            .background(CustomerInnerSurfaceLight, CircleShape)
                     ) {
                         Icon(
                             Icons.Rounded.Close,
                             contentDescription = "Close",
-                            tint = Slate400,
+                            tint = CustomerTextSecondary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -73,8 +74,8 @@ fun WhatsAppShareDialog(
 
                 Surface(
                     shape = RoundedCornerShape(14.dp),
-                    color = Midnight950,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerInnerSurfaceLight,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -85,37 +86,37 @@ fun WhatsAppShareDialog(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Booking Reference:", fontSize = 11.sp, color = Slate400)
+                            Text("Booking Reference:", fontSize = 11.sp, color = CustomerTextSecondary)
                             Text(
                                 bookingCode,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold,
                                 fontFamily = FontFamily.Monospace,
-                                color = Gold500
+                                color = Mint600
                             )
                         }
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Chauffeur:", fontSize = 11.sp, color = Slate400)
+                            Text("Chauffeur:", fontSize = 11.sp, color = CustomerTextSecondary)
                             Text(
                                 driverName,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = CustomerTextPrimary
                             )
                         }
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Vehicle:", fontSize = 11.sp, color = Slate400)
+                            Text("Vehicle:", fontSize = 11.sp, color = CustomerTextSecondary)
                             Text(
                                 "$carModel ($carPlate)",
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Slate200
+                                color = CustomerTextSecondary
                             )
                         }
                     }
@@ -123,8 +124,8 @@ fun WhatsAppShareDialog(
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Emerald400.copy(alpha = 0.12f),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Emerald400.copy(alpha = 0.3f)),
+                    color = Mint50,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
@@ -132,7 +133,7 @@ fun WhatsAppShareDialog(
                             text = "SECURE TELEMETRY URL",
                             fontSize = 9.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Emerald400,
+                            color = Mint600,
                             letterSpacing = 0.5.sp
                         )
                         Text(
@@ -140,7 +141,7 @@ fun WhatsAppShareDialog(
                             fontSize = 11.sp,
                             fontFamily = FontFamily.Monospace,
                             fontWeight = FontWeight.SemiBold,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             modifier = Modifier.padding(top = 4.dp)
                         )
                     }
@@ -151,7 +152,7 @@ fun WhatsAppShareDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Emerald600),
+                    colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Icon(

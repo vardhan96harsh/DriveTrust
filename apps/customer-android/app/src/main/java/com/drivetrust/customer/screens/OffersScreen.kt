@@ -99,14 +99,14 @@ fun CustomerOffersScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate900)
+            .background(CustomerBackgroundLight)
     ) {
         // Luxury Top App Bar
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MidnightDark,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-            shadowElevation = 8.dp
+            color = CustomerBackgroundLight,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 2.dp
         ) {
             Row(
                 modifier = Modifier
@@ -123,13 +123,13 @@ fun CustomerOffersScreen(
                         onClick = onBack,
                         modifier = Modifier
                             .size(38.dp)
-                            .background(MidnightCard, androidx.compose.foundation.shape.CircleShape)
-                            .border(1.dp, MidnightBorder, androidx.compose.foundation.shape.CircleShape)
+                            .background(CustomerWhite, androidx.compose.foundation.shape.CircleShape)
+                            .border(1.dp, CustomerCardBorderLight, androidx.compose.foundation.shape.CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = CustomerTextPrimary,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -138,13 +138,13 @@ fun CustomerOffersScreen(
                             text = "Privileges & Offers",
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
                             text = "Exclusive vouchers on verified chauffeur rides",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
                     }
                 }
@@ -162,12 +162,13 @@ fun CustomerOffersScreen(
             item {
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Text("HAVE AN EXECUTIVE PROMO CODE?", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400, letterSpacing = 0.8.sp)
+                        Text("HAVE AN EXECUTIVE PROMO CODE?", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold600, letterSpacing = 0.8.sp)
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -179,17 +180,17 @@ fun CustomerOffersScreen(
                                     promoInput = it.uppercase().trim()
                                     inputError = null
                                 },
-                                placeholder = { Text("e.g. WELCOME50", fontSize = 12.sp, color = Slate500) },
+                                placeholder = { Text("e.g. WELCOME50", fontSize = 12.sp, color = CustomerTextSecondary) },
                                 modifier = Modifier.weight(1f),
                                 shape = RoundedCornerShape(12.dp),
                                 singleLine = true,
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = Gold500,
-                                    unfocusedBorderColor = MidnightBorder,
-                                    focusedTextColor = Color.White,
-                                    unfocusedTextColor = Color.White,
-                                    focusedContainerColor = MidnightDark,
-                                    unfocusedContainerColor = MidnightDark
+                                    focusedBorderColor = Mint500,
+                                    unfocusedBorderColor = CustomerCardBorderLight,
+                                    focusedTextColor = CustomerTextPrimary,
+                                    unfocusedTextColor = CustomerTextPrimary,
+                                    focusedContainerColor = CustomerInnerSurfaceLight,
+                                    unfocusedContainerColor = CustomerInnerSurfaceLight
                                 )
                             )
                             Button(
@@ -203,15 +204,15 @@ fun CustomerOffersScreen(
                                     }
                                 },
                                 shape = RoundedCornerShape(12.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = Gold500),
+                                colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                                 modifier = Modifier.height(52.dp)
                             ) {
-                                Text("APPLY", fontWeight = FontWeight.Black, fontSize = 12.sp, color = Slate900)
+                                Text("APPLY", fontWeight = FontWeight.Black, fontSize = 12.sp, color = Color.White)
                             }
                         }
 
                         if (inputError != null) {
-                            Text(inputError!!, fontSize = 11.sp, color = Red400, fontWeight = FontWeight.SemiBold)
+                            Text(inputError!!, fontSize = 11.sp, color = Red600, fontWeight = FontWeight.SemiBold)
                         }
                         if (appliedCodeFeedback != null) {
                             Row(
@@ -221,10 +222,10 @@ fun CustomerOffersScreen(
                                 Icon(
                                     imageVector = Icons.Rounded.CheckCircle,
                                     contentDescription = "Success",
-                                    tint = Emerald400,
+                                    tint = Mint600,
                                     modifier = Modifier.size(14.dp)
                                 )
-                                Text(appliedCodeFeedback!!, fontSize = 12.sp, color = Emerald400, fontWeight = FontWeight.Bold)
+                                Text(appliedCodeFeedback!!, fontSize = 12.sp, color = Mint600, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -238,8 +239,8 @@ fun CustomerOffersScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("ACTIVE PRIVILEGE VOUCHERS (${offers.size})", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Slate400, letterSpacing = 0.8.sp)
-                    Text("Tap to Apply", fontSize = 11.sp, color = Gold400, fontWeight = FontWeight.Bold)
+                    Text("ACTIVE PRIVILEGE VOUCHERS (${offers.size})", fontSize = 10.sp, fontWeight = FontWeight.Black, color = CustomerTextSecondary, letterSpacing = 0.8.sp)
+                    Text("Tap to Apply", fontSize = 11.sp, color = Mint600, fontWeight = FontWeight.Bold)
                 }
             }
 
@@ -247,11 +248,12 @@ fun CustomerOffersScreen(
             items(offers, key = { it.code }) { offer ->
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = MidnightCard,
+                    color = CustomerWhite,
                     border = androidx.compose.foundation.BorderStroke(
                         1.dp,
-                        if (offer.isHot) Gold500.copy(alpha = 0.5f) else MidnightBorder
+                        if (offer.isHot) Mint500.copy(alpha = 0.5f) else CustomerCardBorderLight
                     ),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -266,8 +268,8 @@ fun CustomerOffersScreen(
                             ) {
                                 Surface(
                                     shape = RoundedCornerShape(8.dp),
-                                    color = MidnightDark,
-                                    border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f))
+                                    color = CustomerInnerSurfaceLight,
+                                    border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f))
                                 ) {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
@@ -277,14 +279,14 @@ fun CustomerOffersScreen(
                                         Icon(
                                             imageVector = Icons.Rounded.ConfirmationNumber,
                                             contentDescription = "Coupon",
-                                            tint = Gold400,
+                                            tint = Gold600,
                                             modifier = Modifier.size(13.dp)
                                         )
                                         Text(
                                             text = offer.code,
                                             fontSize = 12.sp,
                                             fontWeight = FontWeight.Black,
-                                            color = Gold400,
+                                            color = Gold600,
                                             letterSpacing = 0.5.sp
                                         )
                                     }
@@ -293,7 +295,7 @@ fun CustomerOffersScreen(
                                 if (offer.isHot) {
                                     Surface(
                                         shape = RoundedCornerShape(6.dp),
-                                        color = Gold500.copy(alpha = 0.15f),
+                                        color = Gold50.copy(alpha = 0.9f),
                                         border = androidx.compose.foundation.BorderStroke(0.8.dp, Gold500.copy(alpha = 0.4f))
                                     ) {
                                         Row(
@@ -304,14 +306,14 @@ fun CustomerOffersScreen(
                                             Icon(
                                                 imageVector = Icons.Rounded.Whatshot,
                                                 contentDescription = "Popular",
-                                                tint = Gold400,
+                                                tint = Gold600,
                                                 modifier = Modifier.size(11.dp)
                                             )
                                             Text(
                                                 text = "POPULAR",
                                                 fontSize = 9.sp,
                                                 fontWeight = FontWeight.Black,
-                                                color = Gold400
+                                                color = Gold600
                                             )
                                         }
                                     }
@@ -324,14 +326,14 @@ fun CustomerOffersScreen(
                                     onApplyPromo(offer)
                                 },
                                 shape = RoundedCornerShape(10.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = if (offer.isHot) Gold500 else Slate800),
+                                colors = ButtonDefaults.buttonColors(containerColor = if (offer.isHot) Mint500 else CustomerInnerSurfaceLight),
                                 contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp)
                             ) {
                                 Text(
                                     "APPLY",
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Black,
-                                    color = if (offer.isHot) Slate900 else Color.White
+                                    color = if (offer.isHot) Color.White else CustomerTextPrimary
                                 )
                             }
                         }
@@ -340,17 +342,17 @@ fun CustomerOffersScreen(
                             text = offer.title,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White
+                            color = CustomerTextPrimary
                         )
 
                         Text(
                             text = offer.discountDescription,
                             fontSize = 12.sp,
-                            color = Slate300,
+                            color = CustomerTextSecondary,
                             lineHeight = 16.sp
                         )
 
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -360,13 +362,13 @@ fun CustomerOffersScreen(
                             Text(
                                 text = "Min Order: ₹${offer.minOrder.toInt()} • ${offer.applicableService}",
                                 fontSize = 10.sp,
-                                color = Slate400
+                                color = CustomerTextSecondary
                             )
                             Text(
                                 text = offer.validTill,
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.SemiBold,
-                                color = Gold400
+                                color = Gold600
                             )
                         }
                     }

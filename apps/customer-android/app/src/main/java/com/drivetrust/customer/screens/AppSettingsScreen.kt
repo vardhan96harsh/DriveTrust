@@ -36,14 +36,14 @@ fun CustomerAppSettingsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate900)
+            .background(CustomerBackgroundLight)
     ) {
         // Luxury Top App Bar
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MidnightDark,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-            shadowElevation = 8.dp
+            color = CustomerBackgroundLight,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 2.dp
         ) {
             Row(
                 modifier = Modifier
@@ -60,13 +60,13 @@ fun CustomerAppSettingsScreen(
                         onClick = onBack,
                         modifier = Modifier
                             .size(38.dp)
-                            .background(MidnightCard, CircleShape)
-                            .border(1.dp, MidnightBorder, CircleShape)
+                            .background(CustomerWhite, CircleShape)
+                            .border(1.dp, CustomerCardBorderLight, CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = CustomerTextPrimary,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -75,13 +75,13 @@ fun CustomerAppSettingsScreen(
                             text = "Preferences & System",
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
                             text = "App preferences, alerts & security standards",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
                     }
                 }
@@ -98,8 +98,8 @@ fun CustomerAppSettingsScreen(
             if (cacheClearedFeedback) {
                 Surface(
                     shape = RoundedCornerShape(14.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Emerald500.copy(alpha = 0.6f)),
+                    color = Mint50,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.4f)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
@@ -110,14 +110,14 @@ fun CustomerAppSettingsScreen(
                         Icon(
                             imageVector = Icons.Rounded.CheckCircle,
                             contentDescription = "Cleared",
-                            tint = Emerald400,
+                            tint = Mint600,
                             modifier = Modifier.size(18.dp)
                         )
                         Text(
                             "Cached routes, invoice previews and temporary files cleared!",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Emerald400
+                            color = Mint600
                         )
                     }
                 }
@@ -137,10 +137,10 @@ fun CustomerAppSettingsScreen(
                         val isSelected = selectedLanguage == code
                         Surface(
                             shape = RoundedCornerShape(12.dp),
-                            color = if (isSelected) Gold500 else MidnightDark,
+                            color = if (isSelected) Mint500 else CustomerInnerSurfaceLight,
                             border = androidx.compose.foundation.BorderStroke(
                                 1.dp,
-                                if (isSelected) Gold400 else MidnightBorder
+                                if (isSelected) Mint500 else CustomerCardBorderLight
                             ),
                             modifier = Modifier
                                 .weight(1f)
@@ -149,8 +149,8 @@ fun CustomerAppSettingsScreen(
                             Text(
                                 text = label,
                                 fontSize = 12.sp,
-                                fontWeight = if (isSelected) FontWeight.Black else FontWeight.Normal,
-                                color = if (isSelected) Slate900 else Slate300,
+                                fontWeight = if (isSelected) FontWeight.Black else FontWeight.Medium,
+                                color = if (isSelected) Color.White else CustomerTextPrimary,
                                 modifier = Modifier.padding(vertical = 12.dp, horizontal = 14.dp),
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
                             )
@@ -170,14 +170,14 @@ fun CustomerAppSettingsScreen(
                     checked = tripUpdatesEnabled,
                     onCheckedChange = { tripUpdatesEnabled = it }
                 )
-                HorizontalDivider(color = MidnightBorder)
+                HorizontalDivider(color = CustomerCardBorderLight)
                 SettingsSwitchRow(
                     label = "Safety & Emergency Alerts",
                     description = "SOS triggers, handover audit sign-offs, and route deviations",
                     checked = safetyAlertsEnabled,
                     onCheckedChange = { safetyAlertsEnabled = it }
                 )
-                HorizontalDivider(color = MidnightBorder)
+                HorizontalDivider(color = CustomerCardBorderLight)
                 SettingsSwitchRow(
                     label = "Discounts & Cashback Offers",
                     description = "Weekly coupon codes and DT Wallet reward bonuses",
@@ -210,14 +210,14 @@ fun CustomerAppSettingsScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Clear Cached App Data", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                        Text("Removes temporary map routes and PDF cache (18.4 MB)", fontSize = 11.sp, color = Slate400)
+                        Text("Clear Cached App Data", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
+                        Text("Removes temporary map routes and PDF cache (18.4 MB)", fontSize = 11.sp, color = CustomerTextSecondary)
                     }
                     OutlinedButton(
                         onClick = { cacheClearedFeedback = true },
                         shape = RoundedCornerShape(10.dp),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f)),
-                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Gold400)
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint500),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Mint600)
                     ) {
                         Text("Clear", fontSize = 11.sp, fontWeight = FontWeight.Bold)
                     }
@@ -230,18 +230,18 @@ fun CustomerAppSettingsScreen(
                 icon = Icons.Rounded.Info
             ) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("App Version", fontSize = 12.sp, color = Slate400)
-                    Text("DriveTrust Customer v2.5.0-PROD", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text("App Version", fontSize = 12.sp, color = CustomerTextSecondary)
+                    Text("DriveTrust Customer v2.5.0-PROD", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
                 }
-                HorizontalDivider(color = MidnightBorder)
+                HorizontalDivider(color = CustomerCardBorderLight)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("Regulatory Compliance", fontSize = 12.sp, color = Slate400)
-                    Text("MoRTH Sarathi & MP Police Cleared", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Emerald400)
+                    Text("Regulatory Compliance", fontSize = 12.sp, color = CustomerTextSecondary)
+                    Text("MoRTH Sarathi & MP Police Cleared", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Mint600)
                 }
-                HorizontalDivider(color = MidnightBorder)
+                HorizontalDivider(color = CustomerCardBorderLight)
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("Operation Hub", fontSize = 12.sp, color = Slate400)
-                    Text("Vidisha & Bhopal Central Fleet", fontSize = 12.sp, color = Gold400, fontWeight = FontWeight.SemiBold)
+                    Text("Operation Hub", fontSize = 12.sp, color = CustomerTextSecondary)
+                    Text("Vidisha & Bhopal Central Fleet", fontSize = 12.sp, color = Gold600, fontWeight = FontWeight.SemiBold)
                 }
             }
         }
@@ -262,15 +262,16 @@ private fun SettingsSection(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = Gold400,
+                tint = Gold600,
                 modifier = Modifier.size(14.dp)
             )
-            Text(title, fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400, letterSpacing = 0.8.sp)
+            Text(title, fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold600, letterSpacing = 0.8.sp)
         }
         Surface(
             shape = RoundedCornerShape(16.dp),
-            color = MidnightCard,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+            color = CustomerWhite,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 2.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -293,13 +294,18 @@ private fun SettingsSwitchRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f).padding(end = 12.dp)) {
-            Text(label, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.White)
-            Text(description, fontSize = 11.sp, color = Slate400, lineHeight = 15.sp)
+            Text(label, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
+            Text(description, fontSize = 11.sp, color = CustomerTextSecondary, lineHeight = 15.sp)
         }
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(checkedThumbColor = Gold500, checkedTrackColor = MidnightDark)
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = Mint500,
+                uncheckedThumbColor = Slate400,
+                uncheckedTrackColor = Slate200
+            )
         )
     }
 }

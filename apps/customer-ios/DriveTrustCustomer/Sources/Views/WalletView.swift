@@ -18,32 +18,32 @@ struct WalletView: View {
                         HStack {
                             Text("DRIVETRUST DIGITAL WALLET")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.mint600)
                                 .tracking(1)
                             Spacer()
                             HStack(spacing: 4) {
-                                Circle().fill(Color.emerald400).frame(width: 8, height: 8)
+                                Circle().fill(Color.mint500).frame(width: 8, height: 8)
                                 Text("Auto-Debit Active")
                                     .font(.system(size: 10, weight: .bold))
-                                    .foregroundColor(.emerald400)
+                                    .foregroundColor(.mint600)
                             }
                         }
 
                         Text("₹\(String(format: "%.2f", balance))")
                             .font(.system(size: 38, weight: .black))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
 
                         Text("Instant 1-tap checkout for chauffeur dispatches")
                             .font(.system(size: 11))
-                            .foregroundColor(.slate400)
+                            .foregroundColor(.customerTextSecondary)
 
                         if let msg = successMessage {
                             Text(msg)
                                 .font(.system(size: 11, weight: .medium))
-                                .foregroundColor(.emerald400)
+                                .foregroundColor(.mint600)
                                 .padding(8)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(Color.emerald400.opacity(0.12))
+                                .background(Color.mint50)
                                 .cornerRadius(8)
                         }
 
@@ -53,10 +53,10 @@ struct WalletView: View {
                                 Text("Top Up Wallet via UPI")
                                     .font(.system(size: 13, weight: .bold))
                             }
-                            .foregroundColor(.midnightDark)
+                            .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
-                            .background(Color.gold500)
+                            .background(Color.mint500)
                             .cornerRadius(10)
                         }
                     }
@@ -64,12 +64,13 @@ struct WalletView: View {
                     .background(Color.midnightCard)
                     .cornerRadius(20)
                     .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.midnightBorder, lineWidth: 1))
+                    .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
 
                     // Linked Payment Methods
                     VStack(alignment: .leading, spacing: 12) {
                         Text("SAVED PAYMENT INSTRUMENTS")
                             .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(.gold500)
+                            .foregroundColor(.mint600)
                             .tracking(1)
 
                         ForEach([
@@ -79,28 +80,29 @@ struct WalletView: View {
                         ], id: \.0) { item in
                             HStack(spacing: 12) {
                                 Image(systemName: item.2)
-                                    .foregroundColor(.gold500)
+                                    .foregroundColor(.mint600)
                                     .frame(width: 32, height: 32)
-                                    .background(Color.midnightDark)
+                                    .background(Color.mint50)
                                     .clipShape(Circle())
 
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(item.0)
                                         .font(.system(size: 13, weight: .bold))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.customerTextPrimary)
                                     Text(item.1)
                                         .font(.system(size: 10))
-                                        .foregroundColor(.slate400)
+                                        .foregroundColor(.customerTextSecondary)
                                 }
                                 Spacer()
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.emerald400)
+                                    .foregroundColor(.mint600)
                                     .font(.system(size: 11, weight: .bold))
                             }
                             .padding(12)
                             .background(Color.midnightCard)
                             .cornerRadius(12)
                             .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.midnightBorder, lineWidth: 1))
+                            .shadow(color: Color.black.opacity(0.02), radius: 4, x: 0, y: 1)
                         }
                     }
 
@@ -108,7 +110,7 @@ struct WalletView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("RECENT TRANSACTIONS")
                             .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(.gold500)
+                            .foregroundColor(.mint600)
                             .tracking(1)
 
                         ForEach([
@@ -120,19 +122,20 @@ struct WalletView: View {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(txn.0)
                                         .font(.system(size: 12, weight: .bold))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.customerTextPrimary)
                                     Text(txn.2)
                                         .font(.system(size: 10))
-                                        .foregroundColor(.slate400)
+                                        .foregroundColor(.customerTextSecondary)
                                 }
                                 Spacer()
                                 Text(txn.1)
                                     .font(.system(size: 13, weight: .black))
-                                    .foregroundColor(txn.3 ? .emerald400 : .white)
+                                    .foregroundColor(txn.3 ? .mint600 : .customerTextPrimary)
                             }
                             .padding(12)
                             .background(Color.midnightCard)
                             .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.midnightBorder, lineWidth: 1))
                         }
                     }
                 }
@@ -142,12 +145,12 @@ struct WalletView: View {
         }
         .sheet(isPresented: $showTopUpModal) {
             ZStack {
-                Color.midnightCard.edgesIgnoringSafeArea(.all)
+                Color.midnightDark.edgesIgnoringSafeArea(.all)
 
                 VStack(spacing: 16) {
                     Text("Top Up Wallet")
                         .font(.system(size: 18, weight: .black))
-                        .foregroundColor(.white)
+                        .foregroundColor(.customerTextPrimary)
 
                     HStack(spacing: 10) {
                         ForEach(["200", "500", "1000", "2000"], id: \.self) { amt in
@@ -155,17 +158,18 @@ struct WalletView: View {
                                 topUpAmount = amt
                             }
                             .font(.system(size: 12, weight: .bold))
-                            .foregroundColor(topUpAmount == amt ? .midnightDark : .white)
+                            .foregroundColor(topUpAmount == amt ? .white : .customerTextPrimary)
                             .padding(.horizontal, 14)
                             .padding(.vertical, 8)
-                            .background(topUpAmount == amt ? Color.gold500 : Color.midnightDark)
+                            .background(topUpAmount == amt ? Color.mint500 : Color.midnightCard)
                             .cornerRadius(8)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.midnightBorder, lineWidth: 1))
                         }
                     }
 
                     if isProcessing {
                         ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .gold500))
+                            .progressViewStyle(CircularProgressViewStyle(tint: .mint500))
                     } else {
                         Button(action: {
                             isProcessing = true
@@ -180,10 +184,10 @@ struct WalletView: View {
                         }) {
                             Text("Confirm & Pay ₹\(topUpAmount)")
                                 .font(.system(size: 13, weight: .bold))
-                                .foregroundColor(.midnightDark)
+                                .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 12)
-                                .background(Color.gold500)
+                                .background(Color.mint500)
                                 .cornerRadius(10)
                         }
                     }

@@ -29,10 +29,10 @@ struct RatingView: View {
                     VStack(spacing: 4) {
                         Text("Trip Completed Safely")
                             .font(.system(size: 22, weight: .black))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
                         Text("Chauffeur handed keys back. Thank you for choosing DriveTrust.")
                             .font(.system(size: 11))
-                            .foregroundColor(.slate400)
+                            .foregroundColor(.customerTextSecondary)
                             .multilineTextAlignment(.center)
                     }
 
@@ -40,12 +40,12 @@ struct RatingView: View {
                     VStack(spacing: 14) {
                         Text("RATE YOUR CHAUFFEUR")
                             .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(.gold500)
+                            .foregroundColor(.gold600)
                             .tracking(1)
 
                         Text(booking.assignedDriverName)
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
 
                         HStack(spacing: 10) {
                             ForEach(1...5, id: \.self) { star in
@@ -60,7 +60,7 @@ struct RatingView: View {
                         // Tip selector
                         Text("ADD A CHAUFFEUR GRATUITY (100% TO DRIVER)")
                             .font(.system(size: 9, weight: .bold))
-                            .foregroundColor(.slate400)
+                            .foregroundColor(.customerTextSecondary)
                             .padding(.top, 6)
 
                         HStack(spacing: 8) {
@@ -69,10 +69,10 @@ struct RatingView: View {
                                     tipAmount = tip
                                 }
                                 .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(tipAmount == tip ? .midnightDark : .white)
+                                .foregroundColor(tipAmount == tip ? .white : .customerTextPrimary)
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 8)
-                                .background(tipAmount == tip ? Color.gold500 : Color.midnightDark)
+                                .background(tipAmount == tip ? Color.mint500 : Color.midnight950)
                                 .cornerRadius(8)
                             }
                         }
@@ -82,23 +82,24 @@ struct RatingView: View {
                     .background(Color.midnightCard)
                     .cornerRadius(20)
                     .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.midnightBorder, lineWidth: 1))
+                    .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
 
                     // Bookmark as Favorite Driver
                     Toggle(isOn: $addToFavorites) {
                         HStack(spacing: 8) {
                             Image(systemName: "star.circle.fill")
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.gold600)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Add to Favorite Chauffeurs")
                                     .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                 Text("Priority dispatch on your future bookings")
                                     .font(.system(size: 11))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                             }
                         }
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .gold500))
+                    .toggleStyle(SwitchToggleStyle(tint: .mint500))
                     .padding(14)
                     .background(Color.midnightCard)
                     .cornerRadius(14)
@@ -110,10 +111,10 @@ struct RatingView: View {
                             Text("Book Another Chauffeur")
                                 .font(.system(size: 14, weight: .bold))
                         }
-                        .foregroundColor(.midnightDark)
+                        .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
-                        .background(Color.gold500)
+                        .background(Color.mint500)
                         .cornerRadius(12)
                     }
                 }

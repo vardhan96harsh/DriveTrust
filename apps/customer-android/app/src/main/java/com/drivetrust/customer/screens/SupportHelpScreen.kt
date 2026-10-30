@@ -77,14 +77,14 @@ fun CustomerSupportHelpScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate900)
+            .background(CustomerBackgroundLight)
     ) {
         // Luxury Top App Bar
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MidnightDark,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-            shadowElevation = 8.dp
+            color = CustomerBackgroundLight,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 2.dp
         ) {
             Row(
                 modifier = Modifier
@@ -101,13 +101,13 @@ fun CustomerSupportHelpScreen(
                         onClick = onBack,
                         modifier = Modifier
                             .size(38.dp)
-                            .background(MidnightCard, CircleShape)
-                            .border(1.dp, MidnightBorder, CircleShape)
+                            .background(CustomerWhite, CircleShape)
+                            .border(1.dp, CustomerCardBorderLight, CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = CustomerTextPrimary,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -116,13 +116,13 @@ fun CustomerSupportHelpScreen(
                             text = "Executive Concierge & Support",
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
                             text = "24x7 Priority Chauffeur & Safety Care",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
                     }
                 }
@@ -135,8 +135,8 @@ fun CustomerSupportHelpScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
                 shape = RoundedCornerShape(14.dp),
-                color = MidnightCard,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Emerald500.copy(alpha = 0.6f))
+                color = Mint50,
+                border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.4f))
             ) {
                 Row(
                     modifier = Modifier.padding(14.dp),
@@ -146,10 +146,10 @@ fun CustomerSupportHelpScreen(
                     Icon(
                         imageVector = Icons.Rounded.CheckCircle,
                         contentDescription = "Success",
-                        tint = Emerald400,
+                        tint = Mint600,
                         modifier = Modifier.size(18.dp)
                     )
-                    Text(ticketSuccessMessage!!, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Emerald400)
+                    Text(ticketSuccessMessage!!, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Mint600)
                 }
             }
         }
@@ -170,8 +170,9 @@ fun CustomerSupportHelpScreen(
                     // 24x7 Helpline Card
                     Surface(
                         shape = RoundedCornerShape(16.dp),
-                        color = MidnightCard,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Red500.copy(alpha = 0.5f)),
+                        color = CustomerWhite,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Red500.copy(alpha = 0.3f)),
+                        shadowElevation = 2.dp,
                         modifier = Modifier
                             .weight(1f)
                             .clickable { onCallHelpline() }
@@ -183,27 +184,28 @@ fun CustomerSupportHelpScreen(
                             Box(
                                 modifier = Modifier
                                     .size(36.dp)
-                                    .background(Red500.copy(alpha = 0.15f), CircleShape),
+                                    .background(Red500.copy(alpha = 0.12f), CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.Emergency,
                                     contentDescription = "Emergency",
-                                    tint = Red400,
+                                    tint = Red600,
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
-                            Text("Emergency Care", fontSize = 13.sp, fontWeight = FontWeight.Black, color = Color.White)
-                            Text("Dial 112 / Central Safety Dispatch", fontSize = 10.sp, color = Slate400)
-                            Text("CALL NOW →", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Red400)
+                            Text("Emergency Care", fontSize = 13.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                            Text("Dial 112 / Central Safety Dispatch", fontSize = 10.sp, color = CustomerTextSecondary)
+                            Text("CALL NOW →", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Red600)
                         }
                     }
 
                     // Live AI / Agent Chat Card
                     Surface(
                         shape = RoundedCornerShape(16.dp),
-                        color = MidnightCard,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f)),
+                        color = CustomerWhite,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f)),
+                        shadowElevation = 2.dp,
                         modifier = Modifier
                             .weight(1f)
                             .clickable { showChatDialog = true }
@@ -215,19 +217,19 @@ fun CustomerSupportHelpScreen(
                             Box(
                                 modifier = Modifier
                                     .size(36.dp)
-                                    .background(Gold500.copy(alpha = 0.15f), CircleShape),
+                                    .background(Mint50, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.Chat,
                                     contentDescription = "Chat",
-                                    tint = Gold400,
+                                    tint = Mint600,
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
-                            Text("24x7 Live Concierge", fontSize = 13.sp, fontWeight = FontWeight.Black, color = Color.White)
-                            Text("Instant resolution for trips & fares", fontSize = 10.sp, color = Slate400)
-                            Text("START CHAT →", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400)
+                            Text("24x7 Live Concierge", fontSize = 13.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                            Text("Instant resolution for trips & fares", fontSize = 10.sp, color = CustomerTextSecondary)
+                            Text("START CHAT →", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Mint600)
                         }
                     }
                 }
@@ -237,8 +239,9 @@ fun CustomerSupportHelpScreen(
             item {
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
@@ -247,16 +250,16 @@ fun CustomerSupportHelpScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("ISSUE WITH A PAST TRIP?", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400, letterSpacing = 0.8.sp)
-                            Text("Raise a Support Ticket", fontSize = 15.sp, fontWeight = FontWeight.Black, color = Color.White)
-                            Text("Billing disputes, lost items, or driver feedback.", fontSize = 11.sp, color = Slate400)
+                            Text("ISSUE WITH A PAST TRIP?", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold600, letterSpacing = 0.8.sp)
+                            Text("Raise a Support Ticket", fontSize = 15.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                            Text("Billing disputes, lost items, or driver feedback.", fontSize = 11.sp, color = CustomerTextSecondary)
                         }
                         Button(
                             onClick = { showTicketDialog = true },
                             shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Gold500)
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                         ) {
-                            Text("Raise Ticket", fontSize = 11.sp, fontWeight = FontWeight.Black, color = Slate900)
+                            Text("Raise Ticket", fontSize = 11.sp, fontWeight = FontWeight.Black, color = Color.White)
                         }
                     }
                 }
@@ -268,7 +271,7 @@ fun CustomerSupportHelpScreen(
                     text = "FREQUENTLY ASKED QUESTIONS",
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Black,
-                    color = Slate400,
+                    color = CustomerTextSecondary,
                     letterSpacing = 0.8.sp
                 )
             }
@@ -280,8 +283,9 @@ fun CustomerSupportHelpScreen(
 
                 Surface(
                     shape = RoundedCornerShape(14.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 1.dp,
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
@@ -295,22 +299,22 @@ fun CustomerSupportHelpScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(faq.category, fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Gold400, letterSpacing = 0.5.sp)
-                                Text(faq.question, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text(faq.category, fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Gold600, letterSpacing = 0.5.sp)
+                                Text(faq.question, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
                             }
                             Icon(
                                 imageVector = if (isExpanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
                                 contentDescription = if (isExpanded) "Collapse" else "Expand",
-                                tint = Slate400,
+                                tint = CustomerTextSecondary,
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
 
                         AnimatedVisibility(visible = isExpanded) {
                             Column(modifier = Modifier.padding(top = 6.dp)) {
-                                HorizontalDivider(color = MidnightBorder)
+                                HorizontalDivider(color = CustomerCardBorderLight)
                                 Spacer(modifier = Modifier.height(8.dp))
-                                Text(faq.answer, fontSize = 12.sp, color = Slate300, lineHeight = 18.sp)
+                                Text(faq.answer, fontSize = 12.sp, color = CustomerTextSecondary, lineHeight = 18.sp)
                             }
                         }
                     }
@@ -366,8 +370,8 @@ fun SupportChatModal(onDismiss: () -> Unit) {
             Column(modifier = Modifier.fillMaxSize()) {
                 // Chat Header
                 Surface(
-                    color = MidnightDark,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerBackgroundLight,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
@@ -376,24 +380,24 @@ fun SupportChatModal(onDismiss: () -> Unit) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            Box(modifier = Modifier.size(36.dp).background(Gold500.copy(alpha = 0.15f), CircleShape).border(1.dp, Gold500.copy(alpha = 0.4f), CircleShape), contentAlignment = Alignment.Center) {
+                            Box(modifier = Modifier.size(36.dp).background(Mint50, CircleShape).border(1.dp, Mint500.copy(alpha = 0.4f), CircleShape), contentAlignment = Alignment.Center) {
                                 Icon(
                                     imageVector = Icons.Rounded.Security,
                                     contentDescription = "Concierge Bot",
-                                    tint = Gold400,
+                                    tint = Mint600,
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
                             Column {
-                                Text("DriveTrust Executive Concierge", fontSize = 14.sp, fontWeight = FontWeight.Black, color = Color.White)
-                                Text("● Online • Average response: Instant", fontSize = 10.sp, color = Emerald400)
+                                Text("DriveTrust Executive Concierge", fontSize = 14.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                                Text("● Online • Average response: Instant", fontSize = 10.sp, color = Mint600)
                             }
                         }
                         IconButton(onClick = onDismiss) {
                             Icon(
                                 imageVector = Icons.Rounded.Close,
                                 contentDescription = "Close",
-                                tint = Slate400,
+                                tint = CustomerTextSecondary,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -420,21 +424,21 @@ fun SupportChatModal(onDismiss: () -> Unit) {
                                     bottomStart = if (isBot) 2.dp else 14.dp,
                                     bottomEnd = if (isBot) 14.dp else 2.dp
                                 ),
-                                color = if (isBot) Slate100 else Slate900,
+                                color = if (isBot) CustomerInnerSurfaceLight else Mint500,
                                 modifier = Modifier.widthIn(max = 260.dp)
                             ) {
                                 Column(modifier = Modifier.padding(12.dp)) {
                                     Text(
                                         text = msg.message,
                                         fontSize = 12.sp,
-                                        color = if (isBot) Slate900 else Color.White,
+                                        color = if (isBot) CustomerTextPrimary else Color.White,
                                         lineHeight = 16.sp
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
                                         text = msg.timestamp,
                                         fontSize = 9.sp,
-                                        color = if (isBot) Slate500 else Slate400,
+                                        color = if (isBot) CustomerTextSecondary else Color.White.copy(alpha = 0.8f),
                                         modifier = Modifier.align(Alignment.End)
                                     )
                                 }
@@ -449,7 +453,7 @@ fun SupportChatModal(onDismiss: () -> Unit) {
                         .fillMaxWidth()
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
-                    Text("QUICK SUGGESTIONS:", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Slate400)
+                    Text("QUICK SUGGESTIONS:", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = CustomerTextSecondary)
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -458,7 +462,8 @@ fun SupportChatModal(onDismiss: () -> Unit) {
                         quickQuestions.take(2).forEach { q ->
                             Surface(
                                 shape = RoundedCornerShape(8.dp),
-                                color = Slate100,
+                                color = CustomerInnerSurfaceLight,
+                                border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                                 modifier = Modifier
                                     .weight(1f)
                                     .clickable {
@@ -476,7 +481,7 @@ fun SupportChatModal(onDismiss: () -> Unit) {
                                         chatMessages = chatMessages + SupportChatMessage("BOT", reply, "Just now")
                                     }
                             ) {
-                                Text(q, fontSize = 10.sp, color = Slate700, modifier = Modifier.padding(6.dp), maxLines = 1)
+                                Text(q, fontSize = 10.sp, color = CustomerTextPrimary, modifier = Modifier.padding(6.dp), maxLines = 1)
                             }
                         }
                     }
@@ -498,7 +503,7 @@ fun SupportChatModal(onDismiss: () -> Unit) {
                         OutlinedTextField(
                             value = userMessageInput,
                             onValueChange = { userMessageInput = it },
-                            placeholder = { Text("Type your query...", fontSize = 12.sp) },
+                            placeholder = { Text("Type your query...", fontSize = 12.sp, color = CustomerTextSecondary) },
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(12.dp),
                             singleLine = true
@@ -517,7 +522,7 @@ fun SupportChatModal(onDismiss: () -> Unit) {
                                 }
                             },
                             shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Slate900)
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                         ) {
                             Text("Send", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
                         }
@@ -560,23 +565,25 @@ fun RaiseTicketModal(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Raise Support Ticket", fontSize = 16.sp, fontWeight = FontWeight.Black, color = Slate900)
+                    Text("Raise Support Ticket", fontSize = 16.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                     IconButton(onClick = onDismiss) {
                         Icon(
                             imageVector = Icons.Rounded.Close,
                             contentDescription = "Close",
-                            tint = Slate500,
+                            tint = CustomerTextSecondary,
                             modifier = Modifier.size(20.dp)
                         )
                     }
                 }
 
-                Text("SUBJECT / CATEGORY", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Slate500)
+                Text("SUBJECT / CATEGORY", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = CustomerTextSecondary)
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     subjects.take(3).forEach { s ->
+                        val isSelected = subject == s
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = if (subject == s) Slate900 else Slate100,
+                            color = if (isSelected) Mint500 else CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) Mint500 else CustomerCardBorderLight),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable { subject = s }
@@ -584,15 +591,15 @@ fun RaiseTicketModal(
                             Text(
                                 text = s,
                                 fontSize = 11.sp,
-                                fontWeight = if (subject == s) FontWeight.Bold else FontWeight.Normal,
-                                color = if (subject == s) Color.White else Slate800,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isSelected) Color.White else CustomerTextPrimary,
                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
                             )
                         }
                     }
                 }
 
-                Text("BOOKING REFERENCE CODE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Slate500)
+                Text("BOOKING REFERENCE CODE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = CustomerTextSecondary)
                 OutlinedTextField(
                     value = bookingCode,
                     onValueChange = { bookingCode = it },
@@ -601,11 +608,11 @@ fun RaiseTicketModal(
                     singleLine = true
                 )
 
-                Text("DESCRIPTION", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Slate500)
+                Text("DESCRIPTION", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = CustomerTextSecondary)
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    placeholder = { Text("Explain your issue in detail...", fontSize = 11.sp) },
+                    placeholder = { Text("Explain your issue in detail...", fontSize = 11.sp, color = CustomerTextSecondary) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(80.dp),
@@ -618,7 +625,7 @@ fun RaiseTicketModal(
                     },
                     modifier = Modifier.fillMaxWidth().height(48.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Slate900)
+                    colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                 ) {
                     Text("SUBMIT TICKET", fontWeight = FontWeight.Black, color = Color.White)
                 }

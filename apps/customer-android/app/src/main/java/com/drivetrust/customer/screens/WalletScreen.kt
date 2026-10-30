@@ -81,30 +81,36 @@ fun CustomerWalletScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate50)
+            .background(CustomerBackgroundLight)
     ) {
         // Luxury Header
-        Surface(modifier = Modifier.fillMaxWidth(), color = Color.White, shadowElevation = 2.dp) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = CustomerWhite,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 2.dp
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text("Executive Wallet", fontSize = 20.sp, fontWeight = FontWeight.Black, color = Slate900, letterSpacing = (-0.5).sp)
-                    Text("Client Balance & Digital UPI Accounts", fontSize = 11.sp, color = Slate500)
+                    Text("Executive Wallet", fontSize = 20.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary, letterSpacing = (-0.5).sp)
+                    Text("Client Balance & Digital UPI Accounts", fontSize = 11.sp, color = CustomerTextSecondary)
                 }
                 Surface(
                     shape = RoundedCornerShape(8.dp),
-                    color = Slate900
+                    color = Mint50,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.35f))
                 ) {
                     Row(
                         modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Icon(Icons.Rounded.Verified, contentDescription = "Active", tint = Gold400, modifier = Modifier.size(12.dp))
-                        Text("KYC ACTIVE", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400)
+                        Icon(Icons.Rounded.Verified, contentDescription = "Active", tint = Mint600, modifier = Modifier.size(12.dp))
+                        Text("KYC ACTIVE", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Mint600)
                     }
                 }
             }
@@ -114,75 +120,69 @@ fun CustomerWalletScreen(
             modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Obsidian & Gold Black Card
+            // Executive Balance Card
             Surface(
                 shape = RoundedCornerShape(22.dp),
-                color = Slate900,
-                shadowElevation = 10.dp,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.35f)),
+                color = CustomerWhite,
+                shadowElevation = 3.dp,
+                border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.4f)),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(DarkMeshGradient)
-                ) {
-                    Column(modifier = Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.Top
-                        ) {
-                            Column {
-                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                    Icon(Icons.Rounded.CreditCard, contentDescription = "Chip", tint = Gold400, modifier = Modifier.size(16.dp))
-                                    Text("DRIVETRUST BLACK CARD", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400, letterSpacing = 1.sp)
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = "₹${"%,.2f".format(walletBalance)}",
-                                    fontSize = 32.sp,
-                                    fontWeight = FontWeight.Black,
-                                    color = Color.White,
-                                    letterSpacing = (-0.5).sp
-                                )
-                                Text("Available Chauffeur Credit", fontSize = 11.sp, color = Slate400)
+                Column(modifier = Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Column {
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Icon(Icons.Rounded.CreditCard, contentDescription = "Chip", tint = Mint600, modifier = Modifier.size(16.dp))
+                                Text("DRIVETRUST EXECUTIVE CARD", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Mint600, letterSpacing = 1.sp)
                             }
-                            Box(
-                                modifier = Modifier
-                                    .size(46.dp)
-                                    .background(Slate800, RoundedCornerShape(12.dp))
-                                    .border(1.dp, Gold500.copy(alpha = 0.4f), RoundedCornerShape(12.dp)),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(Icons.Rounded.AccountBalanceWallet, contentDescription = "Wallet", tint = Gold400, modifier = Modifier.size(24.dp))
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "₹${"%,.2f".format(walletBalance)}",
+                                fontSize = 32.sp,
+                                fontWeight = FontWeight.Black,
+                                color = CustomerTextPrimary,
+                                letterSpacing = (-0.5).sp
+                            )
+                            Text("Available Chauffeur Credit", fontSize = 11.sp, color = CustomerTextSecondary)
+                        }
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .background(Mint50, RoundedCornerShape(12.dp))
+                                .border(1.dp, Mint500.copy(alpha = 0.35f), RoundedCornerShape(12.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(Icons.Rounded.AccountBalanceWallet, contentDescription = "Wallet", tint = Mint600, modifier = Modifier.size(24.dp))
+                        }
+                    }
+
+                    // Quick Actions
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        Button(
+                            onClick = { showAddMoneyDialog = true },
+                            modifier = Modifier.weight(1f).height(44.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Mint500),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Icon(Icons.Rounded.Add, contentDescription = "Add", tint = Color.White, modifier = Modifier.size(16.dp))
+                                Text("Add Funds", fontWeight = FontWeight.Black, color = Color.White, fontSize = 12.sp)
                             }
                         }
-
-                        // Quick Actions
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            Button(
-                                onClick = { showAddMoneyDialog = true },
-                                modifier = Modifier.weight(1f).height(44.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = Gold500),
-                                shape = RoundedCornerShape(12.dp)
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                    Icon(Icons.Rounded.Add, contentDescription = "Add", tint = Slate900, modifier = Modifier.size(16.dp))
-                                    Text("Add Funds", fontWeight = FontWeight.Black, color = Slate900, fontSize = 12.sp)
-                                }
-                            }
-                            OutlinedButton(
-                                onClick = { showAddMoneyDialog = true },
-                                modifier = Modifier.weight(1f).height(44.dp),
-                                shape = RoundedCornerShape(12.dp),
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
-                                border = androidx.compose.foundation.BorderStroke(1.dp, Slate700)
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                    Icon(Icons.Rounded.QrCode, contentDescription = "Scan", tint = Slate300, modifier = Modifier.size(16.dp))
-                                    Text("Scan UPI", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = Color.White)
-                                }
+                        OutlinedButton(
+                            onClick = { showAddMoneyDialog = true },
+                            modifier = Modifier.weight(1f).height(44.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = CustomerTextPrimary),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Icon(Icons.Rounded.QrCode, contentDescription = "Scan", tint = CustomerTextPrimary, modifier = Modifier.size(16.dp))
+                                Text("Scan UPI", fontWeight = FontWeight.Bold, fontSize = 12.sp, color = CustomerTextPrimary)
                             }
                         }
                     }
@@ -192,8 +192,9 @@ fun CustomerWalletScreen(
             // Cashback Banner
             Surface(
                 shape = RoundedCornerShape(14.dp),
-                color = Color.White,
+                color = CustomerWhite,
                 border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f)),
+                shadowElevation = 2.dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
@@ -211,7 +212,7 @@ fun CustomerWalletScreen(
                     }
                     Column {
                         Text("5% INSTANT CASHBACK PRIVILEGE", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold600)
-                        Text("Receive 5% cashback auto-credited into DT Wallet for all night trips.", fontSize = 11.sp, color = Slate700)
+                        Text("Receive 5% cashback auto-credited into DT Wallet for all night trips.", fontSize = 11.sp, color = CustomerTextSecondary)
                     }
                 }
             }
@@ -219,10 +220,10 @@ fun CustomerWalletScreen(
             // Linked UPI Accounts
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text("SAVED PAYMENT VPAS", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Slate500, letterSpacing = 0.5.sp)
+                    Text("SAVED PAYMENT VPAS", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = CustomerTextSecondary, letterSpacing = 0.5.sp)
                     TextButton(
                         onClick = { showLinkUpiDialog = true },
-                        colors = ButtonDefaults.textButtonColors(contentColor = Slate900),
+                        colors = ButtonDefaults.textButtonColors(contentColor = Mint600),
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
                     ) {
                         Text("+ Link New UPI", fontSize = 12.sp, fontWeight = FontWeight.Bold)
@@ -242,19 +243,20 @@ fun CustomerWalletScreen(
 
             // Transaction History
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text("TRANSACTION AUDIT LEDGER", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Slate500, letterSpacing = 0.5.sp)
+                Text("TRANSACTION AUDIT LEDGER", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = CustomerTextSecondary, letterSpacing = 0.5.sp)
 
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = Color.White,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Slate200),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column {
                         transactions.forEachIndexed { index, tx ->
                             TransactionRow(tx = tx)
                             if (index < transactions.lastIndex) {
-                                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = Slate100)
+                                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = CustomerCardBorderLight)
                             }
                         }
                     }
@@ -334,8 +336,12 @@ fun CustomerWalletScreen(
 private fun UpiAccountCard(upi: LinkedUpiAccount, onSetDefault: () -> Unit, onDelete: () -> Unit) {
     Surface(
         shape = RoundedCornerShape(14.dp),
-        color = if (upi.isDefault) Slate900 else Color.White,
-        border = if (!upi.isDefault) androidx.compose.foundation.BorderStroke(1.dp, Slate200) else null,
+        color = if (upi.isDefault) Mint50 else CustomerWhite,
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            if (upi.isDefault) Mint500.copy(alpha = 0.5f) else CustomerCardBorderLight
+        ),
+        shadowElevation = 1.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
         Row(
@@ -347,35 +353,35 @@ private fun UpiAccountCard(upi: LinkedUpiAccount, onSetDefault: () -> Unit, onDe
                 Box(
                     modifier = Modifier
                         .size(38.dp)
-                        .background(if (upi.isDefault) Slate800 else Slate100, RoundedCornerShape(10.dp)),
+                        .background(if (upi.isDefault) Mint100 else CustomerInnerSurfaceLight, RoundedCornerShape(10.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.QrCode,
                         contentDescription = "UPI",
-                        tint = if (upi.isDefault) Gold400 else Slate800,
+                        tint = if (upi.isDefault) Mint600 else CustomerTextPrimary,
                         modifier = Modifier.size(20.dp)
                     )
                 }
                 Column {
-                    Text(upi.provider, fontSize = 14.sp, fontWeight = FontWeight.Black, color = if (upi.isDefault) Color.White else Slate900)
-                    Text(upi.vpa, fontSize = 12.sp, color = if (upi.isDefault) Slate400 else Slate600)
+                    Text(upi.provider, fontSize = 14.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
+                    Text(upi.vpa, fontSize = 12.sp, color = CustomerTextSecondary)
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                 if (upi.isDefault) {
-                    Surface(shape = RoundedCornerShape(6.dp), color = Gold500) {
-                        Text("PRIMARY", fontSize = 9.sp, fontWeight = FontWeight.Black, color = Slate900, modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp))
+                    Surface(shape = RoundedCornerShape(6.dp), color = Mint500) {
+                        Text("PRIMARY", fontSize = 9.sp, fontWeight = FontWeight.Black, color = Color.White, modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp))
                     }
                 } else {
                     TextButton(
                         onClick = onSetDefault,
-                        colors = ButtonDefaults.textButtonColors(contentColor = Blue600),
+                        colors = ButtonDefaults.textButtonColors(contentColor = Mint600),
                         contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp)
                     ) { Text("Set Primary", fontSize = 11.sp, fontWeight = FontWeight.Bold) }
                 }
                 IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
-                    Icon(Icons.Rounded.Close, contentDescription = "Delete", tint = if (upi.isDefault) Slate400 else Slate400, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Rounded.Close, contentDescription = "Delete", tint = CustomerTextSecondary, modifier = Modifier.size(16.dp))
                 }
             }
         }
@@ -394,20 +400,20 @@ private fun TransactionRow(tx: WalletTransaction) {
             Box(
                 modifier = Modifier
                     .size(36.dp)
-                    .background(if (isCredit) Emerald50 else Slate100, CircleShape),
+                    .background(if (isCredit) Mint50 else CustomerInnerSurfaceLight, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = if (isCredit) Icons.Rounded.ArrowDownward else Icons.Rounded.ArrowUpward,
                     contentDescription = if (isCredit) "In" else "Out",
-                    tint = if (isCredit) Emerald600 else Slate700,
+                    tint = if (isCredit) Mint600 else CustomerTextSecondary,
                     modifier = Modifier.size(18.dp)
                 )
             }
             Column {
-                Text(tx.title, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = Slate900)
-                Text(tx.subtitle, fontSize = 11.sp, color = Slate500)
-                Text(tx.date, fontSize = 10.sp, color = Slate400)
+                Text(tx.title, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = CustomerTextPrimary)
+                Text(tx.subtitle, fontSize = 11.sp, color = CustomerTextSecondary)
+                Text(tx.date, fontSize = 10.sp, color = CustomerTextMuted)
             }
         }
         Column(horizontalAlignment = Alignment.End) {
@@ -415,14 +421,14 @@ private fun TransactionRow(tx: WalletTransaction) {
                 text = "${if (isCredit) "+" else "-"}₹${"%,.0f".format(tx.amount)}",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Black,
-                color = if (isCredit) Emerald600 else Slate900
+                color = if (isCredit) Mint600 else CustomerTextPrimary
             )
-            Surface(shape = RoundedCornerShape(4.dp), color = if (isCredit) Emerald50 else Slate100) {
+            Surface(shape = RoundedCornerShape(4.dp), color = if (isCredit) Mint50 else CustomerInnerSurfaceLight) {
                 Text(
                     text = "SETTLED",
                     fontSize = 8.sp,
                     fontWeight = FontWeight.Black,
-                    color = if (isCredit) Emerald600 else Slate600,
+                    color = if (isCredit) Mint600 else CustomerTextSecondary,
                     modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp)
                 )
             }
@@ -443,16 +449,21 @@ fun AddMoneyDialog(
     val quickAmounts = listOf(500, 1000, 2000, 5000)
 
     Dialog(onDismissRequest = { if (!isProcessing) onDismiss() }) {
-        Surface(shape = RoundedCornerShape(20.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            shape = RoundedCornerShape(20.dp),
+            color = CustomerWhite,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Text("Add Funds to Wallet", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Slate900)
+                Text("Add Funds to Wallet", fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
 
-                Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFFEF3C7)) {
+                Surface(shape = RoundedCornerShape(8.dp), color = Gold50) {
                     Text(
                         "DEMO BANK GATEWAY • SIMULATED DEPOSIT",
                         fontSize = 9.sp,
                         fontWeight = FontWeight.Black,
-                        color = Color(0xFFB45309),
+                        color = Gold600,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                     )
                 }
@@ -460,23 +471,33 @@ fun AddMoneyDialog(
                 OutlinedTextField(
                     value = amountText,
                     onValueChange = { amountText = it.filter { ch -> ch.isDigit() } },
-                    label = { Text("Deposit Amount (₹)") },
+                    label = { Text("Deposit Amount (₹)", color = CustomerTextSecondary) },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = CustomerTextPrimary,
+                        unfocusedTextColor = CustomerTextPrimary,
+                        focusedBorderColor = Mint500,
+                        unfocusedBorderColor = CustomerCardBorderLight,
+                        focusedContainerColor = CustomerInnerSurfaceLight,
+                        unfocusedContainerColor = CustomerInnerSurfaceLight
+                    )
                 )
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     quickAmounts.forEach { amt ->
+                        val isSelected = amountText == amt.toString()
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = if (amountText == amt.toString()) Slate900 else Slate100,
+                            color = if (isSelected) Mint500 else CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) Mint500 else CustomerCardBorderLight),
                             modifier = Modifier.weight(1f).clickable { amountText = amt.toString() }
                         ) {
                             Text(
                                 "+₹$amt",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = if (amountText == amt.toString()) Color.White else Slate800,
+                                color = if (isSelected) Color.White else CustomerTextPrimary,
                                 modifier = Modifier.padding(vertical = 8.dp),
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
                             )
@@ -490,8 +511,8 @@ fun AddMoneyDialog(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        CircularProgressIndicator(color = Slate900, strokeWidth = 3.dp)
-                        Text("Authorizing simulated deposit...", fontSize = 12.sp, color = Slate600)
+                        CircularProgressIndicator(color = Mint500, strokeWidth = 3.dp)
+                        Text("Authorizing simulated deposit...", fontSize = 12.sp, color = CustomerTextSecondary)
                     }
                 } else {
                     Button(
@@ -502,7 +523,7 @@ fun AddMoneyDialog(
                         },
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Slate900)
+                        colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                     ) {
                         Text("AUTHORIZE DEPOSIT (₹$amountText)", fontWeight = FontWeight.Black, color = Color.White)
                     }
@@ -529,22 +550,29 @@ fun LinkUpiDialog(onDismiss: () -> Unit, onLink: (String, String) -> Unit) {
     val providers = listOf("Google Pay", "PhonePe", "Paytm", "BHIM")
 
     Dialog(onDismissRequest = onDismiss) {
-        Surface(shape = RoundedCornerShape(20.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            shape = RoundedCornerShape(20.dp),
+            color = CustomerWhite,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Text("Link UPI Payment VPA", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Slate900)
+                Text("Link UPI Payment VPA", fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     providers.forEach { p ->
+                        val isSelected = selectedProvider == p
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = if (selectedProvider == p) Slate900 else Slate100,
+                            color = if (isSelected) Mint500 else CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) Mint500 else CustomerCardBorderLight),
                             modifier = Modifier.weight(1f).clickable { selectedProvider = p }
                         ) {
                             Text(
                                 p.split(" ").first(),
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = if (selectedProvider == p) Color.White else Slate800,
+                                color = if (isSelected) Color.White else CustomerTextPrimary,
                                 modifier = Modifier.padding(vertical = 8.dp),
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
                             )
@@ -555,9 +583,17 @@ fun LinkUpiDialog(onDismiss: () -> Unit, onLink: (String, String) -> Unit) {
                 OutlinedTextField(
                     value = vpa,
                     onValueChange = { vpa = it },
-                    placeholder = { Text("e.g. yourname@okaxis", fontSize = 12.sp) },
+                    placeholder = { Text("e.g. yourname@okaxis", fontSize = 12.sp, color = CustomerTextSecondary) },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = CustomerTextPrimary,
+                        unfocusedTextColor = CustomerTextPrimary,
+                        focusedBorderColor = Mint500,
+                        unfocusedBorderColor = CustomerCardBorderLight,
+                        focusedContainerColor = CustomerInnerSurfaceLight,
+                        unfocusedContainerColor = CustomerInnerSurfaceLight
+                    )
                 )
 
                 Button(
@@ -566,7 +602,7 @@ fun LinkUpiDialog(onDismiss: () -> Unit, onLink: (String, String) -> Unit) {
                     },
                     modifier = Modifier.fillMaxWidth().height(48.dp),
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Slate900)
+                    colors = ButtonDefaults.buttonColors(containerColor = Mint500)
                 ) {
                     Text("VERIFY & LINK VPA", fontWeight = FontWeight.Black, color = Color.White)
                 }

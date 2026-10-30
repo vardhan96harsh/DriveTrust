@@ -82,14 +82,14 @@ fun CustomerFavoriteChauffeursScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate900)
+            .background(CustomerBackgroundLight)
     ) {
         // Luxury Top App Bar
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MidnightDark,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-            shadowElevation = 8.dp
+            color = CustomerBackgroundLight,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 2.dp
         ) {
             Row(
                 modifier = Modifier
@@ -106,13 +106,13 @@ fun CustomerFavoriteChauffeursScreen(
                         onClick = onBack,
                         modifier = Modifier
                             .size(38.dp)
-                            .background(MidnightCard, CircleShape)
-                            .border(1.dp, MidnightBorder, CircleShape)
+                            .background(CustomerWhite, CircleShape)
+                            .border(1.dp, CustomerCardBorderLight, CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = CustomerTextPrimary,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -121,13 +121,13 @@ fun CustomerFavoriteChauffeursScreen(
                             text = "Favorite Chauffeurs",
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
                             text = "Your verified, preferred executive drivers",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
                     }
                 }
@@ -140,8 +140,8 @@ fun CustomerFavoriteChauffeursScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
                 shape = RoundedCornerShape(14.dp),
-                color = MidnightCard,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Emerald500.copy(alpha = 0.6f))
+                color = Mint50,
+                border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.4f))
             ) {
                 Row(
                     modifier = Modifier.padding(14.dp),
@@ -151,14 +151,14 @@ fun CustomerFavoriteChauffeursScreen(
                     Icon(
                         imageVector = Icons.Rounded.CheckCircle,
                         contentDescription = "Confirmed",
-                        tint = Emerald400,
+                        tint = Mint600,
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
                         selectedFeedback!!,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Emerald400
+                        color = Mint600
                     )
                 }
             }
@@ -175,8 +175,9 @@ fun CustomerFavoriteChauffeursScreen(
             item {
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = MidnightCard,
+                    color = CustomerWhite,
                     border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.35f)),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
@@ -187,24 +188,24 @@ fun CustomerFavoriteChauffeursScreen(
                         Box(
                             modifier = Modifier
                                 .size(44.dp)
-                                .background(Gold500.copy(alpha = 0.12f), CircleShape)
+                                .background(Gold50, CircleShape)
                                 .border(1.dp, Gold500.copy(alpha = 0.4f), CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.Star,
                                 contentDescription = "Preferred Dispatch",
-                                tint = Gold400,
+                                tint = Gold600,
                                 modifier = Modifier.size(22.dp)
                             )
                         }
                         Column {
-                            Text("PREFERRED CHAUFFEUR DISPATCH", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400, letterSpacing = 0.8.sp)
-                            Text("Priority Fleet Allocation", fontSize = 14.sp, fontWeight = FontWeight.Black, color = Color.White)
+                            Text("PREFERRED CHAUFFEUR DISPATCH", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold600, letterSpacing = 0.8.sp)
+                            Text("Priority Fleet Allocation", fontSize = 14.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                             Text(
                                 "When requested, DriveTrust notifies your preferred chauffeur first before general dispatch.",
                                 fontSize = 11.sp,
-                                color = Slate400,
+                                color = CustomerTextSecondary,
                                 lineHeight = 15.sp
                             )
                         }
@@ -215,8 +216,9 @@ fun CustomerFavoriteChauffeursScreen(
             items(chauffeurs, key = { it.id }) { driver ->
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -235,7 +237,7 @@ fun CustomerFavoriteChauffeursScreen(
                                 Box(
                                     modifier = Modifier
                                         .size(50.dp)
-                                        .background(MidnightDark, CircleShape)
+                                        .background(CustomerInnerSurfaceLight, CircleShape)
                                         .border(1.5.dp, Gold500.copy(alpha = 0.6f), CircleShape),
                                     contentAlignment = Alignment.Center
                                 ) {
@@ -243,7 +245,7 @@ fun CustomerFavoriteChauffeursScreen(
                                         text = driver.name.split(" ").mapNotNull { it.firstOrNull()?.toString() }.take(2).joinToString(""),
                                         fontSize = 17.sp,
                                         fontWeight = FontWeight.Black,
-                                        color = Gold400
+                                        color = Gold600
                                     )
                                 }
                                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -251,10 +253,10 @@ fun CustomerFavoriteChauffeursScreen(
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(6.dp)
                                     ) {
-                                        Text(driver.name, fontSize = 15.sp, fontWeight = FontWeight.Black, color = Color.White)
+                                        Text(driver.name, fontSize = 15.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                                         Surface(
                                             shape = RoundedCornerShape(6.dp),
-                                            color = Gold500.copy(alpha = 0.15f),
+                                            color = Gold50,
                                             border = androidx.compose.foundation.BorderStroke(0.8.dp, Gold500.copy(alpha = 0.4f))
                                         ) {
                                             Row(
@@ -264,7 +266,7 @@ fun CustomerFavoriteChauffeursScreen(
                                                 Icon(
                                                     imageVector = Icons.Rounded.Star,
                                                     contentDescription = "Rating",
-                                                    tint = Gold400,
+                                                    tint = Gold600,
                                                     modifier = Modifier.size(11.dp)
                                                 )
                                                 Spacer(modifier = Modifier.width(3.dp))
@@ -272,29 +274,29 @@ fun CustomerFavoriteChauffeursScreen(
                                                     "${driver.rating}",
                                                     fontSize = 10.sp,
                                                     fontWeight = FontWeight.Black,
-                                                    color = Gold400
+                                                    color = Gold600
                                                 )
                                             }
                                         }
                                     }
-                                    Text(driver.specialty, fontSize = 11.sp, color = Slate300)
-                                    Text("DL: ${driver.licenseNumber} • ${driver.totalTrips} Completed Trips", fontSize = 10.sp, color = Slate500)
+                                    Text(driver.specialty, fontSize = 11.sp, color = CustomerTextSecondary)
+                                    Text("DL: ${driver.licenseNumber} • ${driver.totalTrips} Completed Trips", fontSize = 10.sp, color = CustomerTextMuted)
                                 }
                             }
 
                             Surface(
                                 shape = RoundedCornerShape(6.dp),
-                                color = if (driver.isAvailableNow) Emerald500.copy(alpha = 0.15f) else Slate800,
+                                color = if (driver.isAvailableNow) Mint50 else CustomerInnerSurfaceLight,
                                 border = androidx.compose.foundation.BorderStroke(
                                     0.8.dp,
-                                    if (driver.isAvailableNow) Emerald400.copy(alpha = 0.5f) else MidnightBorder
+                                    if (driver.isAvailableNow) Mint500.copy(alpha = 0.5f) else CustomerCardBorderLight
                                 )
                             ) {
                                 Text(
                                     text = if (driver.isAvailableNow) "● Available" else "○ On Duty",
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = if (driver.isAvailableNow) Emerald400 else Slate400,
+                                    color = if (driver.isAvailableNow) Mint600 else CustomerTextSecondary,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                                 )
                             }
@@ -305,21 +307,21 @@ fun CustomerFavoriteChauffeursScreen(
                             driver.vehicleExpertise.forEach { exp ->
                                 Surface(
                                     shape = RoundedCornerShape(6.dp),
-                                    color = MidnightDark,
-                                    border = androidx.compose.foundation.BorderStroke(0.8.dp, MidnightBorder)
+                                    color = CustomerInnerSurfaceLight,
+                                    border = androidx.compose.foundation.BorderStroke(0.8.dp, CustomerCardBorderLight)
                                 ) {
                                     Text(
                                         text = exp,
                                         fontSize = 9.sp,
                                         fontWeight = FontWeight.SemiBold,
-                                        color = Slate300,
+                                        color = CustomerTextSecondary,
                                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                                     )
                                 }
                             }
                         }
 
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
 
                         // Action buttons
                         Row(
@@ -333,7 +335,7 @@ fun CustomerFavoriteChauffeursScreen(
                                 },
                                 shape = RoundedCornerShape(10.dp),
                                 border = androidx.compose.foundation.BorderStroke(1.dp, Red500.copy(alpha = 0.5f)),
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor = Red400),
+                                colors = ButtonDefaults.outlinedButtonColors(contentColor = Red600),
                                 modifier = Modifier.weight(1f).height(40.dp)
                             ) {
                                 Text("Remove", fontSize = 11.sp, fontWeight = FontWeight.Bold)
@@ -345,7 +347,7 @@ fun CustomerFavoriteChauffeursScreen(
                                     onSelectDriverForRide(driver)
                                 },
                                 shape = RoundedCornerShape(10.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = Gold500),
+                                colors = ButtonDefaults.buttonColors(containerColor = Mint500),
                                 modifier = Modifier.weight(1.5f).height(40.dp)
                             ) {
                                 Row(
@@ -355,10 +357,10 @@ fun CustomerFavoriteChauffeursScreen(
                                     Icon(
                                         imageVector = Icons.Rounded.DirectionsCar,
                                         contentDescription = "Book",
-                                        tint = Slate900,
+                                        tint = Color.White,
                                         modifier = Modifier.size(14.dp)
                                     )
-                                    Text("Request Chauffeur", fontSize = 11.sp, fontWeight = FontWeight.Black, color = Slate900)
+                                    Text("Request Chauffeur", fontSize = 11.sp, fontWeight = FontWeight.Black, color = Color.White)
                                 }
                             }
                         }

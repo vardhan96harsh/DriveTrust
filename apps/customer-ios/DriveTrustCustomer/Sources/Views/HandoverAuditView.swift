@@ -24,11 +24,11 @@ struct HandoverAuditView: View {
                     Button(action: onBack) {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
                     }
                     Text("Pre-Trip Handover Inspection")
                         .font(.system(size: 18, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(.customerTextPrimary)
                     Spacer()
                 }
                 .padding(16)
@@ -41,31 +41,32 @@ struct HandoverAuditView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(carModel)
                                     .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                 Text("Chauffeur: \(driverName)")
                                     .font(.system(size: 11))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                             }
                             Spacer()
                             Text(carPlate)
                                 .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.mint600)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
-                                .background(Color.midnightDark)
+                                .background(Color.mint50)
                                 .cornerRadius(6)
-                                .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.gold500.opacity(0.4), lineWidth: 1))
+                                .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.mint500.opacity(0.4), lineWidth: 1))
                         }
                         .padding(14)
                         .background(Color.midnightCard)
                         .cornerRadius(14)
                         .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.midnightBorder, lineWidth: 1))
+                        .shadow(color: Color.black.opacity(0.03), radius: 4, x: 0, y: 1)
 
                         // 360 Checklist
                         VStack(alignment: .leading, spacing: 10) {
                             Text("360° VEHICLE AUDIT CHECKLIST")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.gold600)
                                 .tracking(1)
 
                             ForEach([
@@ -77,17 +78,18 @@ struct HandoverAuditView: View {
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(item.0)
                                             .font(.system(size: 13, weight: .bold))
-                                            .foregroundColor(.white)
+                                            .foregroundColor(.customerTextPrimary)
                                         Text(item.1)
                                             .font(.system(size: 11))
-                                            .foregroundColor(.emerald400)
+                                            .foregroundColor(.mint600)
                                     }
                                 }
-                                .toggleStyle(SwitchToggleStyle(tint: .emerald500))
+                                .toggleStyle(SwitchToggleStyle(tint: .mint500))
                                 .padding(12)
                                 .background(Color.midnightCard)
                                 .cornerRadius(12)
                                 .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.midnightBorder, lineWidth: 1))
+                                .shadow(color: Color.black.opacity(0.02), radius: 4, x: 0, y: 1)
                             }
                         }
 
@@ -96,23 +98,23 @@ struct HandoverAuditView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("STARTING ODOMETER")
                                     .font(.system(size: 9, weight: .bold))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                                 TextField("Odometer", text: $odoReading)
                                     .font(.system(size: 13))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                     .padding(10)
-                                    .background(Color.midnightCard)
+                                    .background(Color.midnight950)
                                     .cornerRadius(8)
                             }
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("FUEL / BATTERY")
                                     .font(.system(size: 9, weight: .bold))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                                 TextField("Fuel Level", text: $fuelLevel)
                                     .font(.system(size: 13))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                     .padding(10)
-                                    .background(Color.midnightCard)
+                                    .background(Color.midnight950)
                                     .cornerRadius(8)
                             }
                         }
@@ -126,7 +128,7 @@ struct HandoverAuditView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
-                            .background(Color.emerald600)
+                            .background(Color.mint500)
                             .cornerRadius(12)
                         }
                     }

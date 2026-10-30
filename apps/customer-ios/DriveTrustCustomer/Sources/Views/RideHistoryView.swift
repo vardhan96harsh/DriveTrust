@@ -49,10 +49,10 @@ struct RideHistoryView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Chauffeur Ride History")
                             .font(.system(size: 20, weight: .black))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
                         Text("3 Verified Commercial Rides • GST Compliant")
                             .font(.system(size: 11))
-                            .foregroundColor(.slate400)
+                            .foregroundColor(.customerTextSecondary)
                     }
                     Spacer()
                 }
@@ -62,10 +62,10 @@ struct RideHistoryView: View {
                 if let msg = downloadInvoiceMsg {
                     Text(msg)
                         .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(.emerald400)
+                        .foregroundColor(.mint600)
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.emerald400.opacity(0.12))
+                        .background(Color.mint50)
                 }
 
                 ScrollView {
@@ -76,15 +76,15 @@ struct RideHistoryView: View {
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(ride.serviceLabel)
                                             .font(.system(size: 13, weight: .bold))
-                                            .foregroundColor(.white)
+                                            .foregroundColor(.customerTextPrimary)
                                         Text("\(ride.bookingCode) • \(ride.dateString)")
                                             .font(.system(size: 10))
-                                            .foregroundColor(.slate400)
+                                            .foregroundColor(.customerTextSecondary)
                                     }
                                     Spacer()
                                     Text("₹\(Int(ride.fare))")
                                         .font(.system(size: 16, weight: .black))
-                                        .foregroundColor(.gold500)
+                                        .foregroundColor(.gold600)
                                 }
 
                                 Divider().background(Color.midnightBorder)
@@ -92,17 +92,17 @@ struct RideHistoryView: View {
                                 // Route
                                 VStack(alignment: .leading, spacing: 6) {
                                     HStack(spacing: 6) {
-                                        Circle().fill(Color.emerald400).frame(width: 8, height: 8)
+                                        Circle().fill(Color.mint500).frame(width: 8, height: 8)
                                         Text(ride.pickup)
                                             .font(.system(size: 11))
-                                            .foregroundColor(.slate300)
+                                            .foregroundColor(.customerTextPrimary)
                                             .lineLimit(1)
                                     }
                                     HStack(spacing: 6) {
                                         Rectangle().fill(Color.red).frame(width: 8, height: 8).cornerRadius(2)
                                         Text(ride.dropoff)
                                             .font(.system(size: 11))
-                                            .foregroundColor(.slate300)
+                                            .foregroundColor(.customerTextPrimary)
                                             .lineLimit(1)
                                     }
                                 }
@@ -110,10 +110,10 @@ struct RideHistoryView: View {
                                 HStack {
                                     HStack(spacing: 4) {
                                         Image(systemName: "person.circle.fill")
-                                            .foregroundColor(.gold500)
+                                            .foregroundColor(.gold600)
                                         Text("\(ride.driverName) (★ \(String(format: "%.1f", ride.driverRating)))")
                                             .font(.system(size: 11, weight: .bold))
-                                            .foregroundColor(.slate300)
+                                            .foregroundColor(.customerTextSecondary)
                                     }
                                     Spacer()
                                     Button(action: {
@@ -124,10 +124,10 @@ struct RideHistoryView: View {
                                             Text("GST Invoice")
                                                 .font(.system(size: 10, weight: .bold))
                                         }
-                                        .foregroundColor(.gold500)
+                                        .foregroundColor(.mint600)
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 4)
-                                        .background(Color.midnightDark)
+                                        .background(Color.mint50)
                                         .cornerRadius(6)
                                         .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.midnightBorder, lineWidth: 1))
                                     }
@@ -137,6 +137,7 @@ struct RideHistoryView: View {
                             .background(Color.midnightCard)
                             .cornerRadius(16)
                             .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.midnightBorder, lineWidth: 1))
+                            .shadow(color: Color.black.opacity(0.03), radius: 4, x: 0, y: 1)
                         }
                     }
                     .padding(16)

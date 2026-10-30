@@ -28,8 +28,9 @@ fun SosEmergencyDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(24.dp),
-            color = MidnightCard,
-            border = androidx.compose.foundation.BorderStroke(1.dp, Red500.copy(alpha = 0.5f)),
+            color = CustomerWhite,
+            border = androidx.compose.foundation.BorderStroke(1.dp, Red500.copy(alpha = 0.35f)),
+            shadowElevation = 6.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -45,12 +46,12 @@ fun SosEmergencyDialog(
                         onClick = onDismiss,
                         modifier = Modifier
                             .size(32.dp)
-                            .background(Midnight950, CircleShape)
+                            .background(CustomerInnerSurfaceLight, CircleShape)
                     ) {
                         Icon(
                             Icons.Rounded.Close,
                             contentDescription = "Close",
-                            tint = Slate400,
+                            tint = CustomerTextSecondary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -59,13 +60,13 @@ fun SosEmergencyDialog(
                 Box(
                     modifier = Modifier
                         .size(64.dp)
-                        .background(Red500.copy(alpha = 0.15f), CircleShape),
+                        .background(Red500.copy(alpha = 0.12f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         Icons.Rounded.Emergency,
                         contentDescription = null,
-                        tint = Red500,
+                        tint = Red600,
                         modifier = Modifier.size(36.dp)
                     )
                 }
@@ -74,20 +75,20 @@ fun SosEmergencyDialog(
                     text = "Emergency SOS 112 Protocol",
                     fontWeight = FontWeight.Black,
                     fontSize = 20.sp,
-                    color = Color.White
+                    color = CustomerTextPrimary
                 )
 
                 Text(
                     text = "Immediate escalation to Police Control Room (112), DriveTrust 24/7 Security Operations Command, and your registered emergency guardians.",
                     fontSize = 12.sp,
-                    color = Slate300,
+                    color = CustomerTextSecondary,
                     lineHeight = 18.sp
                 )
 
                 Surface(
                     shape = RoundedCornerShape(14.dp),
-                    color = Midnight950,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerInnerSurfaceLight,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -101,14 +102,14 @@ fun SosEmergencyDialog(
                             Icon(
                                 Icons.Rounded.Security,
                                 contentDescription = null,
-                                tint = Red400,
+                                tint = Red600,
                                 modifier = Modifier.size(14.dp)
                             )
                             Text(
                                 text = "ACTIVE TRIP TELEMETRY BROADCAST",
                                 fontSize = 9.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Red400,
+                                color = Red600,
                                 letterSpacing = 0.5.sp
                             )
                         }
@@ -117,7 +118,7 @@ fun SosEmergencyDialog(
                             text = "Trip Ref: $bookingCode",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = CustomerTextPrimary
                         )
 
                         Row(
@@ -127,13 +128,13 @@ fun SosEmergencyDialog(
                             Icon(
                                 Icons.Rounded.GpsFixed,
                                 contentDescription = null,
-                                tint = Emerald400,
+                                tint = Mint600,
                                 modifier = Modifier.size(12.dp)
                             )
                             Text(
                                 text = "GPS: 12.9784° N, 77.6408° E (Real-time Link)",
                                 fontSize = 11.sp,
-                                color = Slate400
+                                color = CustomerTextSecondary
                             )
                         }
                     }

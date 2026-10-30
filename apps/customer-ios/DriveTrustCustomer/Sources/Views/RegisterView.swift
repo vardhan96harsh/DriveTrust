@@ -30,10 +30,10 @@ struct RegisterView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Client Registration")
                                     .font(.system(size: 20, weight: .black))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                 Text("Register your personal vehicle for chauffeur service")
                                     .font(.system(size: 11))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                             }
                         }
 
@@ -41,12 +41,12 @@ struct RegisterView: View {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("FULL NAME")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.mint600)
                                 .tracking(1)
                             TextField("Full Name", text: $fullName)
-                                .foregroundColor(.white)
+                                .foregroundColor(.customerTextPrimary)
                                 .padding(12)
-                                .background(Color.midnightDark)
+                                .background(Color.midnight950)
                                 .cornerRadius(10)
                                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.midnightBorder, lineWidth: 1))
                         }
@@ -54,12 +54,12 @@ struct RegisterView: View {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("PHONE NUMBER")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.mint600)
                                 .tracking(1)
                             TextField("Phone", text: $phone)
-                                .foregroundColor(.white)
+                                .foregroundColor(.customerTextPrimary)
                                 .padding(12)
-                                .background(Color.midnightDark)
+                                .background(Color.midnight950)
                                 .cornerRadius(10)
                                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.midnightBorder, lineWidth: 1))
                         }
@@ -68,28 +68,28 @@ struct RegisterView: View {
 
                         Text("PRIMARY VEHICLE DETAILS")
                             .font(.system(size: 11, weight: .black))
-                            .foregroundColor(.white)
+                            .foregroundColor(.customerTextPrimary)
 
                         HStack(spacing: 10) {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("BRAND")
                                     .font(.system(size: 9, weight: .bold))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                                 TextField("e.g. Toyota", text: $carBrand)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                     .padding(12)
-                                    .background(Color.midnightDark)
+                                    .background(Color.midnight950)
                                     .cornerRadius(10)
                                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.midnightBorder, lineWidth: 1))
                             }
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("MODEL")
                                     .font(.system(size: 9, weight: .bold))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                                 TextField("e.g. Fortuner", text: $carModel)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                     .padding(12)
-                                    .background(Color.midnightDark)
+                                    .background(Color.midnight950)
                                     .cornerRadius(10)
                                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.midnightBorder, lineWidth: 1))
                             }
@@ -98,11 +98,11 @@ struct RegisterView: View {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("LICENSE PLATE NUMBER")
                                 .font(.system(size: 9, weight: .bold))
-                                .foregroundColor(.slate400)
+                                .foregroundColor(.customerTextSecondary)
                             TextField("e.g. MP-40-CA-4921", text: $carPlate)
-                                .foregroundColor(.white)
+                                .foregroundColor(.customerTextPrimary)
                                 .padding(12)
-                                .background(Color.midnightDark)
+                                .background(Color.midnight950)
                                 .cornerRadius(10)
                                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.midnightBorder, lineWidth: 1))
                         }
@@ -111,17 +111,17 @@ struct RegisterView: View {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("TRANSMISSION TYPE")
                                 .font(.system(size: 9, weight: .bold))
-                                .foregroundColor(.slate400)
+                                .foregroundColor(.customerTextSecondary)
                             HStack(spacing: 8) {
                                 ForEach(["AUTOMATIC", "MANUAL", "LUXURY"], id: \.self) { trans in
                                     let isSelected = carTransmission == trans
                                     Button(action: { carTransmission = trans }) {
                                         Text(trans)
                                             .font(.system(size: 11, weight: .bold))
-                                            .foregroundColor(isSelected ? .midnightDark : .slate300)
+                                            .foregroundColor(isSelected ? .white : .customerTextPrimary)
                                             .frame(maxWidth: .infinity)
                                             .padding(.vertical, 10)
-                                            .background(isSelected ? Color.gold500 : Color.midnightDark)
+                                            .background(isSelected ? Color.mint500 : Color.midnight950)
                                             .cornerRadius(8)
                                             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.midnightBorder, lineWidth: 1))
                                     }
@@ -132,14 +132,14 @@ struct RegisterView: View {
                         // Legal Shield Guarantee
                         HStack(spacing: 8) {
                             Image(systemName: "checkmark.shield.fill")
-                                .foregroundColor(.emerald400)
+                                .foregroundColor(.mint600)
                             Text("All client vehicles are covered under DriveTrust Transit Shield (₹10L Policy) during active bookings.")
                                 .font(.system(size: 11))
-                                .foregroundColor(.slate300)
+                                .foregroundColor(.customerTextSecondary)
                                 .lineLimit(2)
                         }
                         .padding(12)
-                        .background(Color.midnightDark)
+                        .background(Color.mint50)
                         .cornerRadius(10)
 
                         Button(action: {
@@ -157,18 +157,18 @@ struct RegisterView: View {
                         }) {
                             Text("Complete Registration & Enter")
                                 .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(.midnightDark)
+                                .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 14)
-                                .background(Color.gold500)
+                                .background(Color.mint500)
                                 .cornerRadius(12)
                         }
 
                         Button("Back to Sign In") {
                             onBackToLogin()
                         }
-                        .font(.system(size: 12))
-                        .foregroundColor(.slate400)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.mint600)
                         .frame(maxWidth: .infinity)
                     }
                     .padding(24)

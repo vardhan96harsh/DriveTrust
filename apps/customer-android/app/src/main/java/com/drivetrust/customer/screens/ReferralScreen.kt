@@ -30,14 +30,14 @@ fun CustomerReferralScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Slate900)
+            .background(CustomerBackgroundLight)
     ) {
         // Luxury Top App Bar
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MidnightDark,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-            shadowElevation = 8.dp
+            color = CustomerBackgroundLight,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 2.dp
         ) {
             Row(
                 modifier = Modifier
@@ -54,13 +54,13 @@ fun CustomerReferralScreen(
                         onClick = onBack,
                         modifier = Modifier
                             .size(38.dp)
-                            .background(MidnightCard, CircleShape)
-                            .border(1.dp, MidnightBorder, CircleShape)
+                            .background(CustomerWhite, CircleShape)
+                            .border(1.dp, CustomerCardBorderLight, CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = CustomerTextPrimary,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -69,13 +69,13 @@ fun CustomerReferralScreen(
                             text = "Executive Referral Privilege",
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Black,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
                             text = "Share the prestige. Earn ₹100 wallet credit.",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
                     }
                 }
@@ -93,8 +93,9 @@ fun CustomerReferralScreen(
             item {
                 Surface(
                     shape = RoundedCornerShape(20.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f)),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -105,14 +106,14 @@ fun CustomerReferralScreen(
                         Box(
                             modifier = Modifier
                                 .size(64.dp)
-                                .background(Gold500.copy(alpha = 0.12f), CircleShape)
-                                .border(1.5.dp, Gold500.copy(alpha = 0.5f), CircleShape),
+                                .background(Gold50, CircleShape)
+                                .border(1.5.dp, Gold500.copy(alpha = 0.4f), CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.CardGiftcard,
                                 contentDescription = "Referral Reward",
-                                tint = Gold400,
+                                tint = Gold600,
                                 modifier = Modifier.size(32.dp)
                             )
                         }
@@ -122,7 +123,7 @@ fun CustomerReferralScreen(
                                 text = "GIVE ₹100, GET ₹100 CREDIT",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Black,
-                                color = Gold400,
+                                color = Gold600,
                                 letterSpacing = 0.8.sp
                             )
                             Spacer(modifier = Modifier.height(4.dp))
@@ -130,13 +131,13 @@ fun CustomerReferralScreen(
                                 text = "Invite Your Network to DriveTrust",
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Black,
-                                color = Color.White
+                                color = CustomerTextPrimary
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = "Share verified executive chauffeur convenience. When your referral completes their first verified ride, both of you receive ₹100 instantly in your DT Wallet.",
                                 fontSize = 12.sp,
-                                color = Slate300,
+                                color = CustomerTextSecondary,
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                                 lineHeight = 16.sp
                             )
@@ -145,8 +146,8 @@ fun CustomerReferralScreen(
                         // Referral Code Box
                         Surface(
                             shape = RoundedCornerShape(14.dp),
-                            color = MidnightDark,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f)),
+                            color = CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Row(
@@ -155,21 +156,21 @@ fun CustomerReferralScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column {
-                                    Text("YOUR EXCLUSIVE INVITE CODE", fontSize = 9.sp, fontWeight = FontWeight.Black, color = Slate400, letterSpacing = 0.6.sp)
-                                    Text(referralCode, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Gold400, letterSpacing = 1.sp)
+                                    Text("YOUR EXCLUSIVE INVITE CODE", fontSize = 9.sp, fontWeight = FontWeight.Black, color = CustomerTextSecondary, letterSpacing = 0.6.sp)
+                                    Text(referralCode, fontSize = 20.sp, fontWeight = FontWeight.Black, color = Gold600, letterSpacing = 1.sp)
                                 }
                                 Button(
                                     onClick = { isCopied = true },
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = if (isCopied) Emerald500 else Gold500
+                                        containerColor = if (isCopied) Mint500 else Gold500
                                     )
                                 ) {
                                     Text(
                                         text = if (isCopied) "COPIED ✓" else "COPY",
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Black,
-                                        color = Slate900
+                                        color = Color.White
                                     )
                                 }
                             }
@@ -203,8 +204,9 @@ fun CustomerReferralScreen(
             item {
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -213,12 +215,12 @@ fun CustomerReferralScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("YOUR REFERRAL PRIVILEGES", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Slate400, letterSpacing = 0.8.sp)
+                            Text("YOUR REFERRAL PRIVILEGES", fontSize = 10.sp, fontWeight = FontWeight.Black, color = CustomerTextSecondary, letterSpacing = 0.8.sp)
                             Text(
                                 text = "View Wallet →",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Gold400,
+                                color = Mint600,
                                 modifier = Modifier.clickable { onOpenWallet() }
                             )
                         }
@@ -229,35 +231,35 @@ fun CustomerReferralScreen(
                         ) {
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = MidnightDark,
-                                border = androidx.compose.foundation.BorderStroke(0.8.dp, MidnightBorder),
+                                color = CustomerInnerSurfaceLight,
+                                border = androidx.compose.foundation.BorderStroke(0.8.dp, CustomerCardBorderLight),
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Column(modifier = Modifier.padding(12.dp)) {
-                                    Text("Friends Joined", fontSize = 10.sp, color = Slate400)
-                                    Text("3", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Color.White)
+                                    Text("Friends Joined", fontSize = 10.sp, color = CustomerTextSecondary)
+                                    Text("3", fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                                 }
                             }
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = MidnightDark,
+                                color = Gold50.copy(alpha = 0.8f),
                                 border = androidx.compose.foundation.BorderStroke(0.8.dp, Gold500.copy(alpha = 0.4f)),
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Column(modifier = Modifier.padding(12.dp)) {
-                                    Text("Total Earned", fontSize = 10.sp, color = Gold400)
-                                    Text("₹300.00", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Gold400)
+                                    Text("Total Earned", fontSize = 10.sp, color = Gold600)
+                                    Text("₹300.00", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Gold600)
                                 }
                             }
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = MidnightDark,
-                                border = androidx.compose.foundation.BorderStroke(0.8.dp, MidnightBorder),
+                                color = CustomerInnerSurfaceLight,
+                                border = androidx.compose.foundation.BorderStroke(0.8.dp, CustomerCardBorderLight),
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Column(modifier = Modifier.padding(12.dp)) {
-                                    Text("Pending", fontSize = 10.sp, color = Slate400)
-                                    Text("₹100.00", fontSize = 18.sp, fontWeight = FontWeight.Black, color = Slate300)
+                                    Text("Pending", fontSize = 10.sp, color = CustomerTextSecondary)
+                                    Text("₹100.00", fontSize = 18.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                                 }
                             }
                         }
@@ -269,12 +271,13 @@ fun CustomerReferralScreen(
             item {
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shadowElevation = 2.dp,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                        Text("HOW IT WORKS", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Slate400, letterSpacing = 0.8.sp)
+                        Text("HOW IT WORKS", fontSize = 10.sp, fontWeight = FontWeight.Black, color = CustomerTextSecondary, letterSpacing = 0.8.sp)
 
                         val steps = listOf(
                             Triple("1", "Share Exclusive Code", "Send code DTHARSH2026 to your colleagues and family."),
@@ -290,15 +293,15 @@ fun CustomerReferralScreen(
                                 Box(
                                     modifier = Modifier
                                         .size(28.dp)
-                                        .background(MidnightDark, CircleShape)
-                                        .border(1.dp, Gold500.copy(alpha = 0.5f), CircleShape),
+                                        .background(Mint50, CircleShape)
+                                        .border(1.dp, Mint500.copy(alpha = 0.5f), CircleShape),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    Text(num, color = Gold400, fontSize = 12.sp, fontWeight = FontWeight.Black)
+                                    Text(num, color = Mint600, fontSize = 12.sp, fontWeight = FontWeight.Black)
                                 }
                                 Column {
-                                    Text(title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                                    Text(desc, fontSize = 11.sp, color = Slate300)
+                                    Text(title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = CustomerTextPrimary)
+                                    Text(desc, fontSize = 11.sp, color = CustomerTextSecondary)
                                 }
                             }
                         }

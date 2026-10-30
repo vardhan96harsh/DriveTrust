@@ -32,22 +32,22 @@ struct ProfileView: View {
                         VStack(spacing: 4) {
                             Text(customerName)
                                 .font(.system(size: 18, weight: .black))
-                                .foregroundColor(.white)
+                                .foregroundColor(.customerTextPrimary)
                             Text("+91 98450 12345 • client@drivetrust.in")
                                 .font(.system(size: 11))
-                                .foregroundColor(.slate400)
+                                .foregroundColor(.customerTextSecondary)
                         }
 
                         HStack(spacing: 6) {
                             Image(systemName: "checkmark.seal.fill")
-                                .foregroundColor(.emerald400)
+                                .foregroundColor(.mint600)
                             Text("Aadhaar Verified Client (Vidisha, MP-40)")
                                 .font(.system(size: 11, weight: .bold))
-                                .foregroundColor(.emerald400)
+                                .foregroundColor(.mint600)
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
-                        .background(Color.emerald400.opacity(0.12))
+                        .background(Color.mint50)
                         .cornerRadius(20)
                     }
                     .padding(20)
@@ -55,6 +55,7 @@ struct ProfileView: View {
                     .background(Color.midnightCard)
                     .cornerRadius(20)
                     .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.midnightBorder, lineWidth: 1))
+                    .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
 
                     // Emergency Contacts Card
                     VStack(alignment: .leading, spacing: 10) {
@@ -63,30 +64,31 @@ struct ProfileView: View {
                                 .foregroundColor(.red)
                             Text("SAFETY & GUARDIAN CONTACT")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.gold500)
+                                .foregroundColor(.gold600)
                                 .tracking(1)
                         }
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Family Emergency Contact")
                                     .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                 Text("+91 99801 11223 (Auto-shared on ride start)")
                                     .font(.system(size: 11))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                             }
                             Spacer()
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.emerald400)
+                                .foregroundColor(.mint600)
                         }
                         .padding(12)
-                        .background(Color.midnightDark)
+                        .background(Color.midnight950)
                         .cornerRadius(10)
                     }
                     .padding(16)
                     .background(Color.midnightCard)
                     .cornerRadius(16)
                     .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.midnightBorder, lineWidth: 1))
+                    .shadow(color: Color.black.opacity(0.02), radius: 4, x: 0, y: 1)
 
                     // Corporate 18% ITC Billing Switch
                     VStack(alignment: .leading, spacing: 12) {
@@ -94,28 +96,28 @@ struct ProfileView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Corporate Business Profile")
                                     .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                 Text("Generate 18% GST ITC invoices for tax claims")
                                     .font(.system(size: 11))
-                                    .foregroundColor(.slate400)
+                                    .foregroundColor(.customerTextSecondary)
                             }
                         }
-                        .toggleStyle(SwitchToggleStyle(tint: .gold500))
+                        .toggleStyle(SwitchToggleStyle(tint: .mint500))
 
                         if isCorporateMode {
                             VStack(alignment: .leading, spacing: 8) {
                                 TextField("Company Legal Name", text: $companyName)
                                     .font(.system(size: 12))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                     .padding(10)
-                                    .background(Color.midnightDark)
+                                    .background(Color.midnight950)
                                     .cornerRadius(8)
 
                                 TextField("GSTIN Number", text: $gstin)
                                     .font(.system(size: 12))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                     .padding(10)
-                                    .background(Color.midnightDark)
+                                    .background(Color.midnight950)
                                     .cornerRadius(8)
                             }
                         }
@@ -124,6 +126,7 @@ struct ProfileView: View {
                     .background(Color.midnightCard)
                     .cornerRadius(16)
                     .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.midnightBorder, lineWidth: 1))
+                    .shadow(color: Color.black.opacity(0.02), radius: 4, x: 0, y: 1)
 
                     // Quick Actions
                     VStack(spacing: 8) {
@@ -133,7 +136,7 @@ struct ProfileView: View {
                                     .foregroundColor(.red)
                                 Text("Safety Vault & Police 112 Settings")
                                     .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                 Spacer()
                                 Image(systemName: "chevron.right").foregroundColor(.slate500)
                             }
@@ -146,10 +149,10 @@ struct ProfileView: View {
                         Button(action: onOpenSupport) {
                             HStack {
                                 Image(systemName: "questionmark.circle.fill")
-                                    .foregroundColor(.gold500)
+                                    .foregroundColor(.mint600)
                                 Text("24x7 Safety Command Helpline")
                                     .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.customerTextPrimary)
                                 Spacer()
                                 Image(systemName: "chevron.right").foregroundColor(.slate500)
                             }

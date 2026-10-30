@@ -49,8 +49,9 @@ fun QuickChatDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(24.dp),
-            color = MidnightCard,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+            color = CustomerWhite,
+            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+            shadowElevation = 4.dp,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(490.dp)
@@ -71,14 +72,14 @@ fun QuickChatDialog(
                     ) {
                         Surface(
                             shape = CircleShape,
-                            color = Midnight950,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.5f)),
+                            color = Mint50,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Mint500.copy(alpha = 0.5f)),
                             modifier = Modifier.size(38.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Text(
                                     text = driverName.take(2).uppercase(),
-                                    color = Gold500,
+                                    color = Mint600,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 13.sp
                                 )
@@ -89,7 +90,7 @@ fun QuickChatDialog(
                                 text = driverName,
                                 fontWeight = FontWeight.Black,
                                 fontSize = 15.sp,
-                                color = Color.White
+                                color = CustomerTextPrimary
                             )
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
@@ -98,13 +99,14 @@ fun QuickChatDialog(
                                 Box(
                                     modifier = Modifier
                                         .size(6.dp)
-                                        .background(Emerald400, CircleShape)
+                                        .background(Mint500, CircleShape)
+                                Oddly = null
                                 )
                                 Text(
                                     text = "Chauffeur Connected",
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Emerald400
+                                    color = Mint600
                                 )
                             }
                         }
@@ -114,18 +116,18 @@ fun QuickChatDialog(
                         onClick = onDismiss,
                         modifier = Modifier
                             .size(32.dp)
-                            .background(Midnight950, CircleShape)
+                            .background(CustomerInnerSurfaceLight, CircleShape)
                     ) {
                         Icon(
                             Icons.Rounded.Close,
                             contentDescription = "Close",
-                            tint = Slate400,
+                            tint = CustomerTextSecondary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
                 }
 
-                HorizontalDivider(color = MidnightBorder)
+                HorizontalDivider(color = CustomerCardBorderLight)
 
                 // Message Thread
                 LazyColumn(
@@ -142,13 +144,13 @@ fun QuickChatDialog(
                         ) {
                             Surface(
                                 shape = RoundedCornerShape(14.dp),
-                                color = if (isCustomer) Gold500 else Midnight950,
-                                border = if (isCustomer) null else androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                                color = if (isCustomer) Mint500 else CustomerInnerSurfaceLight,
+                                border = if (isCustomer) null else androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                                 modifier = Modifier.widthIn(max = 250.dp)
                             ) {
                                 Text(
                                     text = msg.text,
-                                    color = if (isCustomer) MidnightDark else Slate200,
+                                    color = if (isCustomer) Color.White else CustomerTextPrimary,
                                     fontSize = 12.sp,
                                     fontWeight = if (isCustomer) FontWeight.SemiBold else FontWeight.Normal,
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
@@ -157,7 +159,7 @@ fun QuickChatDialog(
                             Text(
                                 text = msg.time,
                                 fontSize = 9.sp,
-                                color = Slate500,
+                                color = CustomerTextSecondary,
                                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
                             )
                         }
@@ -172,8 +174,8 @@ fun QuickChatDialog(
                     items(quickReplies) { chip ->
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = Midnight950,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                            color = CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                             onClick = {
                                 messages.add(ChatMessage("CUSTOMER", chip, "Just now"))
                             }
@@ -181,7 +183,7 @@ fun QuickChatDialog(
                             Text(
                                 text = chip,
                                 fontSize = 10.sp,
-                                color = Gold500,
+                                color = Mint600,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 5.dp)
                             )
@@ -198,14 +200,14 @@ fun QuickChatDialog(
                     OutlinedTextField(
                         value = messageText,
                         onValueChange = { messageText = it },
-                        placeholder = { Text("Type instruction for chauffeur...", fontSize = 11.sp, color = Slate500) },
+                        placeholder = { Text("Type instruction for chauffeur...", fontSize = 11.sp, color = CustomerTextSecondary) },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Slate200,
-                            focusedBorderColor = Gold500,
-                            unfocusedBorderColor = MidnightBorder,
-                            focusedContainerColor = Midnight950,
-                            unfocusedContainerColor = Midnight950
+                            focusedTextColor = CustomerTextPrimary,
+                            unfocusedTextColor = CustomerTextPrimary,
+                            focusedBorderColor = Mint500,
+                            unfocusedBorderColor = CustomerCardBorderLight,
+                            focusedContainerColor = CustomerInnerSurfaceLight,
+                            unfocusedContainerColor = CustomerInnerSurfaceLight
                         ),
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(12.dp),
@@ -221,12 +223,12 @@ fun QuickChatDialog(
                         },
                         modifier = Modifier
                             .size(46.dp)
-                            .background(Gold500, RoundedCornerShape(12.dp))
+                            .background(Mint500, RoundedCornerShape(12.dp))
                     ) {
                         Icon(
                             Icons.Rounded.Send,
                             contentDescription = "Send",
-                            tint = MidnightDark,
+                            tint = Color.White,
                             modifier = Modifier.size(20.dp)
                         )
                     }

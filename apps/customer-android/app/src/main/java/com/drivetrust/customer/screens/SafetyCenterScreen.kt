@@ -38,13 +38,13 @@ fun CustomerSafetyCenterScreen(
                             "Executive Safety Shield",
                             fontWeight = FontWeight.Black,
                             fontSize = 17.sp,
-                            color = Color.White,
+                            color = CustomerTextPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
                             "24x7 Chauffeur Protection & Police 112 Dispatch",
                             fontSize = 11.sp,
-                            color = Slate400
+                            color = CustomerTextSecondary
                         )
                     }
                 },
@@ -54,21 +54,21 @@ fun CustomerSafetyCenterScreen(
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .size(36.dp)
-                            .background(MidnightCard, CircleShape)
-                            .border(1.dp, MidnightBorder, CircleShape)
+                            .background(CustomerWhite, CircleShape)
+                            .border(1.dp, CustomerCardBorderLight, CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = CustomerTextPrimary,
                             modifier = Modifier.size(18.dp)
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MidnightDark)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = CustomerBackgroundLight)
             )
         },
-        containerColor = Slate900
+        containerColor = CustomerBackgroundLight
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -81,9 +81,10 @@ fun CustomerSafetyCenterScreen(
             item {
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Red500.copy(alpha = 0.6f)),
-                    shape = RoundedCornerShape(16.dp)
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Red500.copy(alpha = 0.35f)),
+                    shape = RoundedCornerShape(16.dp),
+                    shadowElevation = 2.dp
                 ) {
                     Column(modifier = Modifier.padding(18.dp)) {
                         Row(
@@ -95,20 +96,20 @@ fun CustomerSafetyCenterScreen(
                                 Icon(
                                     imageVector = Icons.Rounded.Emergency,
                                     contentDescription = "SOS",
-                                    tint = Red400,
+                                    tint = Red500,
                                     modifier = Modifier.size(20.dp)
                                 )
-                                Text("POLICE EMERGENCY (ERSS 112)", fontSize = 13.sp, fontWeight = FontWeight.Black, color = Red400)
+                                Text("POLICE EMERGENCY (ERSS 112)", fontSize = 13.sp, fontWeight = FontWeight.Black, color = Red600)
                             }
-                            Surface(color = Red500.copy(alpha = 0.2f), shape = RoundedCornerShape(6.dp)) {
-                                Text("LIVE DISPATCH", color = Red400, fontSize = 9.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp))
+                            Surface(color = Red500.copy(alpha = 0.12f), shape = RoundedCornerShape(6.dp)) {
+                                Text("LIVE DISPATCH", color = Red600, fontSize = 9.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp))
                             }
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
                             "Pressing SOS transmits your real-time GPS telemetry, vehicle registration, and verified chauffeur identity directly to the Police Emergency Dispatch Network (112).",
-                            color = Slate300,
+                            color = CustomerTextSecondary,
                             fontSize = 12.sp,
                             lineHeight = 17.sp
                         )
@@ -141,9 +142,10 @@ fun CustomerSafetyCenterScreen(
             item {
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.4f)),
-                    shape = RoundedCornerShape(16.dp)
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Gold500.copy(alpha = 0.35f)),
+                    shape = RoundedCornerShape(16.dp),
+                    shadowElevation = 2.dp
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -153,33 +155,33 @@ fun CustomerSafetyCenterScreen(
                             Icon(
                                 imageVector = Icons.Rounded.VerifiedUser,
                                 contentDescription = "Verified",
-                                tint = Gold400,
+                                tint = Gold600,
                                 modifier = Modifier.size(18.dp)
                             )
-                            Text("MoRTH Sarathi & Police KYC Guarantee", fontSize = 14.sp, fontWeight = FontWeight.Black, color = Color.White)
+                            Text("MoRTH Sarathi & Police KYC Guarantee", fontSize = 14.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             "Every DriveTrust chauffeur undergoes strict human admin verification before stepping behind your steering wheel. Commercial badges and DL are authenticated against the Ministry of Road Transport & Highways database.",
                             fontSize = 12.sp,
-                            color = Slate300,
+                            color = CustomerTextSecondary,
                             lineHeight = 17.sp
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Surface(
-                                color = Gold500.copy(alpha = 0.12f),
+                                color = Gold50.copy(alpha = 0.8f),
                                 border = androidx.compose.foundation.BorderStroke(0.8.dp, Gold500.copy(alpha = 0.4f)),
                                 shape = RoundedCornerShape(6.dp)
                             ) {
-                                Text("Police Background Cleared", color = Gold400, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+                                Text("Police Background Cleared", color = Gold600, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
                             }
                             Surface(
-                                color = Emerald500.copy(alpha = 0.15f),
-                                border = androidx.compose.foundation.BorderStroke(0.8.dp, Emerald500.copy(alpha = 0.5f)),
+                                color = Mint50,
+                                border = androidx.compose.foundation.BorderStroke(0.8.dp, Mint500.copy(alpha = 0.4f)),
                                 shape = RoundedCornerShape(6.dp)
                             ) {
-                                Text("Sarathi DL Validated", color = Emerald400, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+                                Text("Sarathi DL Validated", color = Mint600, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
                             }
                         }
                     }
@@ -190,9 +192,10 @@ fun CustomerSafetyCenterScreen(
             item {
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-                    shape = RoundedCornerShape(16.dp)
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shape = RoundedCornerShape(16.dp),
+                    shadowElevation = 2.dp
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -202,17 +205,17 @@ fun CustomerSafetyCenterScreen(
                             Icon(
                                 imageVector = Icons.Rounded.ContactPhone,
                                 contentDescription = "Contacts",
-                                tint = Gold400,
+                                tint = Gold600,
                                 modifier = Modifier.size(18.dp)
                             )
-                            Text("Trusted Emergency Contacts", fontSize = 14.sp, fontWeight = FontWeight.Black, color = Color.White)
+                            Text("Trusted Emergency Contacts", fontSize = 14.sp, fontWeight = FontWeight.Black, color = CustomerTextPrimary)
                         }
-                        Text("Auto-alerted via SMS and WhatsApp whenever you trigger SOS", fontSize = 11.sp, color = Slate400)
+                        Text("Auto-alerted via SMS and WhatsApp whenever you trigger SOS", fontSize = 11.sp, color = CustomerTextSecondary)
 
                         Spacer(modifier = Modifier.height(12.dp))
                         Surface(
-                            color = MidnightDark,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
+                            color = CustomerInnerSurfaceLight,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -222,14 +225,14 @@ fun CustomerSafetyCenterScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column {
-                                    Text(trustedContactName, fontWeight = FontWeight.Black, color = Color.White, fontSize = 13.sp)
-                                    Text(trustedContactPhone, color = Slate400, fontSize = 11.sp)
+                                    Text(trustedContactName, fontWeight = FontWeight.Black, color = CustomerTextPrimary, fontSize = 13.sp)
+                                    Text(trustedContactPhone, color = CustomerTextSecondary, fontSize = 11.sp)
                                 }
                                 Surface(
                                     shape = RoundedCornerShape(6.dp),
-                                    color = Emerald500.copy(alpha = 0.15f)
+                                    color = Mint100
                                 ) {
-                                    Text("PRIMARY", fontSize = 10.sp, color = Emerald400, fontWeight = FontWeight.Black, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+                                    Text("PRIMARY", fontSize = 10.sp, color = Mint600, fontWeight = FontWeight.Black, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
                                 }
                             }
                         }
@@ -241,12 +244,13 @@ fun CustomerSafetyCenterScreen(
             item {
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-                    color = MidnightCard,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MidnightBorder),
-                    shape = RoundedCornerShape(16.dp)
+                    color = CustomerWhite,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, CustomerCardBorderLight),
+                    shape = RoundedCornerShape(16.dp),
+                    shadowElevation = 2.dp
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("PROACTIVE SAFETY AUTOMATION", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold400, letterSpacing = 0.8.sp)
+                        Text("PROACTIVE SAFETY AUTOMATION", fontSize = 10.sp, fontWeight = FontWeight.Black, color = Gold600, letterSpacing = 0.8.sp)
 
                         Spacer(modifier = Modifier.height(14.dp))
                         Row(
@@ -255,18 +259,23 @@ fun CustomerSafetyCenterScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Auto-Share Night Rides (After 10 PM)", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 13.sp)
-                                Text("Automatically sends WhatsApp tracking link to your trusted contacts", fontSize = 11.sp, color = Slate400)
+                                Text("Auto-Share Night Rides (After 10 PM)", fontWeight = FontWeight.Bold, color = CustomerTextPrimary, fontSize = 13.sp)
+                                Text("Automatically sends WhatsApp tracking link to your trusted contacts", fontSize = 11.sp, color = CustomerTextSecondary)
                             }
                             Switch(
                                 checked = autoShareNight,
                                 onCheckedChange = { autoShareNight = it },
-                                colors = SwitchDefaults.colors(checkedThumbColor = Gold500, checkedTrackColor = MidnightDark)
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = Color.White,
+                                    checkedTrackColor = Mint500,
+                                    uncheckedThumbColor = Slate400,
+                                    uncheckedTrackColor = Slate200
+                                )
                             )
                         }
 
                         Spacer(modifier = Modifier.height(14.dp))
-                        HorizontalDivider(color = MidnightBorder)
+                        HorizontalDivider(color = CustomerCardBorderLight)
                         Spacer(modifier = Modifier.height(14.dp))
 
                         Row(
@@ -275,13 +284,18 @@ fun CustomerSafetyCenterScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("In-Cabin Audio Safety Recording", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 13.sp)
-                                Text("Encrypted audio recorded only on your device for emergency disputes", fontSize = 11.sp, color = Slate400)
+                                Text("In-Cabin Audio Safety Recording", fontWeight = FontWeight.Bold, color = CustomerTextPrimary, fontSize = 13.sp)
+                                Text("Encrypted audio recorded only on your device for emergency disputes", fontSize = 11.sp, color = CustomerTextSecondary)
                             }
                             Switch(
                                 checked = audioRecordingEnabled,
                                 onCheckedChange = { audioRecordingEnabled = it },
-                                colors = SwitchDefaults.colors(checkedThumbColor = Gold500, checkedTrackColor = MidnightDark)
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = Color.White,
+                                    checkedTrackColor = Mint500,
+                                    uncheckedThumbColor = Slate400,
+                                    uncheckedTrackColor = Slate200
+                                )
                             )
                         }
                     }
