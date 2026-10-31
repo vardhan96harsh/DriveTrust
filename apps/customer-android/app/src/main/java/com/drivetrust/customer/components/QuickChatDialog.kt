@@ -100,7 +100,6 @@ fun QuickChatDialog(
                                     modifier = Modifier
                                         .size(6.dp)
                                         .background(Mint500, CircleShape)
-                                Oddly = null
                                 )
                                 Text(
                                     text = "Chauffeur Connected",

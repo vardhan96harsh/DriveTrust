@@ -1,6 +1,7 @@
 package com.drivetrust.customer.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -57,7 +58,7 @@ fun CustomerHandoverAuditScreen(
                     modifier = Modifier
                         .size(40.dp)
                         .background(CustomerWhite, RoundedCornerShape(10.dp))
-                        .androidx.compose.foundation.border(1.dp, CustomerCardBorderLight, RoundedCornerShape(10.dp))
+                        .border(1.dp, CustomerCardBorderLight, RoundedCornerShape(10.dp))
                 ) {
                     Icon(
                         Icons.Rounded.ArrowBack,
